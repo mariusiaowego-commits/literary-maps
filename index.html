@@ -170,10 +170,39 @@
   /* ── Popup ── */
   .leaflet-popup-content-wrapper { background: rgba(6, 14, 32, 0.97) !important; border: 1px solid #c9a84c !important; color: #e8d5b0; border-radius: 6px; }
   .leaflet-popup-tip { background: rgba(6, 14, 32, 0.97) !important; }
+  .popup-header { margin-bottom: 6px; }
   .popup-title { color: #c9a84c; font-size: 14px; font-weight: bold; margin-bottom: 3px; }
-  .popup-zh   { color: #8fa8c8; font-size: 11px; margin-bottom: 5px; }
-  .popup-desc { color: #b0a090; font-size: 12px; line-height: 1.6; }
   .popup-yr   { font-size: 10px; color: #c9a84c; margin-bottom: 5px; }
+
+  /* Popup Tabs */
+  .popup-tabs { display: flex; gap: 0; border-bottom: 1px solid #2a3a5a; margin-bottom: 6px; }
+  .popup-tab-btn {
+    background: none;
+    border: none;
+    color: #7a8aaa;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .popup-tab-btn:hover { color: #e8d5b0; }
+  .popup-tab-btn.active { color: #c9a84c; border-bottom-color: #c9a84c; }
+  .popup-tab-btn.disabled { color: #3a4a6a; cursor: default; pointer-events: none; }
+  .popup-tab-content { min-height: 40px; }
+  .popup-geo { color: #b0a090; font-size: 12px; line-height: 1.6; }
+  .popup-empty { color: #4a5a6a; font-size: 11px; font-style: italic; padding: 8px 0; }
+  .popup-passage { margin-bottom: 10px; }
+  .popup-passage-src { font-size: 10px; color: #7a8aaa; margin-bottom: 3px; }
+  .popup-passage-text { color: #d4c49a; font-size: 12px; line-height: 1.65; font-style: italic; }
+  .popup-passage-ref { font-size: 9.5px; color: #5a6a7a; margin-top: 2px; }
+  .popup-analysis { color: #b0a090; font-size: 12px; line-height: 1.65; margin-bottom: 8px; }
+
+  /* Character detail panel */
+  .char-detail { margin-top: 6px; border-top: 1px solid #1e2e48; padding-top: 6px; }
+  .char-bio, .char-arc, .char-motivation { font-size: 10.5px; color: #9a9a8a; line-height: 1.55; margin-bottom: 4px; }
+  .char-quotes blockquote { color: #d4c49a; font-size: 11px; font-style: italic; line-height: 1.6; border-left: 2px solid #4a6fa5; padding-left: 8px; margin: 4px 0; }
 
   .leaflet-control-attribution { background: rgba(8,16,34,0.7) !important; color: #5a6070 !important; font-size: 8px !important; }
   .leaflet-control-attribution a { color: #7a8aaa !important; }
@@ -188,52 +217,18 @@
 <!-- Title -->
 <div class="title-banner">
   <h1>The Razor's Edge</h1>
-  <p>Larry Darrell's Mediterranean Journey &nbsp;·&nbsp; 毛姆《刀锋》地中海航线</p>
+  <p>Larry Darrell's Mediterranean Journey &nbsp;&middot;&nbsp; 毛姆《刀锋》地中海航线</p>
 </div>
 
-<!-- Character panel — clickable -->
+<!-- Character panel — filled by CharPanel.buildPanelHtml() -->
 <div class="char-panel panel">
-  <div class="panel-title">Characters · 角色</div>
-
-  <div class="char-item" onclick="flyToCity(0)">
-    <div class="c-name">LARRY</div>
-    <div class="c-zh">拉里·达雷尔</div>
-    <div class="c-desc">流浪追寻生命意义，曾是一战空军飞行员</div>
-    <div class="c-city">&#9679; <span onclick="flyToCity(0); return false;">Paris · 巴黎</span> → <span onclick="flyToCity(17); return false;">Mumbai · 孟买</span></div>
-  </div>
-
-  <div class="char-item" onclick="flyToCity(0)">
-    <div class="c-name">ISABEL</div>
-    <div class="c-zh">伊莎贝尔</div>
-    <div class="c-desc">拉里的未婚妻，留在巴黎，后嫁给富商格雷</div>
-    <div class="c-city">&#9679; <span onclick="flyToCity(0); return false;">Paris · 巴黎</span></div>
-  </div>
-
-  <div class="char-item" onclick="flyToCity(7)">
-    <div class="c-name">MRS. BRADSHAW</div>
-    <div class="c-zh">布拉肖太太</div>
-    <div class="c-desc">贵格会信徒，精神导师，引拉里去印度</div>
-    <div class="c-city">&#9679; <span onclick="flyToCity(7); return false;">Athens · 雅典</span></div>
-  </div>
-
-  <div class="char-item" onclick="flyToSophie()">
-    <div class="c-name">SOPHIE</div>
-    <div class="c-zh">索菲·麦克唐纳</div>
-    <div class="c-desc">丈夫孩子车祸亡后沉沦酒精，青梅竹马</div>
-    <div class="c-city">&#9679; <span onclick="flyToSophie(); return false;" style="color:#c46a6a;">Lost at Sea · 航海中失踪</span></div>
-  </div>
-
-  <div class="char-item">
-    <div class="c-name">WALTER LANDOR</div>
-    <div class="c-zh">沃尔特·兰德尔</div>
-    <div class="c-desc">19世纪英国诗人/作家，《刀锋》第5章引用其诗《I Strove with None》</div>
-    <div class="c-city">&#9679; 英国</div>
-  </div>
+  <div class="panel-title">Characters &middot; 角色</div>
+  <div id="char-list">Loading...</div>
 </div>
 
 <!-- Poem -->
 <div class="poem-panel panel">
-  <div class="poem-title">Walter Landor · 兰德尔的诗</div>
+  <div class="poem-title">Walter Landor &middot; 兰德尔的诗</div>
   <div class="poem-en">
     I strove with none, for none was worth my strife;<br>
     Nature I loved, and next to Nature, Art;<br>
@@ -248,18 +243,18 @@
   </div>
   <div class="poem-src">
     Landor, "Dying Speech of an Old Philosopher"<br>
-    《刀锋》第5章引用 · 墓碑铭文
+    《刀锋》第5章引用 &middot; 墓碑铭文
   </div>
 </div>
 
 <!-- Sophie panel — clickable -->
 <div class="sophie-panel panel" onclick="flyToSophie()">
-  <div class="panel-title" style="color:#c46a6a;">Sophie · 索菲的命运</div>
+  <div class="panel-title" style="color:#c46a6a;">Sophie &middot; 索菲的命运</div>
   <div class="s-desc">
     丈夫与孩子车祸身亡后沉沦酒精，曾是拉里的青梅竹马。<br><br>
     拉里在航海途中找到她，带她登上邮轮试图拯救……但她在一站独自离船，消失在茫茫人海。
   </div>
-  <div class="s-note">&#9679; 点击定位 · 航海失踪事件 ~1921</div>
+  <div class="s-note">&#9679; 点击定位 &middot; 航海失踪事件 ~1921</div>
 </div>
 
 <!-- Legend -->
@@ -271,201 +266,204 @@
   </div>
   <div class="legend-item">
     <div class="leg-circle" style="background:#6a9fd8;"></div>
-    <span>City · 城市</span>
+    <span>City &middot; 城市</span>
   </div>
   <div class="legend-item">
     <div class="leg-circle" style="background:#c9a84c;"></div>
-    <span>Key Event · 关键</span>
+    <span>Key Event &middot; 关键</span>
   </div>
   <div class="legend-item">
     <div class="leg-circle" style="background:#c46a6a;"></div>
-    <span>Sophie Missing · 失踪</span>
+    <span>Sophie Missing &middot; 失踪</span>
   </div>
 </div>
 
-<!-- Time ruler — clickable years -->
-<div class="time-ruler">
-  <span onclick="flyToYear(1919)">1914</span>
-  <span class="sep">——</span>
-  <span class="year" onclick="flyToYear(1919)">1919</span>
-  <span class="sep">——</span>
-  <span onclick="flyToYear(1920)">1920</span>
-  <span class="sep">——</span>
-  <span onclick="flyToYear(1921)">1921</span>
-  <span class="sep">——</span>
-  <span onclick="flyToYear(1922)">1922</span>
-  <span class="sep">——</span>
-  <span class="year" onclick="flyToYear(1924)">1924</span>
-  <span class="hint">click year to locate · 点击定位</span>
+<!-- Time ruler — filled dynamically after data loads -->
+<div class="time-ruler" id="time-ruler">
+  <span class="hint" style="margin:0;">Loading...</span>
 </div>
 
 <!-- Map -->
 <div id="map"></div>
 
+<!-- Data modules -->
+<script src="src/map-data.js"></script>
+<script src="src/components/tabs.js"></script>
+<script src="src/components/popup.js"></script>
+<script src="src/components/char-panel.js"></script>
+
 <script>
-// ─── MAP ───────────────────────────────────────────────────────────────────
-var map = L.map('map', {
-  center: [40.0, 18.0],
-  zoom: 5,
-  minZoom: 3,
-  maxZoom: 10,
-  zoomControl: true,
-  attributionControl: true,
-});
+(function() {
+  'use strict';
 
-var natGeo = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
-  attribution: 'National Geographic, Esri, GEBCO, NOAA',
-  maxZoom: 10
-});
-var ocean  = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', {
-  attribution: 'Esri, GEBCO, NOAA',
-  maxZoom: 10
-});
-var osm    = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors',
-  maxZoom: 10
-});
+  var map = L.map('map', {
+    center: [40.0, 18.0],
+    zoom: 5,
+    minZoom: 3,
+    maxZoom: 10,
+    zoomControl: true,
+    attributionControl: true,
+  });
 
-natGeo.addTo(map);
+  var natGeo = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'National Geographic, Esri, GEBCO, NOAA',
+    maxZoom: 10
+  });
+  var ocean  = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Esri, GEBCO, NOAA',
+    maxZoom: 10
+  });
+  var osm    = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 10
+  });
 
-L.control.layers({
-  'NatGeo': natGeo,
-  'Ocean' : ocean,
-  'OSM'   : osm,
-}, null, { position: 'topright' }).addTo(map);
+  natGeo.addTo(map);
 
-// ─── DATA ───────────────────────────────────────────────────────────────────
-var waypoints = [
-  { id:  0, lat: 48.8566, lng:  -2.3522, city: 'Paris',     zh: '巴黎',      note: '1919. 拉里从一战归来，住在拉丁区阁楼，沉迷阅读哲学书籍，寻找 "the why of things" 。', year: 1919, key: false },
-  { id:  1, lat: 43.2965, lng:   5.3698, city: 'Marseille', zh: '马赛',     note: '1920. 航海起点，登上货船，开始流浪生涯。离法赴海，驶向东方。',                  year: 1920, key: false },
-  { id:  2, lat: 43.7696, lng:   7.5908, city: 'Monaco',    zh: '摩纳哥',    note: '1920. 地中海沿岸小国，豪华赌城与游艇俱乐部。',                                    year: 1920, key: false },
-  { id:  3, lat: 43.7384, lng:   7.4246, city: 'Nice',      zh: '尼斯',      note: '1920. 法国蓝色海岸，疗养度假胜地，拉里经过此处继续向东。',                        year: 1920, key: false },
-  { id:  4, lat: 44.4158, lng:  10.0546, city: 'Parm',      zh: '帕尔马',    note: '1920. 意大利艾米利亚-罗马涅大区首府，文艺复兴古城。',                            year: 1920, key: false },
-  { id:  5, lat: 41.9028, lng:  12.4964, city: 'Rome',      zh: '罗马',      note: '1920. 拉里在罗马接触天主教神父，仍未找到他想要的答案，决定继续向东。',             year: 1920, key: false },
-  { id:  6, lat: 41.0082, lng:  28.9784, city: 'Istanbul',  zh: '伊斯坦布尔', note: '1920. 横跨欧亚两洲，接触拜占庭文明与东正教，领略伊斯兰文化。',                   year: 1920, key: false },
-  { id:  7, lat: 37.9838, lng:  23.7275, city: 'Athens',    zh: '雅典',      note: '1921. ★ 关键转折：在雅典遇见布拉肖太太，她告诉拉里印度圣人可以解答人生困惑。',     year: 1921, key: true  },
-  { id:  8, lat: 35.5138, lng:  28.2273, city: 'Rhodes',   zh: '罗德岛',    note: '1921. 希腊爱琴海岛屿，十字军骑士团遗址，古老城墙与海风。',                        year: 1921, key: false },
-  { id:  9, lat: 31.7683, lng:  35.2137, city: 'Jerusalem',zh: '耶路撒冷',  note: '1921. 三大宗教圣地，在圣殿山感受信仰的力量，凝视哭墙。',                           year: 1921, key: false },
-  { id: 10, lat: 30.0444, lng:  31.2357, city: 'Cairo',    zh: '开罗',      note: '1922. 经苏伊士运河前往埃及，探访金字塔与尼罗河，思考古文明的永恒。',               year: 1922, key: false },
-  { id: 11, lat: 23.0225, lng:  72.5714, city: 'Ahmedabad', zh: '艾哈迈达巴德', note: '1922. 圣雄甘地故乡，布拉肖太太多番引见，拉里决定留在印度学习吠檀多哲学。',      year: 1922, key: false },
-  { id: 12, lat: 28.6139, lng:  77.2090, city: 'Delhi',    zh: '德里',       note: '1923. 印度首都，继续探索各种精神道路，拜访多位修行者。',                          year: 1923, key: false },
-  { id: 13, lat: 27.1767, lng:  78.0081, city: 'Agra',     zh: '阿格拉',     note: '1923. 泰姬陵所在地，伊斯兰建筑之美，令拉里感受到超越时间的大美。',               year: 1923, key: false },
-  { id: 14, lat: 24.5467, lng:  73.6854, city: 'Udaipur',  zh: '乌代布尔',   note: '1923. 印度"白城"，拉里修行的最后一站，继续冥想、瑜伽与吠檀多。',                year: 1923, key: false },
-  { id: 15, lat: 23.8699, lng:  86.1795, city: 'Bengal',   zh: '孟加拉',     note: '1924. 恒河三角洲，拜访修行道院，在恒河边静坐冥想。',                             year: 1924, key: false },
-  { id: 16, lat: 19.0760, lng:  72.8777, city: 'Mumbai',   zh: '孟买',       note: '1924. 返回印度西部，准备启程回西方。',                                            year: 1924, key: false },
-  { id: 17, lat: 18.9388, lng:  72.8354, city: 'Suez',     zh: '苏伊士',      note: '1924. 乘船经苏伊士运河返回西方，拉里在甲板上终于找到了开悟的答案。',              year: 1924, key: true  },
-];
+  L.control.layers({
+    'NatGeo': natGeo,
+    'Ocean' : ocean,
+    'OSM'   : osm,
+  }, null, { position: 'topright' }).addTo(map);
 
-var SOPHIE_LAT = 33.8, SOPHIE_LNG = 26.5;
-
-// ─── ROUTE LINE ─────────────────────────────────────────────────────────────
-var routeCoords = waypoints.map(function(w){ return [w.lat, w.lng]; });
-L.polyline(routeCoords, {
-  color: '#e8c060',
-  weight: 2.5,
-  opacity: 0.85,
-  dashArray: '8, 6',
-}).addTo(map);
-
-// ─── MARKERS ─────────────────────────────────────────────────────────────────
-waypoints.forEach(function(w){
-  var isKey  = w.key;
-  var color  = isKey ? '#c9a84c' : '#6a9fd8';
-  var radius = isKey ? 7 : 5;
-
-  // City name label
-  var labelSide = w.lng > 20 ? 'right' : 'left';
-  var labelX = labelSide === 'left' ? 8 : -8;
-
-  L.marker([w.lat + 0.12, w.lng], {
-    icon: L.divIcon({
-      html: '<div style="font-size:12px;font-weight:bold;color:#e8d5b0;background:rgba(8,16,34,0.82);padding:2px 7px;border-radius:3px;border:1px solid '+color+';white-space:nowrap;line-height:1.4;">'
-          + '<span style="color:'+color+';">'+w.city+'</span>'
-          + '<br><span style="font-size:9.5px;color:#8fa8c8;font-weight:normal;">'+w.zh+'</span>'
-          + '</div>',
-      className: '',
-      iconSize: [110, 36],
-      iconAnchor: labelSide === 'left' ? [0, 18] : [110, 18],
-    })
-  }).addTo(map);
-
-  // Circle marker
-  L.circleMarker([w.lat, w.lng], {
-    radius: radius,
-    fillColor: color,
-    color: '#ffffff',
-    weight: 1.5,
-    opacity: 0.9,
-    fillOpacity: 0.85,
-  }).bindPopup(
-    '<div class="popup-title">'+w.city+' · '+w.zh+'</div>'
-    +'<div class="popup-yr">&#9201; '+w.year+(isKey?' · ★ Key Event':'')+'</div>'
-    +'<div class="popup-desc">'+w.note+'</div>'
-  ).addTo(map);
-});
-
-// ─── SOPHIE MARKER ──────────────────────────────────────────────────────────
-L.marker([SOPHIE_LAT, SOPHIE_LNG], {
-  icon: L.divIcon({
-    html: '<div style="font-size:18px;color:#c46a6a;text-shadow:1px 1px 4px #000;">&#10006;</div>',
-    className: '',
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-  })
-}).bindPopup(
-  '<div class="popup-title" style="color:#c46a6a;">Sophie Missing · 索菲失踪</div>'
-  +'<div class="popup-yr">~ 1921 · 地中海航海途中</div>'
-  +'<div class="popup-desc">拉里找到已沉沦酒精的索菲，带她登上邮轮。<br>'
-  +'但她在一站独自离船，从此杳无音讯。<br><br>'
-  +'<span style="color:#8a5a5a;font-size:10.5px;">毛姆笔下暗示她可能回到了在沉沦前热爱的大海——这是小说最神秘的留白之一。</span></div>'
-).addTo(map);
-
-// ─── NAVIGATION FUNCTIONS ────────────────────────────────────────────────────
-function flyToCity(id) {
-  var w = waypoints[id];
-  map.flyTo([w.lat, w.lng], 8, { duration: 1.4 });
-  // Open popup after animation
-  setTimeout(function(){
-    map.eachLayer(function(layer){
-      if (layer instanceof L.CircleMarker) {
-        var latlng = layer.getLatLng();
-        if (Math.abs(latlng.lat - w.lat) < 0.01 && Math.abs(latlng.lng - w.lng) < 0.01) {
-          layer.openPopup();
-        }
-      }
+  // ─── BUILD TIME RULER ────────────────────────────────────────────────────
+  function buildTimeRuler() {
+    var years = MapData.getYears();
+    var ruler = document.getElementById('time-ruler');
+    var html = '';
+    years.forEach(function(yr, i) {
+      if (i > 0) html += '<span class="sep">——</span>';
+      var cls = (yr === 1919 || yr === 1924) ? 'year' : '';
+      html += '<span class="' + cls + '" onclick="flyToYear(' + yr + ')">' + yr + '</span>';
     });
-  }, 1500);
-}
+    html += '<span class="hint">click year to locate &middot; 点击定位</span>';
+    ruler.innerHTML = html;
+  }
 
-function flyToSophie() {
-  map.flyTo([SOPHIE_LAT, SOPHIE_LNG], 6, { duration: 1.4 });
-  setTimeout(function(){
-    map.eachLayer(function(layer){
-      if (layer instanceof L.Marker) {
-        var ll = layer.getLatLng();
-        if (Math.abs(ll.lat - SOPHIE_LAT) < 1 && Math.abs(ll.lng - SOPHIE_LNG) < 1) {
-          layer.openPopup();
-        }
-      }
+  // ─── BUILD MARKERS ───────────────────────────────────────────────────────
+  function buildMarkers() {
+    var waypoints = MapData.getWaypoints();
+
+    // Route line
+    L.polyline(MapData.getRouteCoords(), {
+      color: '#e8c060',
+      weight: 2.5,
+      opacity: 0.85,
+      dashArray: '8, 6',
+    }).addTo(map);
+
+    // Waypoint markers
+    waypoints.forEach(function(w) {
+      var isKey  = w.key;
+      var color  = isKey ? '#c9a84c' : '#6a9fd8';
+      var radius = isKey ? 7 : 5;
+      var labelSide = w.lng > 20 ? 'right' : 'left';
+
+      // City label
+      L.marker([w.lat + 0.12, w.lng], {
+        icon: L.divIcon({
+          html: '<div style="font-size:12px;font-weight:bold;color:#e8d5b0;background:rgba(8,16,34,0.82);padding:2px 7px;border-radius:3px;border:1px solid '+color+';white-space:nowrap;line-height:1.4;">'
+              + '<span style="color:'+color+';">'+w.city+'</span>'
+              + '<br><span style="font-size:9.5px;color:#8fa8c8;font-weight:normal;">'+w.zh+'</span>'
+              + '</div>',
+          className: '',
+          iconSize: [110, 36],
+          iconAnchor: labelSide === 'left' ? [0, 18] : [110, 18],
+        })
+      }).addTo(map);
+
+      // Circle marker with tab popup
+      L.circleMarker([w.lat, w.lng], {
+        radius: radius,
+        fillColor: color,
+        color: '#ffffff',
+        weight: 1.5,
+        opacity: 0.9,
+        fillOpacity: 0.85,
+      }).bindPopup(PopupRenderer.buildHtml(w)).addTo(map);
     });
-  }, 1500);
-}
 
-function flyToYear(yr) {
-  var matches = waypoints.filter(function(w){ return w.year === yr; });
-  if (matches.length > 0) {
-    var w = matches[0];
-    map.flyTo([w.lat, w.lng], 7, { duration: 1.2 });
-    setTimeout(function(){
-      map.eachLayer(function(layer){
+    // Sophie marker
+    var sc = MapData.getSophieCoords();
+    L.marker([sc.lat, sc.lng], {
+      icon: L.divIcon({
+        html: '<div style="font-size:18px;color:#c46a6a;text-shadow:1px 1px 4px #000;">&#10006;</div>',
+        className: '',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12],
+      })
+    }).bindPopup(
+      '<div class="popup-title" style="color:#c46a6a;">Sophie Missing &middot; 索菲失踪</div>'
+      + '<div class="popup-yr">~ 1921 &middot; 地中海航海途中</div>'
+      + '<div class="popup-geo">拉里找到已沉沦酒精的索菲，带她登上邮轮。<br>'
+      + '但她在一站独自离船，从此杳无音讯。<br><br>'
+      + '<span style="color:#8a5a5a;font-size:10.5px;">毛姆笔下暗示她可能回到了在沉沦前热爱的大海——这是小说最神秘的留白之一。</span></div>'
+    ).addTo(map);
+  }
+
+  // ─── NAVIGATION FUNCTIONS ────────────────────────────────────────────────
+  window.flyToCity = function(id) {
+    var w = MapData.getWaypoint(id);
+    if (!w) return;
+    map.flyTo([w.lat, w.lng], 8, { duration: 1.4 });
+    setTimeout(function() {
+      map.eachLayer(function(layer) {
         if (layer instanceof L.CircleMarker) {
           var latlng = layer.getLatLng();
-          if (Math.abs(latlng.lat - w.lat) < 0.01) layer.openPopup();
+          if (Math.abs(latlng.lat - w.lat) < 0.01 && Math.abs(latlng.lng - w.lng) < 0.01) {
+            layer.openPopup();
+          }
         }
       });
-    }, 1300);
-  }
-}
+    }, 1500);
+  };
+
+  window.flyToSophie = function() {
+    var sc = MapData.getSophieCoords();
+    map.flyTo([sc.lat, sc.lng], 6, { duration: 1.4 });
+    setTimeout(function() {
+      map.eachLayer(function(layer) {
+        if (layer instanceof L.Marker) {
+          var ll = layer.getLatLng();
+          if (Math.abs(ll.lat - sc.lat) < 1 && Math.abs(ll.lng - sc.lng) < 1) {
+            layer.openPopup();
+          }
+        }
+      });
+    }, 1500);
+  };
+
+  window.flyToYear = function(yr) {
+    var matches = MapData.getWaypointsByYear(yr);
+    if (matches.length > 0) {
+      var w = matches[0];
+      map.flyTo([w.lat, w.lng], 7, { duration: 1.2 });
+      setTimeout(function() {
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.CircleMarker) {
+            var latlng = layer.getLatLng();
+            if (Math.abs(latlng.lat - w.lat) < 0.01) layer.openPopup();
+          }
+        });
+      }, 1300);
+    }
+  };
+
+  // ─── INIT SEQUENCE ───────────────────────────────────────────────────────
+  MapData.init()
+    .then(function() {
+      // Build UI components
+      document.getElementById('char-list').innerHTML = CharPanel.buildPanelHtml();
+      buildTimeRuler();
+      buildMarkers();
+    })
+    .catch(function(err) {
+      console.error('Failed to initialize map data:', err);
+      document.getElementById('char-list').innerHTML =
+        '<div style="color:#c46a6a;font-size:11px;padding:8px 0;">Failed to load data. Check console.</div>';
+    });
+
+})();
 </script>
 </body>
 </html>

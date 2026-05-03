@@ -10,6 +10,5 @@
 # OS
 Thumbs.db
 
-# Local data (future)
-data/
-*.db
+# Local data (future expansion)
+# data/ is now tracked — see data/waypoints.json
