@@ -1,31 +1,28 @@
-# The Razor's Edge Literary Map
+# 🗺️ The Razor's Edge Literary Map
 
-An interactive Leaflet.js web map tracing Larry Darrell's spiritual journey from W. Somerset Maugham's novel *The Razor's Edge* (1944). Follow Larry from post-WWI Paris through the Mediterranean, across the Indian subcontinent, to his enlightenment at sea near Suez.
+Interactive Leaflet.js map tracing Larry Darrell's spiritual journey from W. Somerset Maugham's novel *The Razor's Edge* (1944). Follow Larry from post-WWI Paris through the Mediterranean and across the Indian subcontinent to his enlightenment at Suez.
 
-**[Open the map →](index.html)** — just open the HTML file, no server needed.
+**[Open the map →](index.html)** — open in any browser, no server needed.
 
 ---
 
 ## Features
 
-- **18 waypoints** across Europe, the Middle East, and India
+- **18 waypoints** across Europe, Middle East, and India
 - **3 switchable map layers:** National Geographic, Ocean, OpenStreetMap
 - **Click navigation** — click character names or years to fly to locations
-- **Bilingual labels** (English + Chinese) for all 18 cities
-- **Walter Landor's poem** — the epigraph from Chapter 5 of the novel
-- **Sophie's story** — the tragic青梅竹马 who disappears at sea
-- **Dark maritime theme** — gold accents on deep navy backgrounds
+- **Bilingual labels** (English + Chinese) for all cities
+- **Walter Landor's poem** — the epigraph from Chapter 5
+- **Sophie's story** — the childhood friend who disappears at sea
+- **Dark maritime theme** — gold accents on deep navy
 
 ---
 
 ## Quick Start
 
 ```bash
-# Clone the repository
 git clone https://github.com/mariusiaowego-commits/razors-edge-map.git
 cd razors-edge-map
-
-# Open in browser (no build step)
 open index.html
 ```
 
@@ -35,33 +32,41 @@ open index.html
 
 ```
 razors-edge-map/
-├── index.html    # The complete interactive map
-├── SPEC.md       # Architecture, features, design tokens
-├── CLAUDE.md     # Project memory for Claude Code
-├── README.md     # This file
-├── src/          # Reserved for future JS modules
-└── assets/       # Reserved for future assets
+├── index.html         # Complete map application (all JS/CSS inline)
+├── SPEC.md            # Architecture specification
+├── STATUS.md          # Current development status
+├── DEVELOPMENT_PLAN.md # Development roadmap
+├── README.md          # This file
+├── docs/              # Documentation
+└── vibe coding log.md # Development log
 ```
 
 ---
 
 ## How It Works
 
-- **No build step** — everything is a single self-contained `index.html`
+- **No build step** — single self-contained `index.html`
 - **Leaflet.js 1.9.4** loaded via CDN (unpkg)
 - **Tile layers** from Esri and OpenStreetMap
-- **All data** lives in a JavaScript `waypoints` array at the bottom of the file
+- **All waypoint data** lives in a JavaScript `waypoints` array at the bottom of the file
 
 ---
 
-## Contributing
+## Development
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feat/your-feature`
-3. Make your changes (edit `index.html`)
-4. Test locally: open `index.html` in your browser
-5. Commit: `git commit -m "feat: your feature description"`
-6. Push and open a PR
+```bash
+# Work in a feature branch
+git checkout -b feat/my-feature
+
+# Test locally — open in browser
+open index.html
+
+# Commit with conventional message
+git commit -m "feat: my feature"
+
+# Push and open a PR
+git push -u origin feat/my-feature
+```
 
 ---
 

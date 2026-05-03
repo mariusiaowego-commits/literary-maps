@@ -1,0 +1,15 @@
+# Browser cache
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+
+# Local data (future)
+data/
+*.db
