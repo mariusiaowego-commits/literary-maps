@@ -127,6 +127,102 @@
   .poem-zh { font-size: 9.5px; color: #9a8a78; line-height: 1.6; margin-bottom: 8px; }
   .poem-src { font-size: 8.5px; color: #5a6a7a; }
 
+  /* ── Status Objects panel — right side ── */
+  .status-panel {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 12px;
+    width: 260px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    background: rgba(8, 16, 34, 0.96);
+    border: 1px solid #3a5a8a;
+    border-radius: 12px;
+    padding: 12px;
+    z-index: 999;
+  }
+  .status-panel.open { display: block; }
+  .status-card {
+    border: 1px solid #1e2e48;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 8px;
+    background: rgba(10,18,40,0.7);
+    transition: border-color 0.15s;
+    cursor: pointer;
+  }
+  .status-card:hover { border-color: #4a7ab0; }
+  .status-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .status-card-thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+    background: #1a2a40;
+  }
+  .status-card-thumb-placeholder {
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    background: #1a2a40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .status-card-title { flex: 1; }
+  .status-card-name { font-size: 11px; color: #e8d5b0; font-weight: bold; margin-bottom: 2px; }
+  .status-card-name-zh { font-size: 9.5px; color: #9a8a78; margin-bottom: 4px; }
+  .status-card-meta { display: flex; gap: 4px; flex-wrap: wrap; }
+  .status-type-badge {
+    font-size: 8px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: #1e3a5a;
+    color: #7ab0e0;
+    border: 1px solid #2a4a7a;
+  }
+  .status-owner-badge {
+    font-size: 8px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: #2a1e1e;
+    border: 1px solid #4a2a2a;
+  }
+  .status-card-desc {
+    font-size: 9.5px;
+    color: #7a8aaa;
+    line-height: 1.55;
+    margin-bottom: 6px;
+  }
+  .status-card-detail {
+    font-size: 9px;
+    color: #5a6a7a;
+    line-height: 1.6;
+    border-top: 1px dashed #1e2e48;
+    padding-top: 6px;
+    margin-top: 4px;
+  }
+  .status-card-detail strong { color: #8ab0c8; }
+  .status-card-detail-zh { color: #7a8a6a; }
+  .status-expand-btn {
+    font-size: 8.5px;
+    color: #4a7ab0;
+    background: none;
+    border: none;
+    padding: 2px 0;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
   /* ── Legend ── */
   .legend {
     bottom: 80px;
@@ -396,6 +492,14 @@
   <div id="char-list">Loading...</div>
 </div>
 
+<!-- Status Objects panel — right side -->
+<div class="status-panel" id="status-panel">
+  <div class="popup-title" style="font-size:11px;border-bottom:1px solid #2a3a5a;padding-bottom:8px;margin-bottom:10px;">
+    <span style="color:#c9a84c;">&#9670;</span> Status Objects &middot; 面子之物
+  </div>
+  <div id="status-list">Loading...</div>
+</div>
+
 <!-- Poem -->
 <div class="poem-panel panel">
   <div class="poem-title">Walter Landor &middot; 兰德尔的诗</div>
@@ -451,6 +555,9 @@
   <div class="legend-item">
     <div class="leg-circle" style="background:#c46a6a;"></div>
     <span>Sophie Missing · 苏菲失踪</span>
+  </div>
+  <div style="margin-top:10px;padding-top:8px;border-top:1px dashed #2a3a5a;text-align:center;">
+    <button onclick="RazorMap.toggleStatusPanel()" style="background:none;border:1px solid #3a5a8a;border-radius:6px;padding:5px 10px;color:#8ab0d0;font-size:9px;cursor:pointer;width:100%;">&#9670; 面子之物 Status Objects</button>
   </div>
 </div>
 
@@ -657,7 +764,155 @@ var RazorMap = (function() {
     }
   ];
 
-  // ─── EVENTS ────────────────────────────────────────────────
+  // ─── STATUS OBJECTS (面子之物) ───────────────────────────────
+  // 书中出现的身份/地位象征物品：名画、请柬、社会关系、产业等
+  // 这些事物是角色追求"面子"的具象化载体
+  var STATUS_OBJECTS = [
+    {
+      id: 'invitation-duchess',
+      name: "Duchess of Monmoth's Ball Invitation",
+      name_zh: '蒙莫斯公爵夫人舞会请柬',
+      type: 'invitation',
+      owner: 'elliott',
+      represents: 'aristocratic_recognition',
+      appears_in: 'Ch26',
+      appear_year: 1929,
+      waypoint_id: 'geo-nice',
+      novel_scene: "Elliott's final request to Maugham was to get him an invitation to the Duchess of Monmoth's ball. He never attended — he died before the ball — but the request revealed where his heart truly lay.",
+      novel_scene_zh: '埃利奥特临终前的最后一个请求，是让毛姆给他弄一张蒙莫斯公爵夫人的舞会请柬。他没能等到那一天——他在舞会前就去世了——但这个请求揭示了他一生追求的到底是什么。',
+      story: "For Elliott, this invitation represented the pinnacle of European aristocratic society — the world he had spent decades cultivating and selling paintings to gain access to. Even on his deathbed, the ball was his last earthly desire.",
+      story_zh: '对埃利奥特来说，这张请柬代表着欧洲贵族社会的顶峰——一个他花了数十年通过买卖艺术品来接近的世界。即使在临终的病榻上，舞会仍是他最后的世俗渴望。',
+      historical_context: 'The Edwardian aristocracy used such invitations as social currency. Being seen at the right parties with the right people determined one's place in the social hierarchy. Elliott, as a self-made American art dealer, was obsessed with earning these invitations through his taste and connections.',
+      image_query: 'Edwardian aristocratic ball invitation vintage',
+      image_url: ''
+    },
+    {
+      id: 'painting-renoir',
+      name: 'Renoir Painting (Elliott)',
+      name_zh: '雷诺阿画作（埃利奥特经手）',
+      type: 'art',
+      owner: 'elliott',
+      represents: 'artistic_taste_as_social_currency',
+      appears_in: 'Ch1-5',
+      appear_year: 1919,
+      waypoint_id: 'geo-paris',
+      novel_scene: "Elliott dealt in paintings, specifically cultivating relationships with American collectors who wanted European sophistication. His ability to procure a Renoir was a symbol of his taste and connections.",
+      novel_scene_zh: '埃利奥特从事艺术品交易，专门培养与美国收藏家的关系，这些人渴望欧洲的格调。他能弄到一幅雷诺阿作品，代表着他的品味和社会关系网。',
+      story: "Elliott's art dealing was never purely about art — it was a means to an end. The paintings were tickets into the social world he craved. His clients bought canvases; Elliott bought social access.",
+      story_zh: '埃利奥特的艺术品交易从来不只是为了艺术本身——这是他渴望的上流社会的入场券。客户买的是画布，埃利奥特买的是社交圈子的通行证。',
+      historical_context: 'Post-WWI American collectors like Henry Clay Frick and J.P. Morgan were major buyers of French Impressionist art. European dealers cultivated these relationships to gain social standing in America and Europe simultaneously.',
+      image_query: 'Renoir Impressionist painting drawing room art dealer',
+      image_url: ''
+    },
+    {
+      id: 'isabels-invitation-book',
+      name: "Porterfield Family Social Invitation Book",
+      name_zh: '波特菲尔德家族请柬簿',
+      type: 'social_network',
+      owner: 'isabel',
+      represents: 'midwest_american_old_money',
+      appears_in: 'Ch6-7',
+      appear_year: 1919,
+      waypoint_id: 'geo-chicago',
+      novel_scene: "Isabel grew up in a prominent Chicago family. Her social standing was inherited, not earned — and she was fiercely proud of it. When Larry threatened to 'loaf' his way through life, she couldn't fathom how he would maintain the social position she took for granted.",
+      novel_scene_zh: '伊莎贝尔在芝加哥的名门望族中长大。她的社会地位是与生俱来的，而非挣来的——她对此深感自豪。当拉里威胁要用"晃膀子"度过一生时，她无法理解他如何维持她理所当然的社会地位。',
+      story: "For Isabel, the invitation book represented everything stable and desirable in life: dances, dinners, connections, futures. Larry's rejection of this world was incomprehensible to her — it was a rejection of everything she valued.",
+      story_zh: '对伊莎贝尔来说，请柬簿代表着生活中一切稳定而令人向往的东西：舞会、晚宴、人脉、未来。拉里对这个世界的拒绝，是她无法理解的——那等于否定她所珍视的一切。',
+      historical_context: 'Early 20th century American social elites maintained elaborate invitation systems — debutante balls, country club memberships, seasonal social calendars. Chicago had a particularly rigid upper class centered around the Chicago Club and几家沿湖高级俱乐部。',
+      image_query: '1910s American society invitation book debutante ball Chicago',
+      image_url: ''
+    },
+    {
+      id: 'gray-wealth',
+      name: "Dalton Family Oil Wealth",
+      name_zh: '道尔顿家族石油财富',
+      type: 'property',
+      owner: 'gray',
+      represents: 'american_new_wealth_comfort',
+      appears_in: 'Ch7',
+      appear_year: 1919,
+      waypoint_id: 'geo-chicago',
+      novel_scene: "Gray Dalton came from money — Oklahoma oil money. He was kind, decent, and wealthy enough to offer Isabel the security she craved. His wealth was presented as straightforward American success, uncomplicated by the spiritual questions that haunted Larry.",
+      novel_scene_zh: '格雷·道尔顿出身富裕——俄克拉荷马石油财富。他善良、正派，富有到能给伊莎贝尔她渴望的安全感。他的财富被描绘为简单直接的美国式成功，不像拉里那样被精神问题所困扰。',
+      story: "Gray's wealth represented the traditional American dream: work hard, earn money, marry well, live comfortably. His headaches after the war symbolized how even material success couldn't heal certain wounds.",
+      story_zh: '格雷的财富代表了传统的美国梦：努力工作、赚钱、嫁得好、生活富足。他战后患上的头痛症象征着，即使物质上的成功也无法治愈某些创伤。',
+      historical_context: 'Oklahoma oil barons in the early 20th century were among America\'s wealthiest people. The boom towns of the 1920s produced fortunes that funded everything from mansions to art collections, providing the economic foundation for characters like Gray to live in European sophistication.',
+      image_query: '1920s Oklahoma oil derrick wealth Gilded Age American mansion',
+      image_url: ''
+    },
+    {
+      id: 'aunt-louisa-connection',
+      name: "Aunt Louisa's European Connections",
+      name_zh: '路易莎舅妈的社会关系',
+      type: 'social_network',
+      owner: 'larry',
+      represents: 'family_network_as_social_capital',
+      appears_in: 'Ch1',
+      appear_year: 1919,
+      waypoint_id: 'geo-paris',
+      novel_scene: "Larry's Aunt Louisa was Elliott's sister — and she was the connection that placed Larry in the same Parisian social circles as Elliott. Without this family link, Larry would never have met Isabel or entered the world Elliott so desperately wanted to belong to.",
+      novel_scene_zh: '拉里的舅妈路易莎是埃利奥特的姐姐——正是这层亲属关系，让拉里得以进入与埃利奥特相同的巴黎社交圈。没有这个家族纽带，拉里永远不会遇见伊莎贝尔，也不会进入埃利奥特如此渴望融入的那个世界。',
+      story: "Ironically, Larry — who would reject all social status — entered society through the very network Elliott spent a lifetime cultivating. The family connection that gave Larry access was the same one Elliott used to insert himself into European aristocracy.",
+      story_zh: '具有讽刺意味的是，拉里——一个将拒绝一切社会地位的人——却通过埃利奥特花了一辈子苦心经营的那个社交网络进入了上流社会。给拉里打开大门的家族关系，正是埃利奥特用来插入欧洲贵族圈子的同一张牌。',
+      historical_context: 'Pre-WWI American families with means used European connections extensively — sending children to study abroad, purchasing European art, and cultivating relationships with titled families. These transatlantic networks were a primary vehicle for American social climbing in the early 20th century.',
+      image_query: 'Edwardian American family European social connections aristocracy',
+      image_url: ''
+    },
+    {
+      id: 'sophies-poetry-books',
+      name: "Sophie's Poetry Collection",
+      name_zh: '苏菲的诗集',
+      type: 'art',
+      owner: 'sophie',
+      represents: 'intellectual_aspirational_self',
+      appears_in: 'Ch12',
+      appear_year: 1920,
+      waypoint_id: 'geo-illinois',
+      novel_scene: "Before the accident, Sophie loved poetry — especially the Romantics. Her copy of Keats or Shelley was both her most treasured possession and her vision of who she wanted to become. After the tragedy, she lost herself in alcohol, but the love of poetry was the last trace of who she used to be.",
+      novel_scene_zh: '在车祸之前，苏菲热爱诗歌——尤其是浪漫主义诗人。她的济慈或雪莱诗集既是她最珍爱的所有物，也是她对自我理想的投射。悲剧发生后，她在酒精中迷失了自己，但诗歌的热爱是她曾经自我的最后痕迹。',
+      story: "Sophie's poetry books represent her pre-tragedy self — the educated, aspirational young woman from Illinois who dreamed of a life beyond the prairie. When Larry found her in London, those books were long gone, replaced by bottles.",
+      story_zh: '苏菲的诗集代表着她灾变前的自我——那个来自伊利诺伊、受过教育、充满理想的年轻女性，梦想着草原之外的生活。当拉里在伦敦找到她时，那些诗集早已不见，取而代之的是酒瓶。',
+      historical_context: 'Early 20th century educated American women often turned to British Romantic poetry as escape and aspiration. The classics represented culture, refinement, and a world beyond provincial life. Sophie\'s love of poetry was her claim to a different kind of life.',
+      image_query: '1920s young woman reading poetry book Victorian romantic poetry collection',
+      image_url: ''
+    },
+    {
+      id: 'kashmir-spiritual-experience',
+      name: "Larry's Kashmir Enlightenment",
+      name_zh: '拉里在克什米尔的灵性体验',
+      type: 'spiritual_attainment',
+      owner: 'larry',
+      represents: 'inner_peace_vs_social_status',
+      appears_in: 'Ch17',
+      appear_year: 1922,
+      waypoint_id: 'geo-kashmir',
+      novel_scene: "Larry's enlightenment in Kashmir — his experience of 'the光' — was the ultimate anti-status symbol. There was no certificate, no social recognition, no way to convert it into social capital. It was entirely private and entirely real.",
+      novel_scene_zh: '拉里在克什米尔的证道——他体验到的"光"——是最彻底的"反面子"之物。这里没有证书、没有社会认可、无法转化为任何社交资本。它完全属于私人，完全真实。',
+      story: "Ironically, Larry's spiritual attainment — the one thing in the novel that cannot be bought, sold, or inherited — is the only thing he truly values. All the other characters pursue status objects; Larry pursues what makes status objects irrelevant.",
+      story_zh: '具有讽刺意味的是，拉里的灵性成就——小说中唯一不能被购买、出售或继承的东西——却是他唯一真正珍视的。所有其他角色都在追求面子之物；拉里追求的是让面子之物变得毫无意义的东西。',
+      historical_context: 'The Kashmir region was a destination for Western spiritual seekers in the early 20th century, influenced by Theosophical Society connections and the general Western fascination with Eastern philosophy that followed Swami Vivekananda\'s 1893 Chicago World Parliament of Religions.',
+      image_query: 'Himalayan cave meditation spiritual enlightenment Kashmir mountain monastery',
+      image_url: ''
+    },
+    {
+      id: 'chinese-porcelain',
+      name: "Chinese Porcelain Collection (Elliott's)",
+      name_zh: '中国瓷器收藏（埃利奥特）',
+      type: 'art',
+      owner: 'elliott',
+      represents: 'connoisseurship_as_social_elevation',
+      appears_in: 'Ch2',
+      appear_year: 1919,
+      waypoint_id: 'geo-paris',
+      novel_scene: "Elliott's apartment in Paris was filled with European art, but his true specialty was Chinese porcelain — a mark of the highest connoisseurship. His ability to authenticate and procure Ming dynasty pieces was his professional calling card.",
+      novel_scene_zh: '埃利奥特在巴黎的公寓里摆满了欧洲艺术品，但他真正的专长是中国瓷器——这是最高鉴赏力的标志。他鉴赏和采购明代瓷器的能力，是他职业身份的敲门砖。',
+      story: "For Elliott, Chinese porcelain represented the apex of taste — something only the truly refined could appreciate. Owning it separated the nouveau riche (who bought obvious signs of wealth) from the truly cultured (who understood subtlety).",
+      story_zh: '对埃利奥特来说，中国瓷器代表着品味的顶峰——只有真正有教养的人才能鉴赏。拥有它区分了那些暴发户（买明显财富标识的人）和真正有文化的人（懂得精微之处的人）。',
+      historical_context: 'European obsession with Chinese porcelain reached its height in the 18th century with Meissen and later Sèvres imitations, but genuine Ming and Qing dynasty pieces remained highly prized among collectors into the 20th century. Elliott\'s expertise in this area would have been both financially valuable and socially prestigious.',
+      image_query: 'Chinese Ming dynasty blue and white porcelain collection European aristocratic interior',
+      image_url: ''
+    }
+  ];
   var EVENTS = {
     'landor-poem': {
       id: 'landor-poem', type: 'epigraph', significance: 'medium',
@@ -952,6 +1207,7 @@ var RazorMap = (function() {
     buildTimeRuler();
     bindSlider();
     buildCharPanel();
+    buildStatusPanel();
     buildLegend();
     rotateQuotes();
   }
@@ -1045,6 +1301,8 @@ var RazorMap = (function() {
     var eventCount = wp.events ? wp.events.length : 0;
     html += '<button class="popup-tab-btn" onclick="RazorMap.switchTab(this, \'events\', \'' + wp.id + '\')">情节 ' + (eventCount > 0 ? '<span style="color:#c9a84c">(' + eventCount + ')</span>' : '') + '</button>';
     html += '<button class="popup-tab-btn" onclick="RazorMap.switchTab(this, \'maugham\', \'' + wp.id + '\')">毛姆视角</button>';
+    var statusCountAtWp = STATUS_OBJECTS.filter(function(o) { return o.waypoint_id === wp.id; }).length;
+    html += '<button class="popup-tab-btn" onclick="RazorMap.switchTab(this, \'status\', \'' + wp.id + '\')">面子' + (statusCountAtWp > 0 ? '<span style="color:#c9a84c">(' + statusCountAtWp + ')</span>' : '') + '</button>';
     html += '</div>';
 
     // Tab: Geography / narrative
@@ -1100,6 +1358,36 @@ var RazorMap = (function() {
     html += '<div class="popup-maugham-text">' + (wp.maugham_zh || wp.maugham || '暂无毛姆叙述者视角记录').replace(/\n/g, '<br>') + '</div>';
     html += '</div>';
     html += '<div style="font-size:9.5px;color:#6a7a8a;margin-top:8px;line-height:1.5;">毛姆在小说中以第三人称全知视角叙述，同时他本人也是书中的角色——一位作家，通过社交圈收集各人物的故事素材。</div>';
+    html += '</div>';
+
+    // Tab: Status Objects (面子之物)
+    html += '<div class="popup-tab-content" id="tab-status-' + wp.id + '">';
+    var localStatuses = STATUS_OBJECTS.filter(function(o) { return o.waypoint_id === wp.id; });
+    if (localStatuses.length === 0) {
+      html += '<div class="popup-empty">此地点无面子之物记录</div>';
+    } else {
+      localStatuses.forEach(function(obj) {
+        var owner = CHARACTERS[obj.owner] || { name_zh: obj.owner, color: '#888' };
+        var typeLabels = { art:'艺术品', invitation:'社交请柬', social_network:'社会关系', property:'财产', title:'头衔', other:'其他' };
+        var iconMap = { art:'&#127912;', invitation:'&#129532;', social_network:'&#127760;', property:'&#128176;', title:'&#128737;', other:'&#9670;' };
+        html += '<div style="border:1px solid #1e2e48;border-radius:6px;padding:8px;margin-bottom:8px;">';
+        html += '<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:5px;">';
+        html += '<div style="font-size:18px;flex-shrink:0;line-height:1;">' + (iconMap[obj.type] || '&#9670;') + '</div>';
+        html += '<div style="flex:1;">';
+        html += '<div style="font-size:10.5px;color:#e8d5b0;font-weight:bold;margin-bottom:1px;">' + obj.name_zh + '</div>';
+        html += '<div style="font-size:9px;color:#8ab0c8;margin-bottom:4px;">' + obj.name + '</div>';
+        html += '<div style="display:flex;gap:4px;flex-wrap:wrap;">';
+        html += '<span style="font-size:7.5px;padding:1px 4px;background:#1e3a5a;color:#7ab0e0;border-radius:2px;">' + (typeLabels[obj.type]||obj.type) + '</span>';
+        html += '<span style="font-size:7.5px;padding:1px 4px;background:#2a1e2e;color:' + owner.color + ';border-radius:2px;">' + owner.name_zh + '</span>';
+        html += '</div></div></div>';
+        html += '<div style="font-size:9px;color:#7a8aaa;line-height:1.5;">' + obj.novel_scene_zh + '</div>';
+        html += '<div style="font-size:8.5px;color:#5a6a7a;line-height:1.5;margin-top:5px;border-top:1px dashed #1e2e48;padding-top:5px;"><strong style="color:#8ab0c8;">故事：</strong>' + obj.story_zh + '</div>';
+        if (obj.historical_context) {
+          html += '<div style="font-size:8px;color:#5a6a5a;line-height:1.5;margin-top:4px;"><strong style="color:#8ab0c8;">考据：</strong>' + obj.historical_context + '</div>';
+        }
+        html += '</div>';
+      });
+    }
     html += '</div>';
 
     html += '</div>'; // popup-body
@@ -1169,6 +1457,67 @@ var RazorMap = (function() {
     html += '</div></div>';
 
     document.getElementById('char-list').innerHTML = html;
+  }
+
+  // ─── STATUS OBJECTS PANEL ──────────────────────────────────
+  function buildStatusCard(obj) {
+    var owner = CHARACTERS[obj.owner] || { name_zh: obj.owner, color: '#888' };
+    var typeLabels = {
+      art: '艺术品',
+      invitation: '社交请柬',
+      social_network: '社会关系',
+      property: '财产',
+      spiritual_attainment: '精神成就',
+      other: '其他'
+    };
+    var imgHtml = obj.image_url
+      ? '<img class="status-card-thumb" src="' + obj.image_url + '" alt="' + obj.name + '">'
+      : '<div class="status-card-thumb-placeholder">' + (obj.type === 'art' ? '🎨' : obj.type === 'invitation' ? '📜' : obj.type === 'social_network' ? '🌐' : obj.type === 'property' ? '💰' : obj.type === 'spiritual_attainment' ? '✨' : '◆') + '</div>';
+
+    var html = '<div class="status-card" onclick="RazorMap.toggleStatusCard(this)">';
+    html += '<div class="status-card-header">';
+    html += imgHtml;
+    html += '<div class="status-card-title">';
+    html += '<div class="status-card-name">' + obj.name + '</div>';
+    html += '<div class="status-card-name-zh">' + obj.name_zh + '</div>';
+    html += '<div class="status-card-meta">';
+    html += '<span class="status-type-badge">' + (typeLabels[obj.type] || obj.type) + '</span>';
+    html += '<span class="status-owner-badge" style="color:' + owner.color + ';">' + owner.name_zh + '</span>';
+    html += '</div></div></div>';
+    html += '<div class="status-card-desc">' + obj.novel_scene_zh + '</div>';
+    html += '<div class="status-card-details" style="display:none;">';
+    html += '<div class="status-card-detail"><strong>故事版本：</strong>' + obj.story_zh + '</div>';
+    if (obj.historical_context) {
+      html += '<div class="status-card-detail"><strong>历史考据：</strong><span class="status-card-detail-zh">' + obj.historical_context + '</span></div>';
+    }
+    html += '<div class="status-card-detail"><strong>原文：</strong><em>' + obj.novel_scene + '</em></div>';
+    html += '</div>';
+    html += '<button class="status-expand-btn">展开详情 ▾</button>';
+    html += '</div>';
+    return html;
+  }
+
+  function buildStatusPanel() {
+    var container = document.getElementById('status-list');
+    if (!container) return;
+    if (!STATUS_OBJECTS || STATUS_OBJECTS.length === 0) {
+      container.innerHTML = '<div style="font-size:9px;color:#5a6a7a;text-align:center;padding:20px 0;">暂无面子之物数据</div>';
+      return;
+    }
+    container.innerHTML = STATUS_OBJECTS.map(buildStatusCard).join('');
+  }
+
+  function toggleStatusPanel() {
+    var panel = document.getElementById('status-panel');
+    panel.classList.toggle('open');
+  }
+
+  function toggleStatusCard(card) {
+    var details = card.querySelector('.status-card-details');
+    var btn = card.querySelector('.status-expand-btn');
+    var isOpen = details.style.display !== 'none';
+    details.style.display = isOpen ? 'none' : 'block';
+    btn.textContent = isOpen ? '展开详情 ▾' : '收起详情 ▴';
   }
 
   // ─── LEGEND ─────────────────────────────────────────────────
@@ -1246,6 +1595,7 @@ var RazorMap = (function() {
     setSliderYear: setSliderYear,
     rotateQuotes: rotateQuotes,
     closeQuote: closeQuote,
+    toggleStatusPanel: toggleStatusPanel,
   };
 })();
 
