@@ -360,10 +360,10 @@
     padding-bottom: 6px;
     border-bottom: 1px dashed #2a3a5a;
   }
-  .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 9.5px; color: #8fa8c8; cursor: pointer; transition: color 0.15s; }
-  .legend-item:hover { color: #c8dff5; }
-  .legend-item.active { color: #e8d5b0; }
-  .legend-item.inactive { opacity: 0.4; }
+  .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 9.5px; color: #8fa8c8; cursor: pointer; transition: color 0.15s, opacity 0.15s; padding: 2px 3px; border-radius: 3px; }
+  .legend-item:hover { color: #c8dff5; background: rgba(255,255,255,0.05); }
+  .legend-item.active { color: #e8d5b0; font-weight: bold; }
+  .legend-item.inactive { opacity: 0.35; }
   .leg-line { width: 24px; height: 4px; border-radius: 2px; flex-shrink: 0; }
   .leg-circle { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .leg-star  { width: 10px; height: 10px; color: #c9a84c; font-size: 10px; text-align: center; line-height: 10px; flex-shrink: 0; }
@@ -564,16 +564,52 @@
     cursor: pointer;
     padding: 4px 5px;
     border-radius: 5px;
-    transition: background 0.12s, opacity 0.12s;
+    transition: background 0.12s, opacity 0.12s, border-color 0.12s;
+    border: 1px solid transparent;
   }
   .char-toggle-row:hover { background: rgba(255,255,255,0.06); }
-  .char-toggle-row.inactive { opacity: 0.38; }
-  .char-toggle-row.inactive:hover { opacity: 0.55; }
+  .char-toggle-row.inactive { opacity: 0.35; }
+  .char-toggle-row.inactive:hover { opacity: 0.60; }
+  .char-toggle-row.inactive {
+    border-color: rgba(255,255,255,0.05);
+  }
+  .char-toggle-row:not(.inactive) {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.12);
+  }
   .char-toggle-dot { width: 12px; height: 4px; border-radius: 2px; flex-shrink: 0; transition: box-shadow 0.15s; }
-  .char-toggle-row:not(.inactive) .char-toggle-dot { box-shadow: 0 0 5px currentColor; }
+  .char-toggle-row:not(.inactive) .char-toggle-dot { box-shadow: 0 0 6px currentColor; }
   .char-toggle-name { font-size: 9.5px; color: #8fa8c8; flex: 1; transition: color 0.12s; }
-  .char-toggle-row:not(.inactive) .char-toggle-name { color: #c8d8f0; }
+  .char-avatar {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: bold; color: #1a1a2e;
+    flex-shrink: 0; border: 1px solid rgba(255,255,255,0.15);
+    margin-right: 4px;
+  }
+  .char-toggle-row:not(.inactive) .char-toggle-name { color: #c8d8f0; font-weight: bold; }
   .char-toggle-check { font-size: 9px; color: #4a6fa5; }
+  .char-toggle-actions {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #2a3a5a;
+  }
+  .char-action-btn {
+    flex: 1;
+    text-align: center;
+    font-size: 9px;
+    color: #8fa8c8;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px;
+    padding: 3px 0;
+    cursor: pointer;
+    transition: background 0.1s, color 0.1s;
+    letter-spacing: 1px;
+  }
+  .char-action-btn:hover { background: rgba(255,255,255,0.09); color: #c8d8f0; }
 
   .leaflet-control-attribution { background: rgba(8,16,34,0.7) !important; color: #5a6070 !important; font-size: 8px !important; }
   .leaflet-control-attribution a { color: #7a8aaa !important; }
@@ -642,7 +678,7 @@
 
 <!-- Legend -->
   <div class="legend panel">
-    <div class="panel-title">Legend &middot; 图例</div>
+    <div class="panel-title">Legend &middot; 图例 <span onclick="RazorMap.openCharPanel()" style="font-size:11px;cursor:pointer;color:#c9a84c;float:right;" title="打开人物面板">&#9776; 角色</span></div>
     <div class="legend-item" id="leg-larry" onclick="RazorMap.toggleRoute('larry')">
       <div class="leg-line" style="background:#f5d76e;"></div>
       <span>Larry · 拉里</span>
@@ -653,15 +689,19 @@
     </div>
     <div class="legend-item" id="leg-sophie" onclick="RazorMap.toggleRoute('sophie')">
       <div class="leg-line" style="background:#e88080;"></div>
-      <span>Sophie · 苏菲</span>
+      <span>Sophie · 苏菲 <span style="font-size:9px;color:#5a8aaa;">(航路)</span></span>
     </div>
     <div class="legend-item" id="leg-gray" onclick="RazorMap.toggleRoute('gray')">
       <div class="leg-line" style="background:#6ab0f5;"></div>
       <span>Gray · 格雷</span>
     </div>
     <div class="legend-item" id="leg-elliott" onclick="RazorMap.toggleRoute('elliott')">
-      <div class="leg-line" style="background:#7fc97f;"></div>
+      <div class="leg-line" style="background:#6ab87a;"></div>
       <span>Elliott · 埃利奥特</span>
+    </div>
+    <div class="legend-item" id="leg-suzanne" onclick="RazorMap.toggleRoute('suzanne')">
+      <div class="leg-line" style="background:#c070c8;"></div>
+      <span>Suzanne · 苏珊</span>
     </div>
     <div class="legend-item" id="leg-high_energy" onclick="RazorMap.showEventCluster('high_energy')">
       <div class="leg-star">★</div>
@@ -671,9 +711,9 @@
       <div class="leg-circle" style="background:#9b8df0;"></div>
       <span>Maugham Narrative · 毛姆视角</span>
     </div>
-    <div class="legend-item" id="leg-sophie_disappearance" onclick="RazorMap.showEventCluster('sophie_disappearance')">
-      <div class="leg-circle" style="background:#c46a6a;"></div>
-      <span>Sophie Missing · 苏菲失踪</span>
+    <div class="legend-item" id="leg-sophie_voyage" onclick="RazorMap.toggleSophieVoyage()">
+      <div class="leg-circle" style="background:#5a8aaa;">&#9875;</div>
+      <span>Sophie's Voyage · 苏菲航海</span>
     </div>
     <div style="margin-top:10px;padding-top:8px;border-top:1px dashed #2a3a5a;text-align:center;">
       <button onclick="RazorMap.openStatusModal()" style="background:none;border:1px solid #3a5a8a;border-radius:6px;padding:5px 10px;color:#8ab0d0;font-size:9px;cursor:pointer;width:100%;">&#9670; 面子之物 Status Objects</button>
@@ -721,7 +761,7 @@ var RazorMap = (function() {
     larry: {
       id: 'larry', name: 'Larry Darrell', name_zh: '拉里·达雷尔',
       color: '#e8c060', role: 'protagonist',
-      bio: 'Lawrence "Larry" Darrell is a young American pilot who served in the RAF during World War I. After surviving the war, he returns home but feels alienated from conventional society. He rejects his affluent future — his engagement to Isabel and a promising career — to pursue spiritual truth.',
+      image_query: 'young American man 1920s pilot WWI veteran contemplative gaze serious portrait',
       bio_zh: '拉里·达雷尔是一战期间在英国皇家空军服役的美国飞行员。战后放弃婚约和家族财产，独自在欧洲阅读哲学，在东方求道，最终在苏伊士获得灵性觉醒。回到美国后做了一名出租车司机。',
       arc: '从存在主义危机 → 巴黎哲学追问 → 东方航海与修行 → 克什米尔证道 → 回归世俗服务',
       arc_zh: '从战后创伤出发，经历漫长的精神探索：在巴黎书本中寻找答案，在东方实践中修行，最终在喜马拉雅完成证道。回到美国后选择最平凡的生活方式。',
@@ -741,7 +781,7 @@ var RazorMap = (function() {
     isabel: {
       id: 'isabel', name: 'Isabel Porterfield', name_zh: '伊莎贝尔·波特菲尔德',
       color: '#e89ac7', role: 'main_supporting',
-      bio: "Isabel is Larry's initial fiancée. She genuinely loves Larry but cannot understand his choice to reject worldly success. After Larry breaks off their engagement, she marries Gray Dalton and builds what appears to be the perfect life — but she is haunted by the choice she made.",
+      image_query: 'beautiful young American woman 1920s flapper elegant society dress porcelain complexion',
       bio_zh: '拉里的未婚妻。真心爱拉里但无法理解他放弃世俗成功的选择。拉里解除婚约后嫁给格雷·道尔顿，建立看似完美的生活，但永远被自己的选择所困扰。',
       arc: '订婚 → 拉里解除婚约 → 嫁给格雷 → 丈夫生病、康复 → 伦敦重逢拉里',
       arc_zh: '从满怀希望等待拉里回心转意，到嫁给格雷建立世俗意义的成功人生，再到多年后重逢时终于承认自己是因为害怕而做了那个选择。',
@@ -754,7 +794,7 @@ var RazorMap = (function() {
     sophie: {
       id: 'sophie', name: 'Sophie Warren', name_zh: '苏菲·沃伦',
       color: '#c46a6a', role: 'tragic_counterpoint',
-      bio: 'Sophie was Larry\'s childhood friend in Illinois. After a car accident kills her husband and son in an instant, she turns to alcohol. Larry finds her in London and takes her on a Mediterranean cruise to save her — but she mysteriously disembarks at Suez and vanishes.',
+      image_query: 'haunted young woman 1920s dark circles eyes grief beauty lost expression literary portrait',
       bio_zh: '拉里的童年好友。车祸夺走丈夫和儿子后彻底沉沦。拉里在伦敦找到她，带她登上邮轮试图拯救，但在苏伊士神秘失踪，据推测已溺亡。',
       arc: '幸福家庭（1919）→ 车祸、丧夫丧子 → 沉沦酒精（1920-1923）→ 伦敦被找到 → 航海拯救 → 苏伊士失踪（1924）',
       arc_zh: '从最爱诗文的聪明女孩，到失去一切后沉沦酒精的影子，再到拉里航海拯救的短暂希望，最终神秘消失在苏伊士运河。',
@@ -768,7 +808,7 @@ var RazorMap = (function() {
     gray: {
       id: 'gray', name: 'Gray M. Dalton', name_zh: '格雷·道尔顿',
       color: '#6a9fd8', role: 'supporting',
-      bio: "Gray is Larry's close friend from the war — a kind-hearted American businessman who genuinely loves Isabel. After marrying her, he develops severe chronic headaches. Treatment in Europe eventually works, and he builds a successful life.",
+      image_query: 'handsome American businessman 1920s kind eyes warm smile honest face World War veteran',
       bio_zh: '拉里的战时好友，善良的美国商人。真心爱伊莎贝尔，娶她为妻。婚后患严重头痛症，赴欧治疗后康复，后成为成功的商人。',
       arc: 'RAF战友 → 爱上伊莎贝尔 → 结婚 → 头痛症 → 赴欧治疗 → 康复 → 伦敦重逢',
       arc_zh: '与拉里同为战争创伤的承受者，但选择了物质和家庭生活作为疗愈之道。他的朴素幸福与拉里的精神探索形成对照。',
@@ -1292,7 +1332,7 @@ var RazorMap = (function() {
   // ─── CHARACTER ROUTES ──────────────────────────────────────
   var ROUTES = {
     larry: {
-      color: '#f5d76e', weight: 6, opacity: 0.9,
+      color: '#f5d76e', weight: 7, opacity: 0.9,
       coords: [
         [41.8781,-87.6298], [48.8566,2.3522], [43.2965,5.3698],
         [29.9773,32.5252], [30.0444,31.2357], [6.9271,79.8612],
@@ -1305,14 +1345,14 @@ var RazorMap = (function() {
       ]
     },
     isabel: {
-      color: '#f5a0c8', weight: 4, opacity: 0.8, dashArray: '8,5',
+      color: '#f0a0c0', weight: 3, opacity: 0.75, dashArray: '10,6',
       coords: [
         [41.8781,-87.6298], [41.8781,-87.6298], [41.8781,-87.6298],
         [51.5074,-0.1278]
       ]
     },
     sophie: {
-      color: '#e88080', weight: 5, opacity: 0.8, dashArray: '5,6',
+      color: '#d06060', weight: 5, opacity: 0.8, dashArray: '3,5',
       coords: [
         [40.0000,-89.0000], [40.0000,-89.0000],
         [51.5074,-0.1278], [51.5074,-0.1278],
@@ -1321,14 +1361,14 @@ var RazorMap = (function() {
       ]
     },
     gray: {
-      color: '#6ab0f5', weight: 4, opacity: 0.75, dashArray: '6,5',
+      color: '#5a9fd4', weight: 3, opacity: 0.7, dashArray: '8,6',
       coords: [
         [41.8781,-87.6298], [41.8781,-87.6298], [41.8781,-87.6298],
         [51.5074,-0.1278]
       ]
     },
     elliott: {
-      color: '#7fc97f', weight: 4, opacity: 0.85, dashArray: '10,4',
+      color: '#6ab87a', weight: 3, opacity: 0.8, dashArray: '12,5',
       coords: [
         [48.8566,2.3522],   // Paris 1919
         [48.8566,2.3522],   // Paris (multiple stays)
@@ -1336,6 +1376,14 @@ var RazorMap = (function() {
         [36.1391,-5.3536],  // Gibraltar (cruise 1924)
         [36.7201,-4.4203],  // Malaga (cruise 2024)
         [43.7102,7.2620]    // Nice 1929
+      ]
+    },
+    suzanne: {
+      color: '#c070c8', weight: 5, opacity: 0.85, dashArray: '6,4',
+      coords: [
+        [48.8566,2.3522],   // Paris — meets Larry
+        [48.4020,2.6586],   // Fontainebleau — summer village (south of Paris)
+        [48.8566,2.3522]    // Paris — returns
       ]
     }
   };
@@ -1370,7 +1418,10 @@ var RazorMap = (function() {
   var activeQuoteIdx = -1;
   var expandedEvents = {};
   var routeLayers = {};
-  var visibleCharacters = { larry: true, isabel: true, sophie: true, gray: true, elliott: true, suzanne: false, ramakrishna: false };
+  var sophieVoyageLayer = null;
+  var sophieVoyageShipMarkers = {};
+  var sophieVoyageActive = false;
+  var visibleCharacters = { larry: true, isabel: true, sophie: true, gray: true, elliott: true, suzanne: false };
   var activeWpId = null;   // currently open waypoint
   var activeCharId = null;  // last clicked character route
   var activeCharFilter = null; // character filter for status/quote panels
@@ -1413,11 +1464,11 @@ var RazorMap = (function() {
       addWaypointMarker(wp);
     });
 
-    // Sophie missing marker
+    // Sophie missing marker — anchor icon (ship, distinct from character routes)
     L.marker([32.5, 25.5], {
       icon: L.divIcon({
-        html: '<div style="font-size:18px;color:#c46a6a;text-shadow:1px 1px 4px #000;">&#10006;</div>',
-        className: '', iconSize: [24, 24], iconAnchor: [12, 12],
+        html: '<div style="font-size:20px;color:#5a8aaa;text-shadow:1px 1px 4px #000,0 0 8px rgba(90,138,170,0.5);">&#9875;</div>',
+        className: '', iconSize: [28, 28], iconAnchor: [14, 14],
       })
     }).bindPopup(buildSophiePopup()).addTo(map);
 
@@ -1461,10 +1512,93 @@ var RazorMap = (function() {
     }
     buildCharPanel();
     syncLegendState();
-    // Update context filter to this character's objects
-    activeCharFilter = [charId];
+    // Update activeCharFilter to ALL currently visible characters (not just the toggled one)
+    activeCharFilter = Object.keys(visibleCharacters).filter(function(id) {
+      return id !== 'maugham' && visibleCharacters[id];
+    });
     activeWpId = null;
     updateContextPanels();
+  }
+
+  // Sophie's voyage waypoints — distinct from character routes (anchor icons + ship-line style)
+  var SOPHIE_VOYAGE_WAYPOINTS = [
+    { id: 'sv-illinois',   lat: 40.0000, lng: -89.0000, city: 'Illinois',  city_zh: '伊利诺伊',    year: 1919, desc_en: "Sophie's old life before the tragedy", desc_zh: '车祸前的幸福生活' },
+    { id: 'sv-london',     lat: 51.5074, lng: -0.1278,  city: 'London',    city_zh: '伦敦',         year: 1924, desc_en: 'Larry finds Sophie in London', desc_zh: '拉里在伦敦找到沉沦的苏菲' },
+    { id: 'sv-gibraltar',  lat: 36.1391, lng: -5.3536,  city: 'Gibraltar', city_zh: '直布罗陀',     year: 1924, desc_en: 'Last calm days on the cruise', desc_zh: '航海途中最后的平静时光' },
+    { id: 'sv-sevilla',    lat: 37.3891, lng: -5.9845,  city: 'Seville',   city_zh: '塞维利亚',     year: 1924, desc_en: 'Sophie in Seville with Larry', desc_zh: '苏菲与拉里在塞维利亚' },
+    { id: 'sv-malaga',     lat: 36.7201, lng: -4.4203,  city: 'Malaga',    city_zh: '马拉加',       year: 1924, desc_en: 'Last hope — the church', desc_zh: '最后的希望——教堂' },
+    { id: 'sv-suez',       lat: 29.9773, lng: 32.5252,  city: 'Suez',      city_zh: '苏伊士',       year: 1924, desc_en: 'Sophie vanishes', desc_zh: '苏菲神秘失踪' },
+  ];
+
+  function toggleSophieVoyage() {
+    if (sophieVoyageActive) {
+      // Hide voyage
+      if (sophieVoyageLayer) { map.removeLayer(sophieVoyageLayer); sophieVoyageLayer = null; }
+      Object.keys(sophieVoyageShipMarkers).forEach(function(id) {
+        map.removeLayer(sophieVoyageShipMarkers[id]);
+      });
+      sophieVoyageShipMarkers = {};
+      sophieVoyageActive = false;
+      if (document.getElementById('leg-sophie_voyage')) {
+        document.getElementById('leg-sophie_voyage').style.opacity = '0.5';
+      }
+    } else {
+      // Show voyage
+      var coords = SOPHIE_VOYAGE_WAYPOINTS.map(function(p){ return [p.lat, p.lng]; });
+      sophieVoyageLayer = L.polyline(coords, {
+        color: '#5a8aaa',
+        weight: 2,
+        opacity: 0.6,
+        dashArray: '6,8',
+      }).addTo(map);
+
+      SOPHIE_VOYAGE_WAYPOINTS.forEach(function(p) {
+        var isLast = p.id === 'sv-suez';
+        var icon = L.divIcon({
+          html: isLast
+            ? '<div style="font-size:16px;color:#3a5a6a;text-shadow:0 0 6px #5a8aaa;">?</div>'
+            : '<div style="font-size:14px;color:#5a8aaa;text-shadow:0 0 4px rgba(90,138,170,0.8);">&#9875;</div>',
+          className: '', iconSize: [22, 22], iconAnchor: [11, 11],
+        });
+        var marker = L.marker([p.lat, p.lng], { icon: icon }).addTo(map);
+        var popupContent =
+          '<div class="popup-title" style="color:#5a8aaa;">' + p.city + ' · ' + p.city_zh + '</div>' +
+          '<div class="popup-meta">' + p.year + '</div>' +
+          '<div style="margin-top:8px;font-size:12px;color:#c8b898;line-height:1.7;">' +
+          '<em style="color:#8ab0d0;">' + p.desc_en + '</em><br>' +
+          '<span style="color:#7a9a8a;">' + p.desc_zh + '</span>' +
+          '</div>';
+        marker.bindPopup(popupContent, { maxWidth: 280, className: 'razor-popup' });
+        sophieVoyageShipMarkers[p.id] = marker;
+      });
+
+      sophieVoyageActive = true;
+      if (document.getElementById('leg-sophie_voyage')) {
+        document.getElementById('leg-sophie_voyage').style.opacity = '1';
+      }
+
+      // Fly to show the route
+      map.flyTo([36.0, 15.0], 5, { duration: 1.2 });
+    }
+  }
+
+  function toggleAllRoutes(show) {
+    Object.keys(visibleCharacters).forEach(function(charId) {
+      var shouldBeVisible = !!show;
+      if (visibleCharacters[charId] !== shouldBeVisible) {
+        visibleCharacters[charId] = shouldBeVisible;
+        if (shouldBeVisible) {
+          addRoute(charId);
+        } else {
+          if (routeLayers[charId]) {
+            map.removeLayer(routeLayers[charId]);
+            delete routeLayers[charId];
+          }
+        }
+      }
+    });
+    buildCharPanel();
+    syncLegendState();
   }
 
   // ─── WAYPOINT MARKERS ───────────────────────────────────────
@@ -1671,12 +1805,21 @@ var RazorMap = (function() {
 
   // ─── CHARACTER PANEL ────────────────────────────────────────
   function buildCharPanel() {
-    var html = '';
+    var allChars = Object.keys(CHARACTERS).filter(function(id){ return id !== 'maugham'; });
+    var allVisible = allChars.every(function(id){ return !!visibleCharacters[id]; });
+
+    var html = '<div class="char-toggle-actions">';
+    html += '<span class="char-action-btn" onclick="RazorMap.toggleAllRoutes(true)">全选</span>';
+    html += '<span class="char-action-btn" onclick="RazorMap.toggleAllRoutes(false)">全消</span>';
+    html += '</div>';
+
     Object.keys(CHARACTERS).forEach(function(id) {
       var c = CHARACTERS[id];
       if (id === 'maugham') return; // maugham not in panel
       var isVisible = visibleCharacters[id];
+      var initials = c.name_zh.replace(/[^\\u4e00-\\u9fa5]/g, '').slice(0, 1) || c.name.split(' ').map(function(w){return w[0];}).join('');
       html += '<div class="char-toggle-row' + (isVisible ? '' : ' inactive') + '" onclick="RazorMap.toggleRoute(\'' + id + '\')">';
+      html += '<div class="char-avatar" style="background:' + c.color + ';">' + initials + '</div>';
       html += '<div class="char-toggle-dot" style="background:' + c.color + ';"></div>';
       html += '<div class="char-toggle-name">' + c.name_zh + '</div>';
       html += '<div class="char-toggle-check">' + (isVisible ? '&#9633;' : '&#9634;') + '</div>';
@@ -1768,6 +1911,11 @@ var RazorMap = (function() {
     panel.style.display = 'none';
   }
 
+  function openCharPanel() {
+    var panel = document.getElementById('char-panel');
+    panel.style.display = 'block';
+  }
+
   function toggleStatusPanel() {
     var panel = document.getElementById('status-panel');
     panel.classList.toggle('open');
@@ -1824,7 +1972,7 @@ var RazorMap = (function() {
 
   // ─── LEGEND ─────────────────────────────────────────────────
   function syncLegendState() {
-    ['larry','isabel','sophie','gray','elliott','maugham'].forEach(function(id) {
+    ['larry','isabel','sophie','gray','elliott','suzanne'].forEach(function(id) {
       var el = document.getElementById('leg-' + id);
       if (!el) return;
       el.classList.remove('active', 'inactive');
@@ -1865,12 +2013,19 @@ var RazorMap = (function() {
   function buildTimelineBrief(yr) {
     var brief = document.getElementById('timeline-brief');
     if (!brief) return;
-    var wps = WAYPOINTS.filter(function(w) { return w.year_start === yr; });
+    var chars = activeCharFilter && activeCharFilter.length > 0 ? activeCharFilter : null;
+    var wps = WAYPOINTS.filter(function(w) {
+      if (w.year_start !== yr) return false;
+      if (!chars) return true;
+      return (w.characters && w.characters.some(function(c){ return chars.indexOf(c) >= 0; }));
+    });
     var evts = [];
     Object.keys(EVENTS).forEach(function(eid) {
       var e = EVENTS[eid];
+      if (e.year !== yr) return;
+      if (chars && e.characters && !e.characters.some(function(c){ return chars.indexOf(c) >= 0; })) return;
       var wp = WAYPOINTS.find(function(w) { return w.events && w.events.indexOf(eid) >= 0; });
-      if (e.year === yr) evts.push({ e: e, wp: wp });
+      evts.push({ e: e, wp: wp });
     });
     var html = '<div class="timeline-brief-year">&#9670; ' + yr + '</div>';
     if (wps.length === 0 && evts.length === 0) {
@@ -1878,7 +2033,9 @@ var RazorMap = (function() {
     } else {
       wps.forEach(function(wp) {
         var charName = '';
-        if (wp.char) {
+        if (wp.characters && wp.characters.length > 0) {
+          charName = wp.characters.map(function(c){ var ch = CHARACTERS[c]; return ch ? ch.name_zh : c; }).join(', ');
+        } else if (wp.char) {
           var c = CHARACTERS[wp.char];
           charName = c ? c.name_zh : (wp.char || '');
         }
@@ -1914,8 +2071,16 @@ var RazorMap = (function() {
   }
 
   function flyToYear(yr) {
-    // Find earliest waypoint that starts at or before yr
-    var wp = WAYPOINTS.slice().sort(function(a, b) { return b.year_start - a.year_start; })
+    // Use activeCharFilter to scope waypoints; fall back to all if none selected
+    var chars = activeCharFilter && activeCharFilter.length > 0 ? activeCharFilter : null;
+    var candidates = WAYPOINTS.filter(function(w) {
+      if (chars) {
+        // Waypoint belongs to one of the active characters
+        return chars.indexOf(w.char || '') >= 0 || (w.characters && w.characters.some(function(c){ return chars.indexOf(c) >= 0; }));
+      }
+      return true;
+    });
+    var wp = candidates.slice().sort(function(a, b) { return b.year_start - a.year_start; })
       .find(function(w) { return w.year_start <= yr; });
     if (wp) {
       map.flyTo([wp.lat, wp.lng], 6, { duration: 1.2 });
@@ -2023,6 +2188,9 @@ var RazorMap = (function() {
     showContextQuote: showContextQuote,
     closeQuote: closeQuote,
     closeCharPanel: closeCharPanel,
+    openCharPanel: openCharPanel,
+    toggleAllRoutes: toggleAllRoutes,
+    toggleSophieVoyage: toggleSophieVoyage,
     toggleStatusPanel: toggleStatusPanel,
     toggleStatusCard: toggleStatusCard,
     updateContextPanels: updateContextPanels,
