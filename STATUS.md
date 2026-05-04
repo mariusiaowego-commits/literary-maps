@@ -1,14 +1,14 @@
 # 🗺️ razors-edge-map 刀锋地图 - 当前开发状态
 
-**最后更新**: 2026-05-03
-**当前阶段**: 架构规范化完成，GitHub repo 已建立
+**最后更新**: 2026-05-04
+**当前阶段**: v1.1 增强完成，可开始 P1 移动端适配
 
 ---
 
 ## 📂 项目位置
 
 - **main 分支 (生产)**: `/Users/mt16/dev/razors-edge-map/`
-- **Git 模式**: 主目录直接开发
+- **Git 模式**: 主目录直接开发（worktree 模式已废弃）
 - **remote**: `git@github.com:mariusiaowego-commits/razors-edge-map.git` (SSH)
 - **GitHub**: https://github.com/mariusiaowego-commits/razors-edge-map
 
@@ -28,6 +28,13 @@
 - [x] 年份时间尺导航
 - [x] Walter Landor 诗作展示（第五章引语）
 - [x] 暗色航海主题（深海军蓝 + 金色点缀）
+
+### v1.1 增强（2026-05-03 完成）
+- [x] 数据外置架构：`data/waypoints.json`、`data/passages.json`、`data/analyses.json`
+- [x] 3-Tab Popup：地理信息 / 原文摘录 / 文学解读
+- [x] 人物面板重构：5角色完整档案（bio/arc/motivation/quotes/locations）
+- [x] Researcher 内容填充：6个航点原文 + 6个航点解读
+- [x] CORS 修复：所有数据内联 JS，file:// 直接打开无需服务器
 
 ### 航点列表
 | # | 城市 | 年份 | 关键事件 |
@@ -57,7 +64,7 @@
 
 | 文件 | 说明 |
 |------|------|
-| 无 | 架构规范化已完成，代码已提交 |
+| `.gitignore` | 新增 `.worktrees/` 忽略（worktree 模式废弃） |
 
 ---
 
@@ -65,24 +72,28 @@
 
 | Commit | 内容 |
 |--------|------|
-| `943fa8f` | feat: initial map with Larry's Mediterranean route |
+| `24ee7a2` | docs: 更新vibe coding log |
+| `bff41d8` | fix: char-panel.js 重新内联完整 characters 数据(含name/zh/desc/locations) |
+| `1ed3f39` | fix: 内联数据消除CORS依赖，file://直接打开无需服务器 |
+| `da13f25` | feat: 填充原文/解读/人物档案 (researcher产出) |
+| `95c7e1a` | feat(v1.1): 数据外置 + Tab Popup + 人物面板重构 |
+| `2c0755f` | chore: 架构规范化 - 删除CLAUDE.md, 新建STATUS.md/DEVELOPMENT_PLAN.md/.gitignore/docs |
 
 ---
 
 ## 🚀 下一步开发计划
 
 ### 优先级 P1
-1. **航点数据外置** — 将 `waypoints` 数组提取为 `data/waypoints.json`
-2. **移动端适配** — 可折叠面板、触摸友好缩放、底部抽屉
+1. **移动端适配** — 可折叠面板、触摸友好缩放、底部抽屉
+2. **时间轴滑块** — 1914–1924 可拖动时间轴，拖动时动画绘制路线
 
 ### 优先级 P2
-3. **时间轴滑块** — 1914–1924 可拖动时间轴，拖动时动画绘制路线
-4. **多语言支持** — EN/CN/JP 三语切换
-5. **人物关系图** — SVG/Canvas 面板展示 Larry / Isabel / Sophie / Mrs. Bradshaw / Gray 关系
+3. **多语言支持** — EN/CN/JP 三语切换
+4. **人物关系图** — SVG/Canvas 面板展示 Larry / Isabel / Sophie / Mrs. Bradshaw / Gray 关系
 
 ### 优先级 P3
-6. **照片集** — 每个城市配上1920年代历史照片
-7. **PDF 导出/打印模式** — `@media print` 样式 + puppeteer 脚本生成 A4 地图页
+5. **照片集** — 每个城市配上1920年代历史照片
+6. **PDF 导出/打印模式** — `@media print` 样式 + puppeteer 脚本生成 A4 地图页
 
 ---
 
@@ -99,9 +110,8 @@ open index.html  # 浏览器直接打开，无需构建
 
 - 单文件项目，无需构建步骤
 - 提交信息格式: `feat:` / `fix:` / `docs:` / `chore:`
-- Git worktree 模式：功能开发在 `.worktrees/hermes-xxx`，测试通过后合到 main
-- PR 流程：改代码 → 本地浏览器测试 → 报结果 → 用户确认 → 再提 PR
-- **开发收尾**：每次 session 结束前更新 `STATUS.md` 和 `DEVELOPMENT_PLAN.md`
+- PR 流程: 改代码 → 本地浏览器测试 → 报结果 → 用户确认 → 再提 PR
+- **开发收尾**: 每次 session 结束前更新 `STATUS.md` 和 `DEVELOPMENT_PLAN.md`
 
 ---
 
