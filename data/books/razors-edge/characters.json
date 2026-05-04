@@ -1,0 +1,175 @@
+[
+  {
+    "id": "larry",
+    "name": "Larry Darrell",
+    "name_zh": "拉里·达雷尔",
+    "color": "#e8c060",
+    "role": "protagonist",
+    "route_id": "larry-route",
+    "bio": "Lawrence 'Larry' Darrell is a young American pilot who returns from WWI traumatized by his experiences. Rather than settling into a conventional life with his fiancée Isabel, he chooses a spiritual quest that takes him from Paris to India, eventually achieving enlightenment.",
+    "bio_zh": "拉里·达雷尔是一位经历了一战的年轻美国飞行员。战后他没有选择与未婚妻伊莎贝尔过常规生活，而是踏上了一条灵性探索之路，从巴黎到印度，最终获得了精神觉醒。",
+    "arc": "Larry's arc spans from the war's trauma in 1916, through his rejection of conventional life in 1919, his years of wandering and reading in Paris, his travels east, and his eventual return to America as a simple taxi driver sharing his hard-won wisdom.",
+    "arc_zh": "拉里的人生弧线是整部小说的核心叙事。从战争的创伤出发，他经历了漫长的精神探索：先是在书本中寻找答案（巴黎），然后在东方旅行中实践（航海、修道院、苏菲派），最终在克什米尔的山洞中完成了证道体验。回到美国后，他选择做一名普通的出租车司机，用最平凡的方式将自己的领悟传递给每一个遇到的人。",
+    "motivation": "Larry seeks an absolute answer to 'the why of things' — a direct, personal experience of the divine that will resolve his existential anguish after the war.",
+    "motivation_zh": "拉里的核心动力是寻找万物的为什么的答案——一种直接的、个人的神圣体验，以解决战后创伤带来的存在主义焦虑。",
+    "key_quotes": [
+      {
+        "text": "I want to find out what God has to say.",
+        "text_zh": "我想知道上帝有什么话要对我讲。"
+      },
+      {
+        "text": "I've been reading the great masters for years.",
+        "text_zh": "我多年来一直在读那些伟大导师的著作。"
+      },
+      {
+        "text": "I think the important thing is not what you believe but the act of belief.",
+        "text_zh": "我认为重要的不是你相信什么，而是你相信的这个行为本身。"
+      },
+      {
+        "text": "I want to have an experience of the divine.",
+        "text_zh": "我想要有一次神圣的体验。"
+      }
+    ],
+    "is_key_character": true,
+    "is_author_observer": false
+  },
+  {
+    "id": "maugham",
+    "name": "W. Somerset Maugham",
+    "name_zh": "威廉·萨默塞特·毛姆（叙述者）",
+    "color": "#9b8df0",
+    "role": "narrator_as_character",
+    "route_id": null,
+    "bio": "The narrator of the novel, modeled on Maugham himself. He is a writer who befriends Larry before WWI and later encounters the various characters whose stories intertwine with the protagonist's spiritual journey.",
+    "bio_zh": "毛姆是全书的叙述者和视角人物。他是一位作家，一战前与拉里结识，此后贯穿全书追踪着与拉里精神旅程交织的各色人物命运，是读者理解这个故事的中介。",
+    "arc": "Maugham's arc runs parallel to Larry's: he observes and records, gaining wisdom through witnessing the spiritual journeys of others rather than pursuing his own.",
+    "arc_zh": "毛姆的叙事弧线贯穿全书：从1919年在巴黎初遇放弃婚约的年轻飞行员Larry，到持续追踪他在东方的精神求索，再到旁观各路人物的大结局，毛姆用叙述者的特权完成了一场自己对生命意义的思考。",
+    "motivation": "Maugham collects the stories of those he encounters, using them to understand the spiritual questions that Larry's quest raises.",
+    "motivation_zh": "毛姆收集并记录他遇到的每个人的故事，以此理解拉里的求索所引发的精神问题。",
+    "key_quotes": [
+      {
+        "text": "I am not at all sure that the big things in a man's life are settled by the big issues.",
+        "text_zh": "我一点也不确定一个人的一生是由重大事件决定的。"
+      },
+      {
+        "text": "The tragedy of the world is that so many people are not mad, but merely not quite genius.",
+        "text_zh": "世界的悲剧在于：太多人不是疯了，只是没有天才。"
+      }
+    ],
+    "is_key_character": true,
+    "is_author_observer": true,
+    "note": "Maugham does not have a route on the map as he is primarily a narrative device rather than a physical traveler."
+  },
+  {
+    "id": "isabel",
+    "name": "Isabel Porterfield",
+    "name_zh": "伊莎贝尔·波特菲尔德",
+    "color": "#e89ac7",
+    "role": "main_supporting",
+    "route_id": "isabel-route",
+    "bio": "Larry's fiancée who chooses social position and material comfort over his uncertain spiritual path. She later marries Elliott and lives the conventional life she always desired, though she never stops loving Larry.",
+    "bio_zh": "拉里的未婚妻，在精神追求与安稳生活之间，她选择了后者。她嫁给了埃利奥特·伦道夫伯爵，过上了她一直渴望的优渥生活，但她内心深处始终无法放下对拉里的感情。",
+    "arc": "Isabel's arc is one of quiet tragedy: she makes the 'safe' choice in 1919, watching Larry leave for Paris, then Europe, never fully reconciling herself to either her decision or her feelings.",
+    "arc_zh": "伊莎贝尔的弧线是小说的重要暗线之一：1919年她做出了安全的选择，此后在纽约上西区过着优渥生活，却始终无法释怀自己对拉里的感情，最终在拉里回到美国后依然无法与他真正重逢。",
+    "motivation": "Isabel wants security, social position, and material comfort — the very things Larry rejects — and is haunted by what she gave up.",
+    "motivation_zh": "伊莎贝尔在小说中代表了与拉里完全对立的价值取向：物质、安全、社会地位。她做出选择后终生都在两种生活之间摇摆，尤其是面对拉里时。",
+    "key_quotes": [
+      {
+        "text": "I don't think you can be so terribly in love with a girl you haven't spoken to for more than a few hours in your life.",
+        "text_zh": "我不相信你会在和一个人只说过几个钟头话的情况下就深深地爱上她。"
+      },
+      {
+        "text": "I have an instinct for self-preservation.",
+        "text_zh": "我有自我保护的本能。"
+      }
+    ],
+    "is_key_character": true,
+    "is_author_observer": false
+  },
+  {
+    "id": "sophie",
+    "name": "Sophie Warren",
+    "name_zh": "苏菲·沃伦",
+    "color": "#c46a6a",
+    "role": "tragic_counterpoint",
+    "route_id": "sophie-route",
+    "bio": "Sophie was Larry's former romantic interest before the war, a poetic soul who shared his spiritual inclinations. She survived a horrific personal tragedy and spiraled into alcoholism and promiscuity. Larry hopes to save her, but she disappears at sea, presumed drowned.",
+    "bio_zh": "苏菲是拉里战前的恋人，一个热爱诗歌、与他有共同精神追求的女孩。她在战争期间经历了可怕的个人悲剧，此后沉沦于酒精和混乱的私生活。拉里曾试图拯救她，但她最终在船上消失，疑似溺水身亡。",
+    "arc": "Sophie's arc is the novel's darkest thread: her descent from a promising young poet into alcoholism and dissolution, her brief attempt at redemption with Larry, and her tragic end.",
+    "arc_zh": "苏菲的故事线是小说中最黑暗的部分：她从有望成为诗人的少女，经历战争创伤后沉沦为酒鬼，在拉里的帮助下短暂回归，最终在赴墨西哥的船上神秘消失，留下了无尽的谜团。",
+    "motivation": "Sophie wants to die. Her brief hope for redemption through Larry collapses, and she returns to the self-destructive path that leads to her disappearance.",
+    "motivation_zh": "苏菲的悲剧在于：她爱诗歌、爱拉里所追求的精神生活，但在个人悲剧面前彻底崩溃，失去了活下去的全部意志。",
+    "key_quotes": [
+      {
+        "text": "I loved my husband and my baby and my home, and then I lost them all.",
+        "text_zh": "我爱我的丈夫、我的孩子、我的家，然后我失去了一切。"
+      },
+      {
+        "text": "I have nothing left to believe in. What does it matter what happens to me?",
+        "text_zh": "我再也没有什么可以相信的了。我遭遇什么又有什么关系呢？"
+      }
+    ],
+    "is_key_character": true,
+    "is_author_observer": false
+  },
+  {
+    "id": "gray",
+    "name": "Gray M. Dalton",
+    "name_zh": "格雷·M·道尔顿",
+    "color": "#6a9fd8",
+    "role": "supporting",
+    "route_id": "gray-route",
+    "bio": "Gray is Larry's closest friend from their days working at the newspaper. A gentle, sensitive soul, he suffers migraines after a head injury from the war. He marries Elliott's sister and becomes a successful businessman, finding meaning in work and family rather than philosophy.",
+    "bio_zh": "格雷是拉里战前在报馆工作时的挚友。战争中的头部受伤使他患上了严重的偏头痛。他娶了埃利奥特的姐姐路易丝，在商界取得成功后，以工作和家庭为寄托，找到了自己的平静。",
+    "arc": "Gray's arc mirrors Larry's as a counterpoint: both are wounded by war, but Gray chooses the material world while Larry chooses the spiritual. Gray achieves peace through acceptance rather than striving.",
+    "arc_zh": "格雷的弧线是拉里的镜像：同样经历战争创伤，拉里选择了精神之路，格雷选择了物质之路。但格雷最终在工作与家庭中找到了内心的安宁，成为拉里精神之旅的一面镜子。",
+    "motivation": "Gray wants only peace and a quiet life. After the tragedy of losing everything, he finds contentment in simple material success and family.",
+    "motivation_zh": "格雷在失去一切后，只想要平静的生活。他在简单的物质成功和家庭中找到了满足，是小说中最接近普通人的角色之一。",
+    "key_quotes": [],
+    "is_key_character": false,
+    "is_author_observer": false
+  },
+  {
+    "id": "elliott",
+    "name": "Elliott Randolph",
+    "name_zh": "埃利奥特·伦道夫伯爵",
+    "color": "#7fc97f",
+    "role": "comic_relief",
+    "route_id": "elliott-route",
+    "bio": "Elliott is Isabel's wealthy uncle and Larry's benefactor before the war. He devotes his life to climbing the social ladder in Europe, hosting lavish parties and pursuing invitations to aristocratic circles. He is shallow but ultimately generous and loyal to his family.",
+    "bio_zh": "埃利奥特是伊莎贝尔富有的舅舅，也是拉里战前的资助人。他把一生都献给了攀附欧洲上流社会，举办奢华派对、追逐贵族邀请。他表面浅薄，实则对家人慷慨而忠诚。",
+    "arc": "Elliott's arc is a comic critique of social climbing: from his arrival in Europe as a young American, through decades of party-going and status-seeking, to his final rejection by the very circles he sought and his redemptive death.",
+    "arc_zh": "埃利奥特的弧线是小说中最有趣的社会讽刺：作为一个年轻的美国人来到欧洲，他花了几十年时间追逐社会地位，临终时却被曾经追捧的贵族圈子彻底遗忘，但他在死前仍然展现了对家人的深厚感情。",
+    "motivation": "Elliott wants social acceptance and status above all else, believing that belonging to the right circles gives life meaning.",
+    "motivation_zh": "埃利奥特终其一生追求社会地位，深信进入正确的圈子就是人生的全部意义。临终时他才意识到这一切都是虚空，但即便如此，他仍然以善良和尊严面对死亡。",
+    "key_quotes": [],
+    "is_key_character": false,
+    "is_author_observer": false
+  },
+  {
+    "id": "landor",
+    "name": "Walter Landor",
+    "name_zh": "沃尔特·兰德尔",
+    "color": "#b8d4e8",
+    "role": "spiritual_touchstone",
+    "route_id": "landor-route",
+    "bio": "Walter Landor is a dying poet Larry encounters on a ship to the East. A man of profound wisdom and serenity, he offers Larry a crucial insight into the nature of spiritual attainment: that it must be given freely, not sought through effort.",
+    "bio_zh": "沃尔特·兰德尔是一位拉里在去东方的船上遇到的临终诗人。他是智慧与宁静的化身，给予了拉里关于精神成就本质的关键洞见：灵性不能追求，只能自由地获得。",
+    "arc": "Landor's brief arc spans just a few days on a ship, yet his influence on Larry is transformative. His parting words and poem stay with Larry throughout his journey, culminating in the enlightenment experience at the end.",
+    "arc_zh": "兰德尔只在船上与拉里相处了短短几天，但他的影响却是变革性的。他在临终前说出的智慧和那首诗，贯穿了拉里此后的整个旅程，最终在克什米尔山洞中达到了证道体验的顶峰。",
+    "motivation": "Landor seeks only to die well, having already achieved the detachment and wisdom Larry is searching for.",
+    "motivation_zh": "兰德尔在遇到拉里时已经获得了拉里苦苦追寻的宁静与超脱。他只求死得其所，并将自己的智慧传递给这个年轻人，帮助他走上正道。",
+    "key_quotes": [
+      {
+        "text": "I strove with none, for none was worth my strife.",
+        "text_zh": "我不与任何人争斗，因为没有谁配得上我的争斗。"
+      },
+      {
+        "text": "I am ready to depart.",
+        "text_zh": "我已经准备好离开了。"
+      }
+    ],
+    "is_key_character": false,
+    "is_author_observer": false
+  }
+]

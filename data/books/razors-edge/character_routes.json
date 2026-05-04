@@ -1,0 +1,310 @@
+[
+  {
+    "route_id": "larry-route",
+    "character_id": "larry",
+    "color": "#e8c060",
+    "weight": 3.5,
+    "dash_array": null,
+    "opacity": 0.85,
+    "description": "Larry Darrell的精神探索之旅",
+    "nodes": [
+      {
+        "node_id": "larry-001",
+        "waypoint_id": "geo-chicago",
+        "year": 1919,
+        "month": 1,
+        "arrival_scene": "拉里从一战战场回到芝加哥。战争夺走了他最亲密的战友，也夺走了他对世俗生活的所有热情。",
+        "arrival_scene_zh": "拉里从一战战场回到芝加哥。战争夺走了他最亲密的战友，也夺走了他对世俗生活的所有热情。"
+      },
+      {
+        "node_id": "larry-002",
+        "waypoint_id": "geo-paris",
+        "year": 1919,
+        "month": 4,
+        "arrival_scene": "拉里独自来到巴黎，在拉丁区一间没有暖气的阁楼住下。他在索邦大学旁听哲学课，在塞纳河边的旧书摊寻找答案。",
+        "arrival_scene_zh": "拉里独自来到巴黎，在拉丁区一间没有暖气的阁楼住下。他在索邦大学旁听哲学课，在塞纳河边的旧书摊寻找答案。"
+      },
+      {
+        "node_id": "larry-003",
+        "waypoint_id": "geo-marseille",
+        "year": 1919,
+        "month": 6,
+        "arrival_scene": "拉里在马赛港登上开往东方的货轮。他卖掉父亲留给他的最后一枚金币，换来船票和一颗不安的心。伊莎贝尔追到马赛试图说服他回心转意，他摇头拒绝。",
+        "arrival_scene_zh": "拉里在马赛港登上开往东方的货轮。他卖掉父亲留给他的最后一枚金币，换来船票和一颗不安的心。伊莎贝尔追到马赛试图说服他回心转意，他摇头拒绝。"
+      },
+      {
+        "node_id": "larry-004",
+        "waypoint_id": "geo-suez",
+        "year": 1919,
+        "month": 9,
+        "arrival_scene": "苏伊士运河。在一家小旅馆的屋顶上，拉里第一次经历了深刻的灵性体验——他'看见了光'。这不是比喻，而是一种真实的、超越语言的体验。",
+        "arrival_scene_zh": "苏伊士运河。在一家小旅馆的屋顶上，拉里第一次经历了深刻的灵性体验——他'看见了光'。这不是比喻，而是一种真实的、超越语言的体验。"
+      },
+      {
+        "node_id": "larry-005",
+        "waypoint_id": "geo-cairo",
+        "year": 1920,
+        "month": 1,
+        "arrival_scene": "拉里在开罗停留数周，在尼罗河畔的咖啡馆里结识了一位英国考古学家。他在这里第一次真正接触到东方哲学——不是书本上的概念，而是活生生的人和生活方式。",
+        "arrival_scene_zh": "拉里在开罗停留数周，在尼罗河畔的咖啡馆里结识了一位英国考古学家。他在这里第一次真正接触到东方哲学——不是书本上的概念，而是活生生的人和生活方式。"
+      },
+      {
+        "node_id": "larry-006",
+        "waypoint_id": "geo-colombo",
+        "year": 1921,
+        "month": 2,
+        "arrival_scene": "拉里在科伦坡港上岸。他在这里开始系统性地接触印度教和佛教的经典，并在一位锡兰佛教徒的指导下学习禅定。",
+        "arrival_scene_zh": "拉里在科伦坡港上岸。他在这里开始系统性地接触印度教和佛教的经典，并在一位锡兰佛教徒的指导下学习禅定。"
+      },
+      {
+        "node_id": "larry-007",
+        "waypoint_id": "geo-madras",
+        "year": 1921,
+        "month": 4,
+        "arrival_scene": "拉里在马德拉斯郊外的一个道场里，跟随上师系统学习喜马拉雅瑜伽的基础。每天凌晨三点起床，体式练习、冥想、研读经典。",
+        "arrival_scene_zh": "拉里在马德拉斯郊外的一个道场里，跟随上师系统学习喜马拉雅瑜伽的基础。每天凌晨三点起床，体式练习、冥想、研读经典。"
+      },
+      {
+        "node_id": "larry-008",
+        "waypoint_id": "geo-hyderabad",
+        "year": 1921,
+        "month": 7,
+        "arrival_scene": "拉里在海得拉巴参加了一个伊斯兰苏菲派的神秘主义修行团体。苏菲派的'寂灭'（fana）概念深深吸引了他——通过彻底消融自我，最终与神圣合一。",
+        "arrival_scene_zh": "拉里在海得拉巴参加了一个伊斯兰苏菲派的神秘主义修行团体。苏菲派的'寂灭'（fana）概念深深吸引了他——通过彻底消融自我，最终与神圣合一。"
+      },
+      {
+        "node_id": "larry-009",
+        "waypoint_id": "geo-goa",
+        "year": 1921,
+        "month": 10,
+        "arrival_scene": "拉里在果阿整理他的修行笔记。他把笔记分为三类：身体（瑜伽）、心灵（禅定）、灵魂（祈祷）。这三分类成为他后来第一本书的基本架构。",
+        "arrival_scene_zh": "拉里在果阿整理他的修行笔记。他把笔记分为三类：身体（瑜伽）、心灵（禅定）、灵魂（祈祷）。这三分类成为他后来第一本书的基本架构。"
+      },
+      {
+        "node_id": "larry-010",
+        "waypoint_id": "geo-kashmir",
+        "year": 1922,
+        "month": 1,
+        "arrival_scene": "拉里在克什米尔喜马拉雅山南麓的一个山洞里，经历了人生的证道时刻。在一次长达七天的密集禅修中，他第一次体验到'三摩地'——思考停止，存在本身成为唯一真实的东西。",
+        "arrival_scene_zh": "拉里在克什米尔喜马拉雅山南麓的一个山洞里，经历了人生的证道时刻。在一次长达七天的密集禅修中，他第一次体验到'三摩地'——思考停止，存在本身成为唯一真实的东西。"
+      },
+      {
+        "node_id": "larry-011",
+        "waypoint_id": "geo-kolkata",
+        "year": 1922,
+        "month": 5,
+        "arrival_scene": "拉里在加尔各答再次见到他的上师。他在加尔各答的贫民窟中行走，见证了极端贫穷与最高精神追求在同一座城市里并存的景象。他在日记里写道：'精神离开了慈悲就是野心，慈悲离开了精神就是感伤。'",
+        "arrival_scene_zh": "拉里在加尔各答再次见到他的上师。他在加尔各答的贫民窟中行走，见证了极端贫穷与最高精神追求在同一座城市里并存的景象。"
+      },
+      {
+        "node_id": "larry-012",
+        "waypoint_id": "geo-anuradhapura",
+        "year": 1922,
+        "month": 8,
+        "arrival_scene": "拉里在阿努拉德普勒的古老菩提树下静坐了七天七夜。他在那里确认了他在克什米尔已经证得的东西。他后来说：'答案从来不在别处。'",
+        "arrival_scene_zh": "拉里在阿努拉德普勒的古老菩提树下静坐了七天七夜。他在那里确认了他在克什米尔已经证得的东西。他后来说：'答案从来不在别处。'"
+      },
+      {
+        "node_id": "larry-013",
+        "waypoint_id": "geo-mumbai",
+        "year": 1923,
+        "month": 1,
+        "arrival_scene": "拉里在孟买登上返回欧洲的轮船。他回头看了一眼印度大陆——那片给了他答案的土地。他带回三箱子笔记本和一颗完全不同的心。",
+        "arrival_scene_zh": "拉里在孟买登上返回欧洲的轮船。他回头看了一眼印度大陆——那片给了他答案的土地。他带回三箱子笔记本和一颗完全不同的心。"
+      },
+      {
+        "node_id": "larry-014",
+        "waypoint_id": "geo-london",
+        "year": 1923,
+        "month": 3,
+        "arrival_scene": "拉里回到伦敦。他在港口与毛姆重逢，那天晚上他问起苏菲的消息——他在伊利诺伊州的童年好友。命运的齿轮开始转动。",
+        "arrival_scene_zh": "拉里回到伦敦。他在港口与毛姆重逢，那天晚上他问起苏菲的消息——他在伊利诺伊州的童年好友。命运的齿轮开始转动。"
+      },
+      {
+        "node_id": "larry-015",
+        "waypoint_id": "geo-london",
+        "year": 1924,
+        "month": 1,
+        "arrival_scene": "拉里在伦敦找到了沉沦于酒精的苏菲。他决定带她登上邮轮，试图拯救她。他相信自己已经找到了一条路，他想与她分享。",
+        "arrival_scene_zh": "拉里在伦敦找到了沉沦于酒精的苏菲。他决定带她登上邮轮，试图拯救她。他相信自己已经找到了一条路，他想与她分享。"
+      },
+      {
+        "node_id": "larry-016",
+        "waypoint_id": "geo-gibraltar",
+        "year": 1924,
+        "month": 3,
+        "arrival_scene": "邮轮在直布罗陀停泊。苏菲在甲板上第一次露出笑容，伸手去喂猕猴。拉里觉得也许还有希望。但希望是短暂的。",
+        "arrival_scene_zh": "邮轮在直布罗陀停泊。苏菲在甲板上第一次露出笑容，伸手去喂猕猴。拉里觉得也许还有希望。但希望是短暂的。"
+      },
+      {
+        "node_id": "larry-017",
+        "waypoint_id": "geo-malaga",
+        "year": 1924,
+        "month": 4,
+        "arrival_scene": "苏菲在马拉加独自下船，去老教堂坐了一下午，听管风琴演奏。她说她'觉得也许有什么东西在听'。这是她最后的希望之光。",
+        "arrival_scene_zh": "苏菲在马拉加独自下船，去老教堂坐了一下午，听管风琴演奏。她说她'觉得也许有什么东西在听'。这是她最后的希望之光。"
+      },
+      {
+        "node_id": "larry-018",
+        "waypoint_id": "geo-suez",
+        "year": 1924,
+        "month": 5,
+        "arrival_scene": "邮轮抵达苏伊士运河。苏菲在某个港口独自下船，消失在人群中。拉里等了她三天，最终接受现实：她走了。他独自登上甲板，看着苏伊士的夕阳。他终于明白，他无法拯救任何人——每个人最终都要自己走向觉醒，或者不走向觉醒。",
+        "arrival_scene_zh": "邮轮抵达苏伊士运河。苏菲在某个港口独自下船，消失在人群中。拉里等了她三天，最终接受现实：她走了。他独自登上甲板，看着苏伊士的夕阳。他终于明白，他无法拯救任何人——每个人最终都要自己走向觉醒，或者不走向觉醒。"
+      }
+    ]
+  },
+  {
+    "route_id": "isabel-route",
+    "character_id": "isabel",
+    "color": "#e89ac7",
+    "weight": 2.5,
+    "dash_array": "6, 4",
+    "opacity": 0.7,
+    "description": "Isabel Porterfield的现实选择之路",
+    "nodes": [
+      {
+        "node_id": "isabel-001",
+        "waypoint_id": "geo-chicago",
+        "year": 1919,
+        "month": 1,
+        "arrival_scene": "伊莎贝尔在芝加哥等待拉里从战场归来。她不知道的是，他回来后已经完全变了一个人。",
+        "arrival_scene_zh": "伊莎贝尔在芝加哥等待拉里从战场归来。她不知道的是，他回来后已经完全变了一个人。"
+      },
+      {
+        "node_id": "isabel-002",
+        "waypoint_id": "geo-chicago",
+        "year": 1919,
+        "month": 3,
+        "arrival_scene": "拉里解除婚约。伊莎贝尔的世界在一瞬间崩塌。她不知道的是，这个选择将困扰她的余生。",
+        "arrival_scene_zh": "拉里解除婚约。伊莎贝尔的世界在一瞬间崩塌。她不知道的是，这个选择将困扰她的余生。"
+      },
+      {
+        "node_id": "isabel-003",
+        "waypoint_id": "geo-chicago",
+        "year": 1920,
+        "month": 6,
+        "arrival_scene": "伊莎贝尔嫁给格雷·道尔顿。她手指上的戒指从拉里的订婚戒指换成了格雷的婚戒。她爱格雷吗？她自己也不确定。",
+        "arrival_scene_zh": "伊莎贝尔嫁给格雷·道尔顿。她手指上的戒指从拉里的订婚戒指换成了格雷的婚戒。她爱格雷吗？她自己也不确定。"
+      },
+      {
+        "node_id": "isabel-004",
+        "waypoint_id": "geo-london",
+        "year": 1924,
+        "month": 6,
+        "arrival_scene": "伊莎贝尔在伦敦与归来的拉里重逢。九年后，他看起来比她记忆中更平静，而她终于意识到他们之间的距离已经无法跨越。她拥有了她曾经以为想要的一切——但她心里有一个角落永远属于拉里。",
+        "arrival_scene_zh": "伊莎贝尔在伦敦与归来的拉里重逢。九年后，他看起来比她记忆中更平静，而她终于意识到他们之间的距离已经无法跨越。"
+      }
+    ]
+  },
+  {
+    "route_id": "sophie-route",
+    "character_id": "sophie",
+    "color": "#c46a6a",
+    "weight": 2.5,
+    "dash_array": "3, 5",
+    "opacity": 0.75,
+    "description": "Sophie Warren的毁灭之路",
+    "nodes": [
+      {
+        "node_id": "sophie-001",
+        "waypoint_id": "geo-illinois",
+        "year": 1919,
+        "month": 1,
+        "arrival_scene": "苏菲在伊利诺伊州的家中。丈夫和儿子是她全部的世界。她爱诗歌，和拉里是青梅竹马，有一颗与拉里同样渴望超越的心。",
+        "arrival_scene_zh": "苏菲在伊利诺伊州的家中。丈夫和儿子是她全部的世界。她爱诗歌，和拉里是青梅竹马，有一颗与拉里同样渴望超越的心。"
+      },
+      {
+        "node_id": "sophie-002",
+        "waypoint_id": "geo-illinois",
+        "year": 1919,
+        "month": 3,
+        "arrival_scene": "车祸在一瞬间夺走了苏菲的丈夫和儿子。她没有从那一天走出来。酒精成了唯一的安慰。",
+        "arrival_scene_zh": "车祸在一瞬间夺走了苏菲的丈夫和儿子。她没有从那一天走出来。酒精成了唯一的安慰。"
+      },
+      {
+        "node_id": "sophie-003",
+        "waypoint_id": "geo-london",
+        "year": 1923,
+        "month": 10,
+        "arrival_scene": "苏菲沉沦于伦敦的底层社会，用酒精麻醉自己。拉里找到她时，她几乎已认不出曾经的样子。但他记得她曾经的样子。",
+        "arrival_scene_zh": "苏菲沉沦于伦敦的底层社会，用酒精麻醉自己。拉里找到她时，她几乎已认不出曾经的样子。但他记得她曾经的样子。"
+      },
+      {
+        "node_id": "sophie-004",
+        "waypoint_id": "geo-london",
+        "year": 1924,
+        "month": 1,
+        "arrival_scene": "拉里决定带苏菲登上邮轮，试图拯救她。他相信大海和远方能帮助她重新找到生活的意义。她同意了。",
+        "arrival_scene_zh": "拉里决定带苏菲登上邮轮，试图拯救她。他相信大海和远方能帮助她重新找到生活的意义。她同意了。"
+      },
+      {
+        "node_id": "sophie-005",
+        "waypoint_id": "geo-gibraltar",
+        "year": 1924,
+        "month": 3,
+        "arrival_scene": "直布罗陀。苏菲在甲板上第一次露出笑容。这个笑容是那么短暂。",
+        "arrival_scene_zh": "直布罗陀。苏菲在甲板上第一次露出笑容。这个笑容是那么短暂。"
+      },
+      {
+        "node_id": "sophie-006",
+        "waypoint_id": "geo-malaga",
+        "year": 1924,
+        "month": 4,
+        "arrival_scene": "马拉加。苏菲在老教堂里坐了一下午，听管风琴演奏。她说：'也许有什么东西在听。'这是她最后的希望。",
+        "arrival_scene_zh": "马拉加。苏菲在老教堂里坐了一下午，听管风琴演奏。她说：'也许有什么东西在听。'这是她最后的希望。"
+      },
+      {
+        "node_id": "sophie-007",
+        "waypoint_id": "geo-suez",
+        "year": 1924,
+        "month": 5,
+        "arrival_scene": "苏菲在苏伊士运河的某个港口独自下船，消失在人群中。没有人知道她去了哪里。拉里永远无法确认她是生是死。毛姆暗示，她也许回到了她一直热爱的大海——这是小说最神秘的留白。",
+        "arrival_scene_zh": "苏菲在苏伊士运河的某个港口独自下船，消失在人群中。没有人知道她去了哪里。拉里永远无法确认她是生是死。"
+      }
+    ]
+  },
+  {
+    "route_id": "gray-route",
+    "character_id": "gray",
+    "color": "#6a9fd8",
+    "weight": 2,
+    "dash_array": "4, 4",
+    "opacity": 0.6,
+    "description": "Gray Dalton的朴素幸福之路",
+    "nodes": [
+      {
+        "node_id": "gray-001",
+        "waypoint_id": "geo-chicago",
+        "year": 1919,
+        "month": 3,
+        "arrival_scene": "格雷向伊莎贝尔表白，在她与拉里分手之后。他爱了她很久，现在终于有机会说出来。",
+        "arrival_scene_zh": "格雷向伊莎贝尔表白，在她与拉里分手之后。他爱了她很久，现在终于有机会说出来。"
+      },
+      {
+        "node_id": "gray-002",
+        "waypoint_id": "geo-chicago",
+        "year": 1920,
+        "month": 6,
+        "arrival_scene": "格雷和伊莎贝尔结婚。他们生育了两个孩子，他在家族企业中工作，生活平静而富足。但他的头痛病越来越严重。",
+        "arrival_scene_zh": "格雷和伊莎贝尔结婚。他们生育了两个孩子，他在家族企业中工作，生活平静而富足。但他的头痛病越来越严重。"
+      },
+      {
+        "node_id": "gray-003",
+        "waypoint_id": "geo-london",
+        "year": 1922,
+        "month": 1,
+        "arrival_scene": "格雷前往欧洲求医。他的头痛已经严重到无法正常工作。在伦敦的一家医院里，他接受了手术，慢慢康复。",
+        "arrival_scene_zh": "格雷前往欧洲求医。他的头痛已经严重到无法正常工作。在伦敦的一家医院里，他接受了手术，慢慢康复。"
+      },
+      {
+        "node_id": "gray-004",
+        "waypoint_id": "geo-london",
+        "year": 1924,
+        "month": 6,
+        "arrival_scene": "格雷和伊莎贝尔在伦敦与拉里重逢。他已经不再是当年那个在战场上满脸恐惧的年轻人。他有自己的家庭、自己的事业、自己朴素而真实的幸福。",
+        "arrival_scene_zh": "格雷和伊莎贝尔在伦敦与拉里重逢。他已经不再是当年那个在战场上满脸恐惧的年轻人。他有自己的家庭、自己的事业、自己朴素而真实的幸福。"
+      }
+    ]
+  }
+]

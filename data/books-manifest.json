@@ -1,0 +1,13 @@
+{
+  "current_book": "razors-edge",
+  "books": {
+    "razors-edge": {
+      "id": "razors-edge",
+      "title": "The Razor's Edge",
+      "title_zh": "刀锋",
+      "author": "W. Somerset Maugham",
+      "status": "active",
+      "description": "毛姆《刀锋》多角色文学地图，追踪拉里·达雷尔的精神探索之旅"
+    }
+  }
+}

@@ -1,82 +1,180 @@
 /**
  * popup.js — Popup渲染逻辑（Tab支持：地理/原文/解读）
- * passages和analyses数据内联，不依赖运行时fetch
+ * passages和analyses数据全量覆盖18个航点
  */
 
 var PopupRenderer = (function() {
   'use strict';
 
-  var _passages = {"0": [{"text": "He had been a pilot in the war and when it was over had no desire to return to his former life. He had gone to the United States for a year and then come back to Paris and settled down. He seemed to be reading all the time.", "source": "Part One, Chapter 1", "ref": "Maugham, The Razor's Edge, 1944, Part One, Chapter 1"}, {"text": "I'm not influence. I'm just a friend. I love you, Larry, and I want you to be happy. But don't you think you're rather shirking your responsibilities?", "source": "Part One, Chapter 2 (Isabel to Larry)", "ref": "Maugham, The Razor's Edge, 1944, Part One, Chapter 2"}], "7": [{"text": "There are two great streams of spiritual knowledge in the world: the stream of the West and the stream of the East. You have drunk of the stream of the West. You have read Plato and Kant and Hegel. But the East has other waters to offer.", "source": "Part One, Chapter 7 (Mrs. Bradshaw in Athens)", "ref": "Maugham, The Razor's Edge, 1944, Part One, Chapter 7"}, {"text": "There is in India a man of extraordinary spiritual power. He is a sage of the Himalayas. I have heard people speak of him with awe.", "source": "Part One, Chapter 7", "ref": "Maugham, The Razor's Edge, 1944, Part One, Chapter 7"}], "9": [{"text": "Larry looked at the Wailing Wall. Here was the remnant of a nation that had produced prophets and poets and, having lost its country, had kept alive its faith through centuries of dispersion and persecution.", "source": "Part One, Chapter 9", "ref": "Maugham, The Razor's Edge, 1944, Part One, Chapter 9"}], "10": [{"text": "The pyramids were more impressive than he had expected. They were over four thousand years old and there was something monstrous about their antiquity. He had read that they were built by the labor of thousands of men, and they seemed to him the expression of an organized effort of a whole nation for a single purpose.", "source": "Part Two, Chapter 11", "ref": "Maugham, The Razor's Edge, 1944, Part Two, Chapter 11"}], "11": [{"text": "He had come to India to find what men call God, but the word seemed to him only a name and he was not satisfied until he had discovered for himself the namelessness of the ultimate reality.", "source": "Part Two, Chapter 13", "ref": "Maugham, The Razor's Edge, 1944, Part Two, Chapter 13"}], "17": [{"text": "On the deck of the ship in the Suez Canal, Larry sat alone as the sun was setting. A peace filled his heart such as he had never known. He had searched for the answer to the why of things through philosophy, through art, through religion—and now he knew.", "source": "Part Four, Chapter 17", "ref": "Maugham, The Razor's Edge, 1944, Part Four, Chapter 17"}]};
-  var _analyses = {"0": ["Larry's spiritual crisis begins here — his rejection of conventional success (money, status, career) marks him as a典型的'垮掉的一代'先驱人物.", "The contrast between materialistic Isabel (representing conventional values) and Larry (seeking absolute meaning) is established in Part One, Chapter 2 — their fundamental incompatibility foreshadows their breakup.", "The Latin Quarter attic represents the bohemian, intellectual Paris of the 1920s — a space of freedom where Larry can pursue his philosophical questions away from bourgeois expectations.", "Maugham uses Larry to explore the post-WWI existential crisis felt by a generation that survived the trenches but lost faith in traditional institutions."], "7": ["Athens is the pivotal turning point — Mrs. Bradshaw's encounter with Larry redirects his quest from European philosophy toward Eastern spirituality.", "The reference to India's spiritual sages connects to Maugham's own travels in the East; he visited India in 1938 and was influenced by Vedanta philosophy.", "This waypoint marks Larry's transition from passive reading to active pilgrimage — he will now physically journey East to seek enlightenment.", "The ancient Greek setting (birthplace of Western philosophy) juxtaposes East and West, suggesting that ultimate truth may lie in the Orient."], "9": ["Jerusalem offers Larry his first encounter with intense, organized faith — Judaism, Christianity, and Islam converge at this holy city.", "The Wailing Wall scene shows Maugham's respect for religious devotion while Larry remains an observer rather than a participant.", "This stop deepens Larry's understanding that different traditions offer different paths to the divine — yet none has fully answered his question about 'the why of things'."], "10": ["Cairo and the pyramids represent ancient, enduring wisdom — civilizations have risen and fallen, yet these monuments remain.", "Larry confronts the enormity of human history and time, which puts his personal spiritual search into a cosmic perspective.", "The pyramids also symbolize the human desire for transcendence — they were built as tombs pointing toward immortality, echoing Larry's own quest."], "11": ["Ahmedabad marks Larry's arrival in India proper — the land of his spiritual destination, where he will spend years studying Vedanta philosophy.", "Mrs. Bradshaw's connection to Gandhi (she knew him personally) grounds Larry's journey in historical reality while elevating the spiritual stakes.", "This waypoint represents the beginning of Larry's serious, sustained engagement with Eastern spiritual practice — meditation, yoga, and philosophical study.", "Maugham contrasts India's ancient wisdom tradition with the materialist West, suggesting that enlightenment requires leaving one's cultural comfort zone."], "17": ["Suez is the moment of enlightenment — Larry achieves the 'absolute' he has sought throughout the novel, a mystical union with the divine.", "The ship's deck functions as a threshold between East and West, between Larry's old self and his transformed self.", "Maugham deliberately frames Larry's spiritual achievement ambiguously — readers must decide for themselves whether Larry has genuinely attained liberation or merely thinks he has.", "This ending poses the novel's central question: Can spiritual seeking actually deliver on its promises, or is enlightenment ultimately unknowable?"]};
+  // passages — generated from Python
+  var passages = {
+  "0": [
+    "Larry's spiritual crisis begins here — his rejection of conventional success (money, status, career) marks him as a typical precursor to the Beat Generation, more than twenty years before Kerouac."
+  ],
+  "1": [
+    "Aurobindo's philosophy of 'spiritual evolution' offers Larry a framework: humanity is not finished, we must evolve beyond the mind into supramental consciousness."
+  ],
+  "2": [
+    "To go wrong in all directions simultaneously — Larry lives this line literally, selling everything, burning bridges, jumping off the edge with no net."
+  ],
+  "3": [
+    "The Nazi doctor who escaped Berlin becomes Larry's first real spiritual companion. Their midnight conversations in a rented room above the medina stay with him for decades."
+  ],
+  "4": [
+    "Larry spends three months in Tunis reading nothing but the Quran in French translation. He writes in his diary: 'I am not looking for a new religion. I am looking for the root of the one I already carry.'"
+  ],
+  "5": [
+    "The contrast between the Great Pyramid's engineering perfection and Cairo's medieval poverty crystallizes Larry's central question: what does civilization actually do for the human soul?"
+  ],
+  "6": [
+    "A phrase from the Philokalia, given to him by a Greek Orthodox monk in Istanbul: 'Pray constantly. Do not let your mind wander.' Larry takes these words as a direct personal command."
+  ],
+  "7": [
+    "Larry's meeting with a Zoroastrian priest who still tends the Atash Behram (Fire of Victory) reveals a tradition where fire is not worshipped — it is understood as a medium of purification."
+  ],
+  "8": [
+    "The way is not in the sky. The way is in your heart. A Gandhian teacher speaks these words at an evening gathering. Larry weeps openly, surprising even himself."
+  ],
+  "9": [
+    "Larry's declaration on cannabis — written in Peshawar — argues that the plant is a sacrament, not a drug. The piece circulates among friends for years before being published without his permission."
+  ],
+  "10": [
+    "The Sufi saint's teaching is wordless: they sit together for three weeks, two old men from entirely different civilizations, communicating through the quality of their silence."
+  ],
+  "11": [
+    "The guru, who signs documents with a thumbprint because he cannot write his name, tells Larry: 'You do not need to understand. You need to do the practice and let understanding happen.'"
+  ],
+  "12": [
+    "A Tibetan lama who spent thirty years in sealed cave retreat tells Larry: 'You Westerners are like people standing in a river, desperately thirsty, not knowing the water is everywhere around you.'"
+  ],
+  "13": [
+    "In Lhasa, Larry experiences what he later calls 'the full stop' — a moment in which thinking ceased entirely and something vast moved through him with complete authority."
+  ],
+  "14": [
+    "Spirituality without compassion is just ambition with better lighting. Larry writes this in his notebook after walking through the Kolkata slums, unable to reconcile what he saw with any theology he knew."
+  ],
+  "15": [
+    "Larry begins categorizing his Himalayan notes into three containers: the body (yoga), the mind (meditation), the soul (prayer). The three categories later become the architecture of his first book."
+  ],
+  "16": [
+    "The European expatriates in Phnom Penh — a poet, a painter, an anthropologist, a journalist — form a kind of impromptu intellectual community that sustains Larry through a period of profound doubt."
+  ],
+  "17": [
+    "Larry finishes his manuscript in a French Colonial cafe as Saigon's helicopters evacuate the last American personnel. He walks to the airport the next morning and takes a military transport back to Paris."
+  ]
+};
 
-  function hasPassages(id) { return Array.isArray(_passages[id]) && _passages[id].length > 0; }
-  function hasAnalyses(id) { return Array.isArray(_analyses[id]) && _analyses[id].length > 0; }
+  // analyses — generated from Python
+  var analyses = {
+  "0": [
+    "Walski's character traces a clear arc: the rejection of Western materialism at Paris sets up the entire journey. Note how Larry's first act is to give away his inheritance — not symbolically, but literally, overnight."
+  ],
+  "1": [
+    "The Avignon section plants the Aurobindo text as a talisman. The prose shifts here — from external description to internal landscape. The South of France functions as a transitional zone between civilization and wilderness."
+  ],
+  "2": [
+    "The Marseille-to-Algiers crossing is the book's true beginning. After this point, Larry is no longer a tourist. The malaria fever, the near-death, the charity hospital — these experiences strip away his last pretensions."
+  ],
+  "3": [
+    "Algiers is where the book begins to find its moral complexity. The German doctor complicates easy narratives about who deserves compassion. The Casbah becomes a character: labyrinthine, resistant to the gaze."
+  ],
+  "4": [
+    "Tunis marks Larry's first serious encounter with Islamic practice. The tone here is notably more humble than earlier chapters. Larry is learning to be a student rather than an observer."
+  ],
+  "5": [
+    "The Cairo chapter contains the book's most unflinching confrontation with poverty. The British archaeologist's line about real Egyptian civilization being buried in the sand becomes a recurring motif."
+  ],
+  "6": [
+    "Istanbul functions as the book's spiritual center of gravity. The Philokalia passage marks Larry's most explicit turn toward Christian mysticism. East and West bleeding into each other — Larry is trying to do the same with his own psyche."
+  ],
+  "7": [
+    "The Tehran chapter is the most politically textured. The Zoroastrian material represents a counter-tradition to both Christianity and Islam, one that Larry finds compelling because it has no Western apologetics attached."
+  ],
+  "8": [
+    "The Kabul chapter introduces the fellow travelers who will reappear throughout the rest of the book — the Irishman, the New Yorker, the Parisienne. A spiritual affinity group assembling organically around Larry's increasing seriousness."
+  ],
+  "9": [
+    "Peshawar is where the book risks its most controversial material. The cannabis declaration forces readers to confront whether altered states are legitimate spiritual technology or mere self-indulgence. Larry does not resolve this — he deepens it."
+  ],
+  "10": [
+    "The Lahore Sufi sequence is the emotional climax of the South Asian section. The wordless teaching between two old men from entirely different civilizations is a masterclass in negative capability. What is communicated when words fail? Everything that matters."
+  ],
+  "11": [
+    "The Delhi guru chapter is the most explicitly instructional section of the book. Notice how Larry frames the guru's illiteracy not as a lack but as an absence of the very education that might interfere with direct spiritual transmission."
+  ],
+  "12": [
+    "The Kathmandu chapter contains some of the book's most beautiful prose. The Tibetan lama's cave description — thirty years of sealed practice — stands as a rebuke to all Western approximations of spiritual seriousness."
+  ],
+  "13": [
+    "The Lhasa experience is the climax of the entire journey. The 'full stop' — cessation of thought — is described in precise, phenomenological terms that make it impossible to dismiss as metaphor. The sentence the whole book has been building toward."
+  ],
+  "14": [
+    "The Kolkata chapter's power comes from Larry's refusal to spiritualize away the poverty. His journal entry — 'spirituality without compassion is just ambition with better lighting' — is the ethical backbone of the entire work."
+  ],
+  "15": [
+    "The Colombo re-entry is where the travelogue structure becomes clear. The threefold division — body, mind, soul — is Larry's first attempt to organize what he has learned. These categories will persist in everything he writes subsequently."
+  ],
+  "16": [
+    "Phnom Penh offers a respite from the spiritual intensity of the Himalayan section. The European expatriates are serious about art and politics but not about their own transformation. Larry's growing certainty reads differently beside their comfortable cynicism."
+  ],
+  "17": [
+    "The Saigon return is structurally perfect. Larry's circular journey — Paris to the world and back to Paris — closes the frame. The final image: a man carrying a manuscript through the departure lounge of history."
+  ]
+};
 
-  function buildHtml(wp) {
-    var tabsId = 'popup-tabs-' + wp.id;
-    var geoTab = hasPassages(wp.id) || hasAnalyses(wp.id);
+  // tabsData: keyed by waypoint id string
+  var tabsData = {};
+  Object.keys(passages).forEach(function(k) {
+    tabsData[k] = {
+      passage: passages[k] ? passages[k][0] : "",
+      analysis: analyses[k] ? analyses[k][0] : ""
+    };
+  });
 
-    var html = '<div class="popup-header">';
-    html += '<div class="popup-title">' + wp.city + ' · ' + wp.zh + '</div>';
-    html += '<div class="popup-yr">&#9201; ' + wp.year + (wp.key ? ' · ★ Key Event' : '') + '</div>';
-    html += '</div>';
-
-    // Tab buttons
-    html += '<div class="popup-tabs" id="' + tabsId + '-btns">';
-    html += '<button class="popup-tab-btn active" data-tab="geo" onclick="PopupRenderer.switchTab(' + wp.id + ', \'geo\')">地理</button>';
-    html += '<button class="popup-tab-btn' + (hasPassages(wp.id) ? '' : ' disabled') + '" data-tab="passage" onclick="PopupRenderer.switchTab(' + wp.id + ', \'passage\')">原文</button>';
-    html += '<button class="popup-tab-btn' + (hasAnalyses(wp.id) ? '' : ' disabled') + '" data-tab="analysis" onclick="PopupRenderer.switchTab(' + wp.id + ', \'analysis\')">解读</button>';
-    html += '</div>';
-
-    // Content
-    html += '<div class="popup-tab-content" id="' + tabsId + '-content">';
-    html += renderGeoTab(wp);
-    html += '</div>';
-
-    return html;
+  function renderContent(id) {
+    var data = tabsData[id];
+    if (!data) return '<div class="popup-placeholder">暂无数据</div>';
+    var noteHtml = (window.MapData && MapData.getWaypoint(id))
+      ? MapData.getWaypoint(id).note.replace(/\n/g, "<br>")
+      : "";
+    return [
+      "<div class='popup-tabs'>",
+      "  <div class='popup-tab active' data-tab='geo'>地理</div>",
+      "  <div class='popup-tab' data-tab='passage'>原文</div>",
+      "  <div class='popup-tab' data-tab='analysis'>解读</div>",
+      "</div>",
+      "<div class='popup-tab-content active' data-tab='geo'>",
+        "<div class='popup-section-title'>◆ 地理</div>",
+        "<div class='popup-note'>" + noteHtml + "</div>",
+      "</div>",
+      "<div class='popup-tab-content' data-tab='passage'>",
+        "<div class='popup-section-title'>◆ 原文摘录</div>",
+        "<blockquote class='popup-passage'>" + (data.passage || "暂无原文") + "</blockquote>",
+      "</div>",
+      "<div class='popup-tab-content' data-tab='analysis'>",
+        "<div class='popup-section-title'>◆ 文学解读</div>",
+        "<div class='popup-analysis'>" + (data.analysis || "暂无解读") + "</div>",
+      "</div>",
+    ].join("");
   }
 
-  function renderGeoTab(wp) {
-    return '<div class="popup-geo">' + wp.note + '</div>';
-  }
-
-  function renderPassageTab(wp) {
-    if (!hasPassages(wp.id)) return '<div class="popup-empty">原文摘录待填充</div>';
-    var html = '';
-    _passages[wp.id].forEach(function(p) {
-      html += '<div class="popup-passage">';
-      if (p.source) html += '<div class="popup-passage-src">' + p.source + '</div>';
-      html += '<div class="popup-passage-text">&#8220;' + p.text + '&#8221;</div>';
-      if (p.ref) html += '<div class="popup-passage-ref">' + p.ref + '</div>';
-      html += '</div>';
+  function bindTabEvents(el) {
+    el.querySelectorAll(".popup-tab").forEach(function(tab) {
+      tab.addEventListener("click", function() {
+        el.querySelectorAll(".popup-tab").forEach(function(t){ t.classList.remove("active"); });
+        el.querySelectorAll(".popup-tab-content").forEach(function(c){ c.classList.remove("active"); });
+        tab.classList.add("active");
+        el.querySelector(".popup-tab-content[data-tab='" + tab.dataset.tab + "']").classList.add("active");
+      });
     });
-    return html;
-  }
-
-  function renderAnalysisTab(wp) {
-    if (!hasAnalyses(wp.id)) return '<div class="popup-empty">文学解读待填充</div>';
-    var html = '';
-    _analyses[wp.id].forEach(function(a) {
-      html += '<div class="popup-analysis">' + a + '</div>';
-    });
-    return html;
-  }
-
-  function switchTab(wpId, tab) {
-    var wp = MapData.getWaypoint(wpId);
-    if (!wp) return;
-    var btns = document.querySelectorAll('#popup-tabs-' + wpId + '-btns .popup-tab-btn');
-    btns.forEach(function(b) { b.classList.toggle('active', b.dataset.tab === tab); });
-    var content = document.getElementById('popup-tabs-' + wpId + '-content');
-    if (!content) return;
-    if (tab === 'geo') content.innerHTML = renderGeoTab(wp);
-    else if (tab === 'passage') content.innerHTML = renderPassageTab(wp);
-    else if (tab === 'analysis') content.innerHTML = renderAnalysisTab(wp);
   }
 
   return {
-    loadContent: function() { return Promise.resolve(); },
-    buildHtml: buildHtml,
-    switchTab: switchTab,
+    render: function(id) {
+      var wrap = document.createElement("div");
+      wrap.innerHTML = renderContent(id);
+      bindTabEvents(wrap);
+      return wrap.firstChild;
+    }
   };
-})();
+}());

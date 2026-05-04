@@ -1,0 +1,16 @@
+{
+  "id": "razors-edge",
+  "title": "The Razor's Edge",
+  "title_zh": "刀锋",
+  "author": "W. Somerset Maugham",
+  "author_zh": "威廉·萨默塞特·毛姆",
+  "author_as_character": true,
+  "author_as_character_note": "毛姆以第三人称全知视角叙述故事，但他同时是小说中的角色。他以作家身份参与社交圈，与各主要人物（Larry、Isabel、Elliott、Sophie）均有直接互动，是故事的实际见证人和收集者。他把自己的伦敦社交圈、出版界人脉都写进了小说，形成了一个真实的'毛姆视角'网络。",
+  "published": 1944,
+  "chapters": 24,
+  "narrative_voice": "third_person_omniscient_with_author_as_character",
+  "settings": ["Chicago", "Paris", "London", "Mediterranean", "India", "Ceylon"],
+  "time_span": "1919-1924",
+  "themes": ["spiritual_awakening", "materialism_vs_idealism", "grief_and_loss", "the_nature_of_freedom", "compassion"],
+  "status": "phase1_complete"
+}

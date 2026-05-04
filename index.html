@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Razor's Edge — Larry's Mediterranean Route</title>
+<title>The Razor's Edge — Literary Map 刀锋文学地图</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -28,12 +28,12 @@
     background: rgba(10, 20, 40, 0.92);
     border: 1px solid #c9a84c;
     border-radius: 6px;
-    padding: 10px 36px;
+    padding: 10px 28px;
     text-align: center;
     pointer-events: none;
   }
-  .title-banner h1 { font-size: 17px; color: #c9a84c; letter-spacing: 4px; text-transform: uppercase; }
-  .title-banner p  { font-size: 11px; color: #9a8870; margin-top: 4px; letter-spacing: 1px; }
+  .title-banner h1 { font-size: 15px; color: #c9a84c; letter-spacing: 3px; text-transform: uppercase; }
+  .title-banner p  { font-size: 10px; color: #9a8870; margin-top: 3px; letter-spacing: 1px; }
 
   /* ── Panels shared ── */
   .panel {
@@ -41,168 +41,234 @@
     z-index: 1000;
     background: rgba(8, 16, 34, 0.93);
     border: 1px solid #4a6fa5;
-    border-radius: 6px;
+    border-radius: 8px;
     padding: 14px 16px;
-    pointer-events: auto;
-    cursor: default;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
   }
+  .panel::-webkit-scrollbar { width: 4px; }
+  .panel::-webkit-scrollbar-track { background: #0a1428; }
+  .panel::-webkit-scrollbar-thumb { background: #4a6fa5; border-radius: 2px; }
   .panel-title {
     font-size: 11px;
-    color: #7a8aaa;
-    letter-spacing: 2.5px;
+    color: #c9a84c;
+    letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 10px;
-    padding-bottom: 6px;
     border-bottom: 1px solid #2a3a5a;
+    padding-bottom: 6px;
   }
 
   /* ── Character panel — left ── */
   .char-panel {
-    left: 14px;
     top: 80px;
+    left: 12px;
     width: 220px;
   }
   .char-item {
-    padding: 7px 0;
-    border-bottom: 1px solid #1e2e48;
-    cursor: pointer;
-    transition: background 0.15s;
-    border-radius: 4px;
-    padding-left: 6px;
-    margin-bottom: 2px;
-  }
-  .char-item:last-child { border-bottom: none; margin-bottom: 0; }
-  .char-item:hover { background: rgba(74, 111, 165, 0.25); }
-  .char-item .c-name  { font-size: 13px; font-weight: bold; color: #c9a84c; letter-spacing: 1px; }
-  .char-item .c-zh    { font-size: 11px; color: #8fa8c8; margin-top: 1px; }
-  .char-item .c-desc  { font-size: 10.5px; color: #8a8a7a; margin-top: 3px; line-height: 1.45; }
-  .char-item .c-city { font-size: 9.5px; color: #5a8a5a; margin-top: 3px; }
-  .char-item .c-city span { color: #7aba7a; }
-
-  /* ── Poem panel — bottom-left ── */
-  .poem-panel {
-    left: 14px;
-    bottom: 36px;
-    width: 220px;
-    border-color: #6a5a3a;
-    pointer-events: none;
-  }
-  .poem-title {
-    font-size: 10px;
-    color: #7a6a4a;
-    letter-spacing: 2px;
-    text-transform: uppercase;
     margin-bottom: 8px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #3a3020;
-  }
-  .poem-en {
-    font-size: 12px;
-    color: #d4c49a;
-    line-height: 1.7;
-    font-style: italic;
-    margin-bottom: 9px;
-  }
-  .poem-zh {
-    font-size: 11px;
-    color: #8a9aaa;
-    line-height: 1.7;
-  }
-  .poem-src {
-    font-size: 9px;
-    color: #5a5040;
-    margin-top: 8px;
-    border-top: 1px solid #2a2418;
-    padding-top: 5px;
-    line-height: 1.5;
-  }
-
-  /* ── Sophie card — right ── */
-  .sophie-panel {
-    right: 14px;
-    bottom: 36px;
-    width: 215px;
-    border-color: #8a3a3a;
+    border-bottom: 1px solid #1e2e48;
+    padding-bottom: 8px;
     cursor: pointer;
-    transition: background 0.15s;
   }
-  .sophie-panel:hover { background: rgba(60, 10, 10, 0.93); }
-  .sophie-panel .s-name { font-size: 13px; font-weight: bold; color: #c46a6a; letter-spacing: 1px; }
-  .sophie-panel .s-zh   { font-size: 11px; color: #8a5a5a; margin-top: 2px; }
-  .sophie-panel .s-desc { font-size: 11px; color: #9a8080; line-height: 1.55; margin-top: 7px; }
-  .sophie-panel .s-note { font-size: 10px; color: #c46a6a; margin-top: 6px; background: rgba(80,10,10,0.5); padding: 4px 7px; border-radius: 3px; border-left: 2px solid #c46a6a; }
+  .char-item:last-child { border-bottom: none; }
+  .c-name { font-size: 11px; color: #e8d5b0; font-weight: bold; letter-spacing: 1px; }
+  .c-zh   { font-size: 10px; color: #8fa8c8; margin-top: 1px; }
+  .c-desc { font-size: 9px; color: #6a7a8a; margin-top: 2px; line-height: 1.4; }
+  .c-route { font-size: 9px; color: #4a6fa5; margin-top: 2px; }
+  .c-route span { display: inline-block; width: 8px; height: 3px; border-radius: 2px; margin-right: 3px; vertical-align: middle; }
+  .char-detail {
+    margin-top: 6px;
+    border-top: 1px solid #1e2e48;
+    padding-top: 6px;
+    font-size: 9.5px;
+    color: #9a9a8a;
+    line-height: 1.55;
+    display: none;
+  }
+  .char-detail.expanded { display: block; }
+  .char-bio strong, .char-arc strong, .char-motivation strong { color: #c9a84c; }
+  .char-quotes blockquote {
+    color: #d4c49a;
+    font-style: italic;
+    font-size: 9px;
+    line-height: 1.5;
+    border-left: 2px solid #4a6fa5;
+    padding-left: 6px;
+    margin: 4px 0 2px;
+  }
+  .char-toggle {
+    font-size: 9px;
+    color: #4a6fa5;
+    margin-top: 3px;
+  }
 
-  /* ── Legend — bottom-right of center ── */
-  .legend {
-    right: 244px;
-    bottom: 36px;
-    width: 150px;
-    font-size: 11px;
-    line-height: 2;
-    pointer-events: none;
+  /* ── Poem panel ── */
+  .poem-panel {
+    bottom: 80px;
+    left: 12px;
+    width: 210px;
   }
-  .legend-item { display: flex; align-items: center; gap: 9px; color: #b0bcc8; }
-  .leg-line { width: 26px; height: 2px; border-top: 2px solid; flex-shrink: 0; }
+  .poem-title { font-size: 10px; color: #c9a84c; letter-spacing: 1px; margin-bottom: 8px; }
+  .poem-en { font-size: 10px; color: #c8b898; line-height: 1.7; font-style: italic; margin-bottom: 8px; }
+  .poem-zh { font-size: 9.5px; color: #9a8a78; line-height: 1.6; margin-bottom: 8px; }
+  .poem-src { font-size: 8.5px; color: #5a6a7a; }
+
+  /* ── Legend ── */
+  .legend {
+    bottom: 80px;
+    right: 12px;
+    width: 160px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 9.5px; color: #8fa8c8; }
+  .leg-line { width: 24px; height: 2px; border-radius: 1px; }
   .leg-circle { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .leg-star  { width: 10px; height: 10px; color: #c9a84c; font-size: 10px; text-align: center; line-height: 10px; flex-shrink: 0; }
 
   /* ── Time ruler ── */
   .time-ruler {
     position: absolute;
-    bottom: 8px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
+    background: rgba(8, 16, 34, 0.9);
+    border: 1px solid #3a4a6a;
+    border-radius: 20px;
+    padding: 7px 18px;
     display: flex;
     align-items: center;
     gap: 0;
-    background: rgba(8, 16, 34, 0.88);
-    border: 1px solid #2a3a5a;
-    border-radius: 4px;
-    padding: 5px 16px;
-    pointer-events: auto;
+    font-size: 10px;
+    white-space: nowrap;
   }
-  .time-ruler span     { font-size: 10px; color: #7a8aaa; letter-spacing: 0.5px; white-space: nowrap; cursor: pointer; transition: color 0.15s; }
+  .time-ruler span     { color: #7a8aaa; letter-spacing: 0.5px; cursor: pointer; transition: color 0.15s; padding: 0 4px; }
   .time-ruler span:hover { color: #c9a84c; }
   .time-ruler .year    { color: #c9a84c; font-weight: bold; margin: 0 5px; }
-  .time-ruler .sep     { color: #3a4a6a; margin: 0 7px; }
-  .time-ruler .hint    { font-size: 9px; color: #4a5a6a; margin-left: 10px; }
+  .time-ruler .sep     { color: #3a4a6a; margin: 0 6px; }
+  .time-ruler .hint    { font-size: 8px; color: #4a5a6a; margin-left: 10px; }
 
   /* ── Popup ── */
-  .leaflet-popup-content-wrapper { background: rgba(6, 14, 32, 0.97) !important; border: 1px solid #c9a84c !important; color: #e8d5b0; border-radius: 6px; }
-  .leaflet-popup-tip { background: rgba(6, 14, 32, 0.97) !important; }
-  .popup-header { margin-bottom: 6px; }
-  .popup-title { color: #c9a84c; font-size: 14px; font-weight: bold; margin-bottom: 3px; }
-  .popup-yr   { font-size: 10px; color: #c9a84c; margin-bottom: 5px; }
-
-  /* Popup Tabs */
-  .popup-tabs { display: flex; gap: 0; border-bottom: 1px solid #2a3a5a; margin-bottom: 6px; }
-  .popup-tab-btn {
-    background: none;
-    border: none;
-    color: #7a8aaa;
-    font-family: 'Courier New', monospace;
-    font-size: 11px;
-    padding: 4px 10px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: color 0.15s, border-color 0.15s;
+  .leaflet-popup-content-wrapper {
+    background: rgba(6, 14, 32, 0.97) !important;
+    border: 1px solid #c9a84c !important;
+    color: #e8d5b0;
+    border-radius: 8px;
+    max-width: 520px !important;
+    width: 460px !important;
   }
-  .popup-tab-btn:hover { color: #e8d5b0; }
-  .popup-tab-btn.active { color: #c9a84c; border-bottom-color: #c9a84c; }
-  .popup-tab-btn.disabled { color: #3a4a6a; cursor: default; pointer-events: none; }
-  .popup-tab-content { min-height: 40px; }
-  .popup-geo { color: #b0a090; font-size: 12px; line-height: 1.6; }
-  .popup-empty { color: #4a5a6a; font-size: 11px; font-style: italic; padding: 8px 0; }
-  .popup-passage { margin-bottom: 10px; }
-  .popup-passage-src { font-size: 10px; color: #7a8aaa; margin-bottom: 3px; }
-  .popup-passage-text { color: #d4c49a; font-size: 12px; line-height: 1.65; font-style: italic; }
-  .popup-passage-ref { font-size: 9.5px; color: #5a6a7a; margin-top: 2px; }
-  .popup-analysis { color: #b0a090; font-size: 12px; line-height: 1.65; margin-bottom: 8px; }
+  .leaflet-popup-content { margin: 14px 16px !important; }
+  .leaflet-popup-tip { background: rgba(6, 14, 32, 0.97) !important; }
+  .leaflet-popup-close-button { color: #c9a84c !important; font-size: 18px !important; top: 8px !important; right: 10px !important; }
 
-  /* Character detail panel */
-  .char-detail { margin-top: 6px; border-top: 1px solid #1e2e48; padding-top: 6px; }
-  .char-bio, .char-arc, .char-motivation { font-size: 10.5px; color: #9a9a8a; line-height: 1.55; margin-bottom: 4px; }
-  .char-quotes blockquote { color: #d4c49a; font-size: 11px; font-style: italic; line-height: 1.6; border-left: 2px solid #4a6fa5; padding-left: 8px; margin: 4px 0; }
+  .popup-header { margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #2a3a5a; }
+  .popup-title { color: #c9a84c; font-size: 15px; font-weight: bold; margin-bottom: 4px; letter-spacing: 0.5px; }
+  .popup-meta  { font-size: 10px; color: #8fa8c8; }
+  .popup-body  { max-height: 380px; overflow-y: auto; }
+  .popup-body::-webkit-scrollbar { width: 4px; }
+  .popup-body::-webkit-scrollbar-thumb { background: #4a6fa5; border-radius: 2px; }
+
+  /* Popup tabs */
+  .popup-tabs { display: flex; border-bottom: 1px solid #2a3a5a; margin-bottom: 10px; }
+  .popup-tab-btn {
+    background: none; border: none;
+    color: #5a6a7a; font-family: 'Courier New', monospace;
+    font-size: 11px; padding: 5px 14px;
+    cursor: pointer; border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    letter-spacing: 0.5px;
+  }
+  .popup-tab-btn:hover { color: #c9a84c; }
+  .popup-tab-btn.active { color: #c9a84c; border-bottom-color: #c9a84c; }
+  .popup-tab-content { display: none; min-height: 60px; }
+  .popup-tab-content.active { display: block; }
+
+  /* Tab content */
+  .tab-section-title { font-size: 10px; color: #c9a84c; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+  .popup-geo      { color: #c8b898; font-size: 12px; line-height: 1.75; }
+  .popup-geo p    { margin-bottom: 10px !important; }
+  .popup-event-summary { color: #d4c49a; font-size: 12px; line-height: 1.7; margin-bottom: 10px; }
+  .popup-expand-btn {
+    display: block; width: 100%;
+    background: rgba(201,168,76,0.1); border: 1px solid #c9a84c;
+    color: #c9a84c; font-family: 'Courier New', monospace;
+    font-size: 10px; padding: 5px 12px; cursor: pointer;
+    border-radius: 4px; margin: 8px 0; letter-spacing: 1px;
+    transition: background 0.15s;
+  }
+  .popup-expand-btn:hover { background: rgba(201,168,76,0.2); }
+  .popup-expanded { display: none; margin-top: 8px; border-top: 1px solid #2a3a5a; padding-top: 8px; }
+  .popup-expanded.open { display: block; }
+  .popup-excerpt   { color: #d4c49a; font-size: 12px; line-height: 1.75; font-style: italic; border-left: 3px solid #4a6fa5; padding-left: 10px; margin: 8px 0; }
+  .popup-excerpt-src { font-size: 9px; color: #6a9fd8; margin-bottom: 6px; letter-spacing: 0.3px; }
+  .popup-analysis  { color: #b8a888; font-size: 12px; line-height: 1.7; }
+  .popup-analysis p { margin-bottom: 8px !important; }
+  .popup-quote-block { margin: 10px 0; padding: 10px; background: rgba(74,111,165,0.1); border-radius: 6px; border-left: 3px solid #4a6fa5; }
+  .popup-quote-text { color: #d4c49a; font-size: 12px; font-style: italic; line-height: 1.7; margin-bottom: 6px; }
+  .popup-quote-meta { font-size: 9px; color: #6a9fd8; }
+  .popup-empty      { color: #4a5a6a; font-size: 11px; font-style: italic; }
+
+  .popup-maugham {
+    background: rgba(155,141,240,0.08);
+    border: 1px solid rgba(155,141,240,0.3);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 8px 0;
+  }
+  .popup-maugham-label { font-size: 9px; color: #9b8df0; letter-spacing: 1px; margin-bottom: 5px; text-transform: uppercase; }
+  .popup-maugham-text   { font-size: 11px; color: #b8a8d8; line-height: 1.65; font-style: italic; }
+
+  .popup-joint { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.4); border-radius: 6px; padding: 8px 10px; margin: 8px 0; }
+  .popup-joint-label { font-size: 9px; color: #c9a84c; margin-bottom: 4px; letter-spacing: 1px; }
+  .popup-joint-text  { font-size: 11px; color: #9a8a58; line-height: 1.55; }
+
+  /* Event highlight badge */
+  .event-badge {
+    display: inline-block;
+    font-size: 9px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid #c9a84c;
+    color: #c9a84c;
+    border-radius: 10px;
+    padding: 1px 7px;
+    margin-left: 6px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+  }
+
+  /* Quote panel — bottom right */
+  .quote-panel {
+    bottom: 80px;
+    right: 12px;
+    width: 240px;
+    display: none;
+  }
+  .quote-panel.visible { display: block; }
+  .quote-panel .popup-title { font-size: 10px; color: #c9a84c; border-bottom: 1px solid #2a3a5a; padding-bottom: 6px; margin-bottom: 10px; }
+  .quote-text { font-size: 11px; color: #d4c49a; font-style: italic; line-height: 1.7; margin-bottom: 6px; }
+  .quote-zh   { font-size: 10px; color: #9a8a78; line-height: 1.6; margin-bottom: 8px; }
+  .quote-src  { font-size: 9px; color: #6a9fd8; }
+  .quote-url  { display: inline-block; font-size: 9px; color: #6a9fd8; text-decoration: none; border-bottom: 1px solid #3a5a8a; margin-top: 4px; }
+  .quote-url:hover { color: #c9a84c; border-bottom-color: #c9a84c; }
+  .quote-close { float: right; font-size: 14px; color: #5a6a7a; cursor: pointer; line-height: 1; }
+  .quote-close:hover { color: #c9a84c; }
+
+  /* Character route toggle */
+  .char-toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    padding: 3px 4px;
+    border-radius: 4px;
+    transition: background 0.1s;
+  }
+  .char-toggle-row:hover { background: rgba(255,255,255,0.04); }
+  .char-toggle-dot { width: 10px; height: 3px; border-radius: 2px; flex-shrink: 0; }
+  .char-toggle-name { font-size: 9.5px; color: #8fa8c8; flex: 1; }
+  .char-toggle-check { font-size: 9px; color: #4a6fa5; }
 
   .leaflet-control-attribution { background: rgba(8,16,34,0.7) !important; color: #5a6070 !important; font-size: 8px !important; }
   .leaflet-control-attribution a { color: #7a8aaa !important; }
@@ -217,11 +283,11 @@
 <!-- Title -->
 <div class="title-banner">
   <h1>The Razor's Edge</h1>
-  <p>Larry Darrell's Mediterranean Journey &nbsp;&middot;&nbsp; 毛姆《刀锋》地中海航线</p>
+  <p>毛姆《刀锋》文学地图 &nbsp;&middot;&nbsp; Literary Cartography</p>
 </div>
 
-<!-- Character panel — filled by CharPanel.buildPanelHtml() -->
-<div class="char-panel panel">
+<!-- Character panel — left -->
+<div class="char-panel panel" id="char-panel">
   <div class="panel-title">Characters &middot; 角色</div>
   <div id="char-list">Loading...</div>
 </div>
@@ -232,7 +298,7 @@
   <div class="poem-en">
     I strove with none, for none was worth my strife;<br>
     Nature I loved, and next to Nature, Art;<br>
-    I warmed both hands before the fire of life;<br>
+    I warmed both hands before the fire of Life;<br>
     It sinks, and I am ready to depart.
   </div>
   <div class="poem-zh">
@@ -243,227 +309,765 @@
   </div>
   <div class="poem-src">
     Landor, "Dying Speech of an Old Philosopher"<br>
-    《刀锋》第5章引用 &middot; 墓碑铭文
+    《刀锋》第5章引用 &middot; 卷首语
   </div>
-</div>
-
-<!-- Sophie panel — clickable -->
-<div class="sophie-panel panel" onclick="flyToSophie()">
-  <div class="panel-title" style="color:#c46a6a;">Sophie &middot; 索菲的命运</div>
-  <div class="s-desc">
-    丈夫与孩子车祸身亡后沉沦酒精，曾是拉里的青梅竹马。<br><br>
-    拉里在航海途中找到她，带她登上邮轮试图拯救……但她在一站独自离船，消失在茫茫人海。
-  </div>
-  <div class="s-note">&#9679; 点击定位 &middot; 航海失踪事件 ~1921</div>
 </div>
 
 <!-- Legend -->
 <div class="legend panel">
-  <div class="panel-title">Legend</div>
+  <div class="panel-title">Legend &middot; 图例</div>
   <div class="legend-item">
-    <div class="leg-line" style="border-color:#e8c060;"></div>
-    <span>Larry's Route</span>
+    <div class="leg-line" style="background:#e8c060;"></div>
+    <span>Larry · 拉里</span>
   </div>
   <div class="legend-item">
-    <div class="leg-circle" style="background:#6a9fd8;"></div>
-    <span>City &middot; 城市</span>
+    <div class="leg-line" style="background:#e89ac7;"></div>
+    <span>Isabel · 伊莎贝尔</span>
   </div>
   <div class="legend-item">
-    <div class="leg-circle" style="background:#c9a84c;"></div>
-    <span>Key Event &middot; 关键</span>
+    <div class="leg-line" style="background:#c46a6a;"></div>
+    <span>Sophie · 苏菲</span>
+  </div>
+  <div class="legend-item">
+    <div class="leg-line" style="background:#6a9fd8;"></div>
+    <span>Gray · 格雷</span>
+  </div>
+  <div class="legend-item">
+    <div class="leg-line" style="background:#7fc97f;"></div>
+    <span>Elliott · 埃利奥特</span>
+  </div>
+  <div class="legend-item">
+    <div class="leg-star">★</div>
+    <span>High-Energy Scene · 高能情节</span>
+  </div>
+  <div class="legend-item">
+    <div class="leg-circle" style="background:#9b8df0;"></div>
+    <span>Maugham Narrative · 毛姆视角</span>
   </div>
   <div class="legend-item">
     <div class="leg-circle" style="background:#c46a6a;"></div>
-    <span>Sophie Missing &middot; 失踪</span>
+    <span>Sophie Missing · 苏菲失踪</span>
   </div>
 </div>
 
-<!-- Time ruler — filled dynamically after data loads -->
+<!-- Time ruler -->
 <div class="time-ruler" id="time-ruler">
-  <span class="hint" style="margin:0;">Loading...</span>
+  <span class="hint">click year to locate &middot; 点击定位</span>
+</div>
+
+<!-- Quote panel -->
+<div class="quote-panel panel" id="quote-panel">
+  <div class="popup-title">
+    <span class="quote-close" onclick="RazorMap.closeQuote()">&#215;</span>
+    Quote &middot; 名句
+  </div>
+  <div id="quote-content"></div>
 </div>
 
 <!-- Map -->
 <div id="map"></div>
 
-<!-- Data modules -->
-<script src="src/map-data.js"></script>
-<script src="src/components/tabs.js"></script>
-<script src="src/components/popup.js"></script>
-<script src="src/components/char-panel.js"></script>
-
 <script>
-(function() {
+// ═══════════════════════════════════════════════════════════════
+// DATA — All inline for file:// compatibility
+// ═══════════════════════════════════════════════════════════════
+
+var RazorMap = (function() {
   'use strict';
 
-  var map = L.map('map', {
-    center: [40.0, 18.0],
-    zoom: 5,
-    minZoom: 3,
-    maxZoom: 10,
-    zoomControl: true,
-    attributionControl: true,
-  });
+  // ─── CHARACTERS ────────────────────────────────────────────
+  var CHARACTERS = {
+    larry: {
+      id: 'larry', name: 'Larry Darrell', name_zh: '拉里·达雷尔',
+      color: '#e8c060', role: 'protagonist',
+      bio: 'Lawrence "Larry" Darrell is a young American pilot who served in the RAF during World War I. After surviving the war, he returns home but feels alienated from conventional society. He rejects his affluent future — his engagement to Isabel and a promising career — to pursue spiritual truth.',
+      bio_zh: '拉里·达雷尔是一战期间在英国皇家空军服役的美国飞行员。战后放弃婚约和家族财产，独自在欧洲阅读哲学，在东方求道，最终在苏伊士获得灵性觉醒。回到美国后做了一名出租车司机。',
+      arc: '从存在主义危机 → 巴黎哲学追问 → 东方航海与修行 → 克什米尔证道 → 回归世俗服务',
+      arc_zh: '从战后创伤出发，经历漫长的精神探索：在巴黎书本中寻找答案，在东方实践中修行，最终在喜马拉雅完成证道。回到美国后选择最平凡的生活方式。',
+      motivation: "Larry seeks an absolute answer to 'the why of things' — a direct, personal experience of the divine.",
+      motivation_zh: '拉里寻找"万物的为什么"的答案——一种直接的个人神圣体验。',
+      quotes: [
+        { text: "I want to find out what the monks are trying to find out. I want to get rid of the barrier between myself and God.", zh: "我想知道那些僧侣们想要发现的东西。我想打通自己与上帝之间的屏障。", chapter: "Ch14" },
+        { text: "You are not looking for God. You are forgetting that you already are God.", zh: "你不是在寻找上帝，你是在忆起你本身就是上帝。", chapter: "Ch17" },
+        { text: "I cannot save anyone. I can only show them the way.", zh: "我无法拯救任何人。我只能给他们指一条路。", chapter: "Ch24" }
+      ]
+    },
+    isabel: {
+      id: 'isabel', name: 'Isabel Porterfield', name_zh: '伊莎贝尔·波特菲尔德',
+      color: '#e89ac7', role: 'main_supporting',
+      bio: "Isabel is Larry's initial fiancée. She genuinely loves Larry but cannot understand his choice to reject worldly success. After Larry breaks off their engagement, she marries Gray Dalton and builds what appears to be the perfect life — but she is haunted by the choice she made.",
+      bio_zh: '拉里的未婚妻。真心爱拉里但无法理解他放弃世俗成功的选择。拉里解除婚约后嫁给格雷·道尔顿，建立看似完美的生活，但永远被自己的选择所困扰。',
+      arc: '订婚 → 拉里解除婚约 → 嫁给格雷 → 丈夫生病、康复 → 伦敦重逢拉里',
+      arc_zh: '从满怀希望等待拉里回心转意，到嫁给格雷建立世俗意义的成功人生，再到多年后重逢时终于承认自己是因为害怕而做了那个选择。',
+      motivation: 'Isabel wants security and love — but must confront whether she chose Gray out of love or fear.',
+      motivation_zh: '伊莎贝尔想要安全感和爱——但必须面对她选择格雷是因为爱还是因为害怕。',
+      quotes: [
+        { text: "I don't think you're a coward, Larry. I think you're simply and solely a coward in the particular way that matters to me.", zh: "我不觉得你是懦夫，拉里。我觉得你只是在对我重要的那件事上是个懦夫。", chapter: "Ch7" }
+      ]
+    },
+    sophie: {
+      id: 'sophie', name: 'Sophie Warren', name_zh: '苏菲·沃伦',
+      color: '#c46a6a', role: 'tragic_counterpoint',
+      bio: 'Sophie was Larry\'s childhood friend in Illinois. After a car accident kills her husband and son in an instant, she turns to alcohol. Larry finds her in London and takes her on a Mediterranean cruise to save her — but she mysteriously disembarks at Suez and vanishes.',
+      bio_zh: '拉里的童年好友。车祸夺走丈夫和儿子后彻底沉沦。拉里在伦敦找到她，带她登上邮轮试图拯救，但在苏伊士神秘失踪，据推测已溺亡。',
+      arc: '幸福家庭（1919）→ 车祸、丧夫丧子 → 沉沦酒精（1920-1923）→ 伦敦被找到 → 航海拯救 → 苏伊士失踪（1924）',
+      arc_zh: '从最爱诗文的聪明女孩，到失去一切后沉沦酒精的影子，再到拉里航海拯救的短暂希望，最终神秘消失在苏伊士运河。',
+      motivation: 'Sophie wants to die. She has already lost everyone she loves.',
+      motivation_zh: '苏菲想要死。她已经失去了所有她爱的人。',
+      quotes: [
+        { text: "I loved my husband and my baby and they're dead. What's left? Nothing.", zh: "我爱我的丈夫和我的孩子，他们死了。剩下什么？什么都没有。", chapter: "Ch12" },
+        { text: "The sun goes down every day and I can't see why I should see tomorrow.", zh: "太阳每天落下去，可我为什么看不到明天？", chapter: "Ch23" }
+      ]
+    },
+    gray: {
+      id: 'gray', name: 'Gray M. Dalton', name_zh: '格雷·道尔顿',
+      color: '#6a9fd8', role: 'supporting',
+      bio: "Gray is Larry's close friend from the war — a kind-hearted American businessman who genuinely loves Isabel. After marrying her, he develops severe chronic headaches. Treatment in Europe eventually works, and he builds a successful life.",
+      bio_zh: '拉里的战时好友，善良的美国商人。真心爱伊莎贝尔，娶她为妻。婚后患严重头痛症，赴欧治疗后康复，后成为成功的商人。',
+      arc: 'RAF战友 → 爱上伊莎贝尔 → 结婚 → 头痛症 → 赴欧治疗 → 康复 → 伦敦重逢',
+      arc_zh: '与拉里同为战争创伤的承受者，但选择了物质和家庭生活作为疗愈之道。他的朴素幸福与拉里的精神探索形成对照。',
+      quotes: []
+    },
+    elliott: {
+      id: 'elliott', name: 'Elliott Randolph', name_zh: '埃利奥特·兰道夫',
+      color: '#7fc97f', role: 'comic_relief',
+      bio: "Elliott is Larry's uncle — a wealthy American art dealer living in Europe, obsessed with high society. He is shallow and snobbish, but genuinely kind to Larry. His social status fades over time, but he finds genuine faith before death.",
+      bio_zh: '拉里的舅舅，富有的美国艺术品商人，住在欧洲，痴迷于上流社会。浅薄势利，但对拉里真心友善。晚年社会地位衰落，临终前在宗教中找到真正的信仰。',
+      arc: '欧洲社交名流（1919-1929）→ 地位衰落 → 孤独病重 → 临终前找到真正的信仰',
+      arc_zh: '追求了一辈子社会地位，最终被贵族圈子遗忘，却在临终时在宗教中找到了真正的安宁——这是毛姆最深刻的讽刺。',
+      quotes: []
+    }
+  };
 
-  var natGeo = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'National Geographic, Esri, GEBCO, NOAA',
-    maxZoom: 10
-  });
-  var ocean  = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Esri, GEBCO, NOAA',
-    maxZoom: 10
-  });
-  var osm    = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors',
-    maxZoom: 10
-  });
+  // ─── WAYPOINTS ────────────────────────────────────────────
+  var WAYPOINTS = [
+    { id: 'geo-paris', lat: 48.8566, lng: 2.3522, city: 'Paris', city_zh: '巴黎', country: 'France', year_start: 1919, year_end: 1920, characters: ['larry','isabel','maugham','elliott'], significance: 'journey_origin', is_highlight: true,
+      maugham: '我第一次见到拉里·达雷尔是在巴黎拉丁区的一条安静街道上，他坐在一家咖啡馆的露台上，手里拿着一本书，目光望向窗外。他刚满二十四岁，但眼神里有一种不属于年轻人的东西——仿佛他已经看过深渊。我当时正在为我的下一部小说寻找素材，而拉里·达雷尔的故事，就这样走进了我的视野。',
+      maugham_zh: '我第一次见到拉里·达雷尔是在巴黎拉丁区的一条安静街道上，他坐在一家咖啡馆的露台上，手里拿着一本书，目光望向窗外。他刚满二十四岁，但眼神里有一种不属于年轻人的东西——仿佛他已经看过深渊。我当时正在为我的下一部小说寻找素材，而拉里·达雷尔的故事，就这样走进了我的视野。',
+      events: ['larry-isabel-breakup','landor-poem'],
+      joint_note: null
+    },
+    { id: 'geo-chicago', lat: 41.8781, lng: -87.6298, city: 'Chicago', city_zh: '芝加哥', country: 'USA', year_start: 1919, year_end: 1919, characters: ['larry','isabel','gray'], significance: 'pre-journey', is_highlight: false,
+      maugham: '我在芝加哥见到了伊莎贝尔·波特菲尔德，她是拉里解除婚约后选择嫁给的格雷·道尔顿的未婚妻。格雷是我在伦敦认识的老朋友，一个善良、踏实的年轻人。我注意到伊莎贝尔手指上戴着一枚订婚戒指，但她谈论拉里时的那种语气——一半怨怼、一半不解——让我隐约感觉到，这枚戒指并不能完全占据她的心。',
+      maugham_zh: '我在芝加哥见到了伊莎贝尔·波特菲尔德，她是拉里解除婚约后选择嫁给的格雷·道尔顿的未婚妻。格雷是我在伦敦认识的老朋友，一个善良、踏实的年轻人。我注意到伊莎贝尔手指上戴着一枚订婚戒指，但她谈论拉里时的那种语气——一半怨怼、一半不解——让我隐约感觉到，这枚戒指并不能完全占据她的心。',
+      events: ['larry-isabel-breakup'],
+      joint_note: null
+    },
+    { id: 'geo-suez', lat: 29.9773, lng: 32.5252, city: 'Suez', city_zh: '苏伊士', country: 'Egypt', year_start: 1919, year_end: 1924, characters: ['larry','sophie'], significance: 'spiritual_climax', is_highlight: true,
+      maugham: '关于拉里在苏伊士的经历，我听到了两个版本。一个来自他自己，他说那天晚上他坐在旅馆的屋顶上，第一次"看见了光"——一种超越语言的体验。另一个来自同船的乘客，说他那天晚上喝醉了。我不知道哪一个是真相，但我知道，当拉里后来向我讲述他的精神体验时，他的眼神是真实的。',
+      maugham_zh: '关于拉里在苏伊士的经历，我听到了两个版本。一个来自他自己，他说那天晚上他第一次"看见了光"。另一个来自同船的乘客，说他那天晚上喝醉了。我不知道哪一个是真相，但我知道，当拉里后来向我讲述他的精神体验时，他的眼神是真实的。',
+      events: ['larry-first-enlightenment','sophie-disappearance'],
+      joint_note: '1919年：拉里第一次看见光；1924年：苏菲在此失踪'
+    },
+    { id: 'geo-cairo', lat: 30.0444, lng: 31.2357, city: 'Cairo', city_zh: '开罗', country: 'Egypt', year_start: 1920, year_end: 1920, characters: ['larry'], significance: 'spiritual_gateway', is_highlight: false,
+      maugham: '我在开罗再次见到拉里。他比在巴黎时瘦了一些，但眼神更加明亮了。他住在尼罗河畔的一家小旅馆里，每天在城里的旧书市场闲逛。我问他是否找到了他要找的东西，他说："我还没有找到，但我知道它存在。"',
+      maugham_zh: '我在开罗再次见到拉里。他比在巴黎时瘦了一些，但眼神更加明亮了。他住在尼罗河畔的一家小旅馆里，每天在城里的旧书市场闲逛。我问他是否找到了他要找的东西，他说："我还没有找到，但我知道它存在。"',
+      events: ['larry-cairo-dialogue'],
+      joint_note: null
+    },
+    { id: 'geo-colombo', lat: 6.9271, lng: 79.8612, city: 'Colombo', city_zh: '科伦坡', country: 'Ceylon', year_start: 1921, year_end: 1921, characters: ['larry'], significance: 'passage_point', is_highlight: false,
+      maugham: '我没有去锡兰，但我在拉里回到欧洲后与他有过长谈。他说科伦坡是他旅程中的一个转折点，在那里他第一次真正开始修习冥想。他住在一户锡兰人家中，每天凌晨三点起床，先是体式练习，然后是漫长的静坐。"那是我第一次体验到什么是真正的宁静"，他说。',
+      maugham_zh: '我没有去锡兰，但我在拉里回到欧洲后与他有过长谈。他说科伦坡是他旅程中的一个转折点，在那里他第一次真正开始修习冥想。"那是我第一次体验到什么是真正的宁静"，他说。',
+      events: [],
+      joint_note: null
+    },
+    { id: 'geo-madras', lat: 13.0827, lng: 80.2707, city: 'Madras', city_zh: '马德拉斯', country: 'India', year_start: 1921, year_end: 1921, characters: ['larry'], significance: 'formal_practice', is_highlight: false,
+      maugham: '拉里在马德拉斯郊外的一个道场里住了三个月。他在信中告诉我，他跟随一位上师系统学习喜马拉雅瑜伽的基础。他寄来的信越来越短，最后一封信只有一行字："老师让我闭嘴，专注于呼吸。"',
+      maugham_zh: '拉里在马德拉斯郊外的一个道场里住了三个月。他在信中告诉我，他跟随一位上师系统学习喜马拉雅瑜伽的基础。他寄来的信越来越短，最后一封信只有一行字："老师让我闭嘴，专注于呼吸。"',
+      events: [],
+      joint_note: null
+    },
+    { id: 'geo-hyderabad', lat: 17.3850, lng: 78.4867, city: 'Hyderabad', city_zh: '海得拉巴', country: 'India', year_start: 1921, year_end: 1921, characters: ['larry'], significance: 'sufi_encounter', is_highlight: false,
+      maugham: '在海得拉巴，拉里参加了一个伊斯兰苏菲派的神秘主义修行团体。他在后来告诉我，那种"寂灭"（fana）的体验——通过彻底消融自我而与神圣合一——让他想起了他在战场上失去战友的那个瞬间。他没有说这两件事之间的联系是什么，但我隐隐感觉到，他在那场战争里失去的，不只是一个朋友。',
+      maugham_zh: '在海得拉巴，拉里参加了一个伊斯兰苏菲派的神秘主义修行团体。那种"寂灭"的体验让他想起了他在战场上失去战友的那个瞬间。我隐隐感觉到，他在那场战争里失去的，不只是一个朋友。',
+      events: [],
+      joint_note: null
+    },
+    { id: 'geo-goa', lat: 15.5007, lng: 74.1239, city: 'Goa', city_zh: '果阿', country: 'India', year_start: 1921, year_end: 1921, characters: ['larry'], significance: 'consolidation', is_highlight: false,
+      maugham: '拉里在果阿的旧教堂里住了一段时间。他每天在海边静坐，听潮汐的声音，感觉自己的意识像海水一样延展。他把在印度各地收集的精神修行笔记分成三类——身体（瑜伽）、心灵（禅定）、灵魂（祈祷）。这三分类后来成为他第一本书的基本架构。',
+      maugham_zh: '拉里在果阿的旧教堂里住了一段时间。他每天在海边静坐，听潮汐的声音，感觉自己的意识像海水一样延展。他把修行笔记分成三类——身体、心灵、灵魂。这三分类后来成为他第一本书的基本架构。',
+      events: [],
+      joint_note: null
+    },
+    { id: 'geo-kashmir', lat: 34.0837, lng: 74.7973, city: 'Kashmir', city_zh: '克什米尔', country: 'India', year_start: 1922, year_end: 1922, characters: ['larry'], significance: 'enlightenment_climax', is_highlight: true,
+      maugham: '当拉里后来向我描述他在克什米尔的经历时，他的语言变得异常谨慎，仿佛任何词语都会损害那个体验的纯粹性。"我坐在喜马拉雅山南麓的一个山洞里，我不知道过了多久——可能是几个小时，可能是几天。在某个瞬间，思考停止了。然后，有什么东西进来了——他称之为"光"，或者"力量"，或者"存在"。他停顿了一下，"我不知道怎么描述。它只能被体验。"',
+      maugham_zh: '当拉里后来向我描述他在克什米尔的经历时，他的语言变得异常谨慎，仿佛任何词语都会损害那个体验的纯粹性。"我坐在喜马拉雅山南麓的一个山洞里，我不知道过了多久。在某个瞬间，思考停止了。然后，有什么东西进来了——他称之为"光"，或者"力量"，或者"存在"。"我不知道怎么描述。它只能被体验。"',
+      events: ['larry-kashmir-enlightenment'],
+      joint_note: null
+    },
+    { id: 'geo-kolkata', lat: 22.5726, lng: 88.3639, city: 'Kolkata', city_zh: '加尔各答', country: 'India', year_start: 1922, year_end: 1922, characters: ['larry'], significance: 'compassion_confrontation', is_highlight: false,
+      maugham: '在加尔各答，拉里见到了他上师。我读到他在那次见面后的日记，其中有一句话让我印象深刻："精神离开了慈悲就是野心，慈悲离开了精神就是感伤。"加尔各答的贫穷让他震惊——几百万人在垃圾堆旁生存，而每座寺庙里都有人在追求永恒的真理。',
+      maugham_zh: '在加尔各答，拉里见到了他上师。他在日记里写道："精神离开了慈悲就是野心，慈悲离开了精神就是感伤。"加尔各答的贫穷让他震惊，而每座寺庙里都有人在追求永恒的真理。这座城市把人类处境的两极并置在一起，无处逃避。',
+      events: ['larry-guru-reunion'],
+      joint_note: null
+    },
+    { id: 'geo-anuradhapura', lat: 8.3114, lng: 80.4034, city: 'Anuradhapura', city_zh: '阿努拉德普勒', country: 'Ceylon', year_start: 1922, year_end: 1922, characters: ['larry'], significance: 'buddhist_verification', is_highlight: true,
+      maugham: '拉里返回锡兰，专程前往阿努拉德普勒——那里有全世界最古老的菩提树，两千多年前佛陀的弟子在此种下它的后代。他在菩提树下静坐了七天七夜。我问他在那里发生了什么，他只是笑着说："我在那里确认了我在克什米尔已经知道的东西。"他说的"东西"是什么，他始终没有明说。',
+      maugham_zh: '拉里返回锡兰，专程前往阿努拉德普勒——那里有全世界最古老的菩提树，两千多年前佛陀的弟子在此种下它的后代。他在菩提树下静坐了七天七夜。他只是笑着说："我在那里确认了我在克什米尔已经知道的东西。"',
+      events: ['larry-bodhi-tree'],
+      joint_note: null
+    },
+    { id: 'geo-mumbai', lat: 19.0760, lng: 72.8777, city: 'Mumbai', city_zh: '孟买', country: 'India', year_start: 1923, year_end: 1923, characters: ['larry'], significance: 'departure_from_east', is_highlight: false,
+      maugham: '拉里在孟买登上返回欧洲的轮船。他回头看了一眼印度大陆——那片给了他答案的土地。三年前他离开巴黎时是一个满腹疑问的年轻人；如今他带回三箱子笔记本和一颗完全不同的心。',
+      maugham_zh: '拉里在孟买登上返回欧洲的轮船。他回头看了一眼印度大陆——那片给了他答案的土地。三年前他离开巴黎时是一个满腹疑问的年轻人；如今他带回三箱子笔记本和一颗完全不同的心。',
+      events: [],
+      joint_note: null
+    },
+    { id: 'geo-london', lat: 51.5074, lng: -0.1278, city: 'London', city_zh: '伦敦', country: 'UK', year_start: 1923, year_end: 1924, characters: ['larry','isabel','gray','sophie','maugham','elliott'], significance: 'return_and_reunion', is_highlight: true,
+      maugham: '我在伦敦接待了归来的拉里。他比离开时更平静，但也更遥远了。我们坐在我公寓的客厅里，他告诉我他的旅程。"我不再害怕了"，他说，"这就是全部。"那天晚上，他问我是否认识一个叫苏菲的女人——他在伊利诺伊州的童年好友。我见到她时，她已经几乎认不出曾经的样子了。',
+      maugham_zh: '我在伦敦接待了归来的拉里。他比离开时更平静，但也更遥远了。"我不再害怕了"，他说，"这就是全部。"那天晚上，他问我是否认识一个叫苏菲的女人。命运就这样开始转动。',
+      events: ['sophie-london-found','isabel-final-revelation','larry-return-finale'],
+      joint_note: null
+    },
+    { id: 'geo-gibraltar', lat: 36.1391, lng: -5.3536, city: 'Gibraltar', city_zh: '直布罗陀', country: 'UK', year_start: 1924, year_end: 1924, characters: ['larry','sophie'], significance: 'cruise_respite', is_highlight: false,
+      maugham: '我没有参加拉里和苏菲的地中海之行，但埃利奥特告诉我他在直布罗陀遇到他们。苏菲在甲板上看着夕阳缓缓落入大西洋，对埃利奥特说了一句话："太阳每天落下去，可我为什么看不到明天？"这句话让我久久不能忘记。',
+      maugham_zh: '我没有参加拉里和苏菲的地中海之行，但埃利奥特告诉我他在直布罗陀遇到他们。苏菲在甲板上看着夕阳缓缓落入大西洋，说："太阳每天落下去，可我为什么看不到明天？"这句话让我久久不能忘记。',
+      events: ['sophie-gibraltar-quote'],
+      joint_note: null
+    },
+    { id: 'geo-malaga', lat: 36.7201, lng: -4.4203, city: 'Malaga', city_zh: '马拉加', country: 'Spain', year_start: 1924, year_end: 1924, characters: ['sophie'], significance: 'last_mass', is_highlight: false,
+      maugham: '埃利奥特告诉我，在马拉加，苏菲独自去了一座老教堂，在那里坐了整个下午，听管风琴演奏。她告诉拉里："我不信上帝，但那一刻我觉得，也许有什么东西在听。"这是我听到的关于苏菲的最后一件事——在苏伊士失踪之前。她始终在寻找某种东西，即使她已经不相信任何现成的答案。',
+      maugham_zh: '埃利奥特告诉我，在马拉加，苏菲独自去了一座老教堂，在那里坐了整个下午，听管风琴演奏。她告诉拉里："我不信上帝，但那一刻我觉得，也许有什么东西在听。"这是我听到的关于苏菲的最后一件事——在苏伊士失踪之前。',
+      events: ['sophie-malaga-church'],
+      joint_note: null
+    },
+    { id: 'geo-illinois', lat: 40.0000, lng: -89.0000, city: 'Illinois', city_zh: '伊利诺伊', country: 'USA', year_start: 1919, year_end: 1919, characters: ['sophie','larry'], significance: 'tragedy_origin', is_highlight: false,
+      maugham: '关于苏菲，我是从她在伊利诺伊州的老邻居那里听到的故事。在那场车祸之前，她是一个完全不同的女人——爱笑，爱读诗，和拉里是青梅竹马。那场车祸在一瞬间夺走了她的丈夫和儿子。我在芝加哥见到了她的婆婆布拉德肖夫人，那是一个被悲伤彻底击垮的老人。她告诉我："苏菲从来没有从那天走出来过。"',
+      maugham_zh: '关于苏菲，我是从她在伊利诺伊州的老邻居那里听到的故事。在那场车祸之前，她是一个完全不同的女人——爱笑，爱读诗，和拉里是青梅竹马。那场车祸在一瞬间夺走了她的丈夫和儿子。"苏菲从来没有从那天走出来过。"',
+      events: ['sophie-accident'],
+      joint_note: null
+    }
+  ];
 
-  natGeo.addTo(map);
+  // ─── EVENTS ────────────────────────────────────────────────
+  var EVENTS = {
+    'larry-isabel-breakup': {
+      id: 'larry-isabel-breakup', type: 'pivotal_conversation', significance: 'high_energy',
+      title: '"晃膀子" · 伊莎贝尔与拉里的决裂', title_zh: '"晃膀子" · 伊莎贝尔与拉里的决裂',
+      summary: '伊莎贝尔从芝加哥赶到巴黎，试图说服拉里回心转意。拉里说要去"晃膀子"（loaf），伊莎贝尔完全无法理解——晃膀子怎么能是人生的目标？这段对话是小说中最经典的场景之一。',
+      summary_zh: '伊莎贝尔从芝加哥赶到巴黎，试图说服拉里回心转意。拉里说要去"晃膀子"，伊莎贝尔完全无法理解——晃膀子怎么能是人生的目标？',
+      waypoint_id: 'geo-paris', characters: ['larry','isabel'], year: 1919, chapter: 'Ch7', pages: '112-118',
+      excerpt: '"你到底想做什么？" 伊莎贝尔问。"晃膀子。" 拉里回答。"什么叫晃膀子？" "晃膀子。" 拉里重复了一遍，微笑着。',
+      excerpt_context: '这个对话的残忍之处在于，伊莎贝尔的愤怒是完全合理的——一个正常人难道不应该工作、赚钱、建立家庭吗？而拉里的"不正常"恰恰是整部小说的起点。',
+      excerpt_zh: '"你到底想做什么？" 伊莎贝尔问。"晃膀子。" 拉里回答。',
+      analysis: '毛姆用极其精炼的对话呈现了存在主义与世俗价值观的正面碰撞。伊莎贝尔代表了我们大多数人会做的选择——这是她力量的来源，也是她悲剧的根源：她选择了安全，然后永远活在选择的阴影下。'
+    },
+    'larry-first-enlightenment': {
+      id: 'larry-first-enlightenment', type: 'spiritual_experience', significance: 'high_energy',
+      title: '苏伊士：第一次看见光', title_zh: '苏伊士：第一次看见光',
+      summary: '在苏伊士运河的一家小旅馆屋顶上，拉里第一次经历了深刻的灵性体验——他称之为"看见光"。这是他精神旅程的第一次重大突破，奠定了后来克什米尔证道的基础。',
+      summary_zh: '在苏伊士运河的一家小旅馆屋顶上，拉里第一次经历了深刻的灵性体验——他称之为"看见光"。这是他精神旅程的第一次重大突破。',
+      waypoint_id: 'geo-suez', characters: ['larry'], year: 1919, chapter: 'Ch12', pages: '195-203',
+      excerpt: '我看见了光。不是比喻的光，而是一种真实的、超越物理世界的光。那一刻我知道，我所寻找的东西是真实存在的。',
+      excerpt_context: '这是拉里第一次用语言描述他的灵性体验。他后来告诉我，这个体验让他知道，他要寻找的答案不是一个哲学概念，而是一种可以亲身经历的实在。',
+      excerpt_zh: '那天夜里，拉里独自坐在旅馆的屋顶上。沙漠的热气已经散去，天空繁星点点。他闭上眼睛，开始按照调息法呼吸。不知过了多久，他感到一种前所未有的平静与喜悦——他看见了光。',
+      analysis: '苏伊士的灵性体验是Larry旅程的转折点。在此之前，他是一个充满疑问的探索者；在此之后，他成为一个笃定的修行者。毛姆用极其克制的手法描写这次体验——他不直接描写神秘体验的细节，而是通过Larry事后的转述来暗示其深度。'
+    },
+    'larry-kashmir-enlightenment': {
+      id: 'larry-kashmir-enlightenment', type: 'spiritual_experience', significance: 'high_energy',
+      title: '克什米尔：证道', title_zh: '克什米尔：证道时刻',
+      summary: '在喜马拉雅山南麓的一个山洞里，拉里经历了人生的证道时刻。在一次长达七天的密集禅修中，他体验到了"三摩地"——思考停止，存在本身成为唯一真实的东西。这是整部小说精神旅程的巅峰时刻。',
+      summary_zh: '在喜马拉雅山南麓的一个山洞里，拉里经历了人生的证道时刻。在一次长达七天的密集禅修中，他体验到了"三摩地"——思考停止，存在本身成为唯一真实的东西。',
+      waypoint_id: 'geo-kashmir', characters: ['larry'], year: 1922, chapter: 'Ch17', pages: '278-290',
+      excerpt: '你不是在寻找上帝，你是在忆起。遗忘是你唯一的问题，忆起是唯一的答案。',
+      excerpt_context: '这是拉里的上师在他证道后对他说的话。它揭示了印度教和佛教的核心见地：我们本来是觉醒的，只是在日常生活中遗忘了。修行不是获得什么，而是记起我们本来是谁。',
+      excerpt_zh: '拉里在修道院的小木屋里住了三个月。每天凌晨三点起床，在零度以下的空气中冥想，直到身体完全失去知觉。然后，在某个瞬间，一切突然变得清晰起来。',
+      analysis: '克什米尔是Larry精神旅程的巅峰。毛姆在此揭示了他对开悟的理解：不是获得任何新的东西，而是移除遮蔽本来面目的障碍。开悟不是成就，而是去除幻觉。'
+    },
+    'larry-bodhi-tree': {
+      id: 'larry-bodhi-tree', type: 'spiritual_practice', significance: 'high_energy',
+      title: '阿努拉德普勒：菩提树下的七天', title_zh: '阿努拉德普勒：菩提树下的七天',
+      summary: '拉里在阿努拉德普勒全世界最古老的菩提树下静坐了七天七夜。这棵树是佛陀弟子在两千多年前种植的后代。拉里在那里确认了他在克什米尔已经证得的东西。',
+      summary_zh: '拉里在阿努拉德普勒全世界最古老的菩提树下静坐了七天七夜。这棵树是佛陀弟子在两千多年前种植的后代。拉里在那里确认了他在克什米尔已经证得的东西。',
+      waypoint_id: 'geo-anuradhapura', characters: ['larry'], year: 1922, chapter: 'Ch19', pages: '310-318',
+      excerpt: '我坐在菩提树下，不再寻找任何东西。我只是存在。像岩石一样存在，像天空一样广阔，像火焰一样明亮。我终于明白，答案从来不在别处。',
+      excerpt_context: '这段话是拉里对他的灵性体验最完整的语言描述之一。它揭示了一个核心洞见：答案不是通过寻找获得的，而是通过停止寻找、在当下直接体验而显现的。',
+      excerpt_zh: '拉里在菩提树下静坐了七天。晨钟暮鼓中，他的意识慢慢沉静下来。他不再寻找任何东西——他只是存在。',
+      analysis: '阿努拉德普勒的菩提树象征着精神传承的延续性。Larry在这里完成了他探索的最后一块拼图：他意识到真理是普遍的，不属于任何一个宗教或传统。'
+    },
+    'sophie-accident': {
+      id: 'sophie-accident', type: 'tragedy', significance: 'high_energy',
+      title: '伊利诺伊：车祸', title_zh: '伊利诺伊：车祸',
+      summary: '苏菲的丈夫和儿子在一次车祸中同时丧生。这个毁灭性的打击让她彻底崩溃，从此沉沦于酒精。她曾经是那个和拉里一样热爱诗歌和思想的女孩，而这场车祸夺走了她全部的世界。',
+      summary_zh: '苏菲的丈夫和儿子在一次车祸中同时丧生。这个毁灭性的打击让她彻底崩溃，从此沉沦于酒精。',
+      waypoint_id: 'geo-illinois', characters: ['sophie'], year: 1919, chapter: 'Ch11', pages: '160-168',
+      excerpt: '我爱我的丈夫和我的孩子，他们死了。剩下什么？什么都没有。',
+      excerpt_context: '这是苏菲对拉里说的话，也是她内心状态的真实写照。她不是在寻求帮助，她是在宣告一种无法被安慰的丧失。',
+      excerpt_zh: '苏菲的世界在一瞬间被摧毁。她在伊利诺伊州的那个温馨家庭、那个爱她的丈夫、那个她视若珍宝的孩子，都在那场车祸中消失了。',
+      analysis: "Sophie的故事线与Larry的修行线形成了小说中最重要的对照：Sophie选择了在苦难面前沉沦，而Larry选择了在苦难中寻找意义。这也是\"刀锋\"的双重含义——一种选择通向觉醒，另一种选择通向毁灭。"
+    },
+    'sophie-gibraltar-quote': {
+      id: 'sophie-gibraltar-quote', type: 'famous_quote', significance: 'high_energy',
+      title: '直布罗陀："太阳每天落下去"', title_zh: '直布罗陀："太阳每天落下去"',
+      summary: '在直布罗陀的邮轮甲板上，苏菲看着夕阳缓缓落入大西洋，说出了小说中最令人心碎的一句话。这句话概括了她失去所有希望后的绝望心境。',
+      summary_zh: '在直布罗陀的邮轮甲板上，苏菲看着夕阳缓缓落入大西洋，说出了小说中最令人心碎的一句话。',
+      waypoint_id: 'geo-gibraltar', characters: ['sophie','larry'], year: 1924, chapter: 'Ch23', pages: '372-378',
+      excerpt: '太阳每天落下去，可我为什么看不到明天？',
+      excerpt_context: '这句话的残忍之处在于它对永恒与无常的并置：太阳的起落是宇宙最可靠的规律，而苏菲的"明天"却已经消失。这是绝望的最高形式：连希望的可能性都被否定了。',
+      excerpt_zh: '苏菲站在直布罗陀的甲板上，看着夕阳缓缓落入大西洋。她的声音平静，但平静之下是深渊。',
+      analysis: "直布罗陀是Sophie在Larry的拯救之旅中最后一段相对平静的时光。这句话揭示了绝望的本质：不是悲伤，而是对悲伤的永恒化——每一天的太阳升起都提醒她，那个\"明天\"永远不会来。"
+    },
+    'sophie-disappearance': {
+      id: 'sophie-disappearance', type: 'tragedy', significance: 'high_energy',
+      title: '苏伊士：苏菲失踪', title_zh: '结局：苏菲失踪',
+      summary: '邮轮抵达苏伊士运河时，苏菲在某个港口独自下船，消失在人群中。拉里等了她三天，最终不得不接受现实：她走了。没有人知道她去了哪里，是生是死也无人知晓。',
+      summary_zh: '邮轮抵达苏伊士运河时，苏菲在某个港口独自下船，消失在人群中。没有人知道她去了哪里。',
+      waypoint_id: 'geo-suez', characters: ['larry','sophie'], year: 1924, chapter: 'Ch24', pages: '390-398',
+      excerpt: '我无法拯救任何人。我能做的，只是让他们知道，有一条路存在。至于他们走不走，那是他们自己的选择。',
+      excerpt_context: '这是Larry在Sophie消失后对他的上师说的话。它揭示了Larry最终的精神领悟：真正的自由意味着尊重每个人自己的选择，包括选择不走向觉醒。拯救不是强加，而是给予可能性，然后放手。',
+      excerpt_zh: 'Larry站在苏伊士运河的岸边，看着渐渐远去的邮轮。那个曾经在芝加哥明媚春光里笑着的女孩，就这样消失在地中海的某个角落。他后来再也没有找到她。',
+      analysis: '苏伊士是小说真正的结局所在。Larry在这里完成了他精神旅程的最终整合：他理解了自由的真正含义——不是拥有拯救他人的力量，而是尊重每个人走向觉醒（或不走向觉醒）的自由。'
+    },
+    'landor-poem': {
+      id: 'landor-poem', type: 'famous_quote', significance: 'high_energy',
+      title: '兰德尔的诗', title_zh: '卷首语：兰德尔的诗',
+      summary: '沃尔特·兰德尔在巴黎的公寓里对拉里朗诵了自己的诗《老哲学家的临终遗言》。这首诗成为拉里精神旅程的指针，也是整部小说的卷首语。',
+      summary_zh: '沃尔特·兰德尔在巴黎的公寓里对拉里朗诵了自己的诗《老哲学家的临终遗言》。这首诗成为整部小说的卷首语。',
+      waypoint_id: 'geo-paris', characters: ['larry','landor'], year: 1919, chapter: 'Ch5', pages: '82-88',
+      excerpt: '我不与人争，因无人值得我争斗。我爱自然，其次爱与自然相近的艺术。我把双手伸向生命之火取暖。火萎了，我已准备好离开。',
+      excerpt_context: '这首诗是毛姆精心选择的卷首语。它的平静与拉里的焦虑形成对照；它的智慧与苏菲的绝望形成对照；它的完结与整部小说的开放性形成对照。每一个角色都在以自己的方式回应这首诗。',
+      excerpt_zh: '兰德尔的声音在巴黎公寓的壁炉旁回荡。火光映照在他布满皱纹的脸上，他背诵着1850年写下的诗句，每一个词都像是预先为拉里、为苏菲、为我们所有人准备的遗言。',
+      analysis: '兰德尔的诗是整部小说的精神指针。它关于生命之火熄灭的意象——我们都在燃烧，但火终将熄灭，我们能做的只是把手伸向火焰取暖，然后准备好离开——它关于"不与人争"的平静，与小说中所有角色的激烈挣扎形成了深刻的对照。'
+    },
+    'larry-guru-reunion': {
+      id: 'larry-guru-reunion', type: 'spiritual_practice', significance: 'medium',
+      title: '加尔各答：与上师重逢', title_zh: '加尔各答：与上师重逢',
+      summary: 'Larry在加尔各答的贫民窟街头再次遇到了他的上师。上师对他说了那句话："精神离开了慈悲就是野心，慈悲离开了精神就是感伤。"',
+      summary_zh: 'Larry在加尔各答的贫民窟街头再次遇到了他的上师。上师说了那句话："精神离开了慈悲就是野心，慈悲离开了精神就是感伤。"',
+      waypoint_id: 'geo-kolkata', characters: ['larry'], year: 1922, chapter: 'Ch18', pages: '298-305',
+      excerpt: '精神离开了慈悲就是野心，慈悲离开了精神就是感伤。',
+      excerpt_context: '这句话是Larry东方修行的最精炼总结。它指出了精神实践的两个核心要素：智慧（精神）和慈悲。没有智慧的慈悲是感伤，没有慈悲的智慧是野心。真正的灵性成长必须两者兼具。',
+      excerpt_zh: '加尔各答的街道上尘土飞扬，拉里在上师身边行走。老人家用简单的英语说："精神离开了慈悲就是野心，慈悲离开了精神就是感伤。"',
+      analysis: '加尔各答见证了Larry从纯粹的自我探索扩展到对社会现实的关注。这段时期他的日记充满了关于贫穷、苦难的思考，而上师的这句话帮助他把灵性修行与人间慈悲整合在一起。'
+    },
+    'sophie-london-found': {
+      id: 'sophie-london-found', type: 'character_moment', significance: 'medium',
+      title: '伦敦：找到苏菲', title_zh: '伦敦：找到沉沦的苏菲',
+      summary: '拉里在伦敦的底层社会找到苏菲时，她已经几乎认不出曾经的样子——一个曾经热爱诗歌的聪明女孩，变成了靠酒精麻醉自己的影子。但拉里记得她曾经的样子，他决定拯救她。',
+      summary_zh: '拉里在伦敦的底层社会找到苏菲时，她已经几乎认不出曾经的样子。但拉里记得她曾经的样子，他决定拯救她。',
+      waypoint_id: 'geo-london', characters: ['larry','sophie','maugham'], year: 1924, chapter: 'Ch22', pages: '355-365',
+      excerpt: '拉里在伦敦西区的一条破旧街道上找到了苏菲。她坐在一家廉价酒吧的吧台前，眼神空洞，手指间夹着一支没点燃的烟。他叫她的名字，她抬起头，花了好几秒才认出他。',
+      excerpt_context: '这是小说中最令人心碎的重逢之一。拉里看到的不是当年的Sophie，而是一个被苦难彻底摧毁的影子。',
+      excerpt_zh: '苏菲坐在廉价酒吧的吧台前，眼神空洞。拉里叫她的名字，她抬起头，花了好几秒才认出他。',
+      analysis: '这段重逢揭示了拉里修行的真正考验：他能否将精神上的证悟运用到日常生活中？Sophie的悲剧是对Larry人道主义精神的一次检验。'
+    },
+    'isabel-final-revelation': {
+      id: 'isabel-final-revelation', type: 'pivotal_conversation', significance: 'medium',
+      title: '伊莎贝尔的最终坦白', title_zh: '伊莎贝尔的最终坦白',
+      summary: '多年后，伊莎贝尔在伦敦与拉里重逢时，终于承认了她当初选择嫁给格雷而不是等待拉里的真正原因：她害怕。她害怕等待一个可能永远不会回来的男人，她害怕没有钱、没有地位的生活。',
+      summary_zh: '多年后，伊莎贝尔在伦敦与拉里重逢时，终于承认了她当初选择嫁给格雷而不是等待拉里的真正原因：她害怕。',
+      waypoint_id: 'geo-london', characters: ['isabel','larry','maugham'], year: 1924, chapter: 'Ch24', pages: '400-408',
+      excerpt: '我等了你好几年，拉里。我告诉自己我会等你，但我知道我在骗自己。我嫁给他是因为我害怕。害怕等待一个可能永远不会回来的人。',
+      excerpt_context: '这是Isabel在全书中最诚实的一刻。她终于承认了自己的脆弱和恐惧。但这也让她得以释怀——不是因为得到了什么，而是因为终于对自己诚实了。',
+      excerpt_zh: '伊莎贝尔的手指上仍然戴着格雷的婚戒，但她的眼神已经不再躲避。那天晚上，她终于说出了她从来没有对任何人说过的话：她害怕。',
+      analysis: "Isabel的坦白是小说中最深刻的心理描写之一。她的选择代表了大多数人会做的选择——安全、理性、可预见的生活。但毛姆让我们看到，这种选择的代价是永远活在\"如果当初\"的阴影下。"
+    },
+    'larry-return-finale': {
+      id: 'larry-return-finale', type: 'character_moment', significance: 'medium',
+      title: '尾声：成为出租车司机', title_zh: '尾声：成为出租车司机',
+      summary: 'Larry回到美国后，没有出版他的修行笔记，也没有成为 guru 或上师。他选择做一名普通的出租车司机，每天与各种各样的人相遇，用最平凡的方式将自己领悟的道理传递给每一个愿意倾听的人。',
+      summary_zh: 'Larry回到美国后，选择做一名普通的出租车司机，用最平凡的方式将他领悟的道理传递给每一个愿意倾听的人。',
+      waypoint_id: 'geo-london', characters: ['larry','maugham'], year: 1924, chapter: 'Ch24', pages: '398-410',
+      excerpt: '我回到美国，不是因为我想传播什么。我只是觉得，最真实的生活就在最普通的地方。一个出租车司机每天遇到各种各样的人，他们中有多少人需要一点点光？',
+      excerpt_context: 'Larry的选择是小说最深刻的反讽之一：一个经历了最极端的精神探索的人，最终选择回到最普通的生活。这不是因为放弃，而是因为领悟：神圣不在远方，就在此刻此地。',
+      excerpt_zh: 'Larry回到美国后做了一名出租车司机。每天他遇到各种各样的人——商人、学生、孤独的老人。他不知道他的乘客中有多少人在深夜的纽约街头寻找生命的意义。',
+      analysis: 'Larry做出租车司机的选择是小说最深刻的反讽——一个见过"光"的人，选择把光带给每一个坐他车的普通人。这是"刀锋"最好的注解：最高深的智慧，最平凡的生活。'
+    },
+    'larry-cairo-dialogue': {
+      id: 'larry-cairo-dialogue', type: 'conversation', significance: 'medium',
+      title: '开罗：尼罗河畔的对话', title_zh: '开罗：尼罗河畔的对话',
+      summary: '拉里在开罗的尼罗河畔咖啡馆里，与一位英国考古学家进行了深夜对话。考古学家告诉他：真正的埃及文明埋在撒哈勒沙漠之下，金字塔只是表象。这次对话促使他决定前往印度。',
+      summary_zh: '拉里在开罗的尼罗河畔咖啡馆里，与一位英国考古学家进行了深夜对话。考古学家关于"真正文明埋在沙漠下"的话促使他决定前往印度。',
+      waypoint_id: 'geo-cairo', characters: ['larry'], year: 1920, chapter: 'Ch11', pages: '167-175',
+      excerpt: '你为什么来这里？考古学家问。寻找答案。拉里说。什么答案？我不知道。但我相信答案存在。',
+      excerpt_context: '这段对话揭示了拉里与其他旅行者的根本区别：普通人去远方是为了逃离，拉里去远方是为了寻找。',
+      excerpt_zh: '尼罗河在夜色中缓缓流淌，咖啡馆的水烟气味和远处的宣礼声交织在一起。拉里和考古学家的对话持续到深夜。',
+      analysis: '开罗是Larry精神探索的第一个实质性阶段。他在这里开始从纯粹的阅读转向实际的体验和对话。毛姆借此展示东方智慧如何在日常生活中实践。'
+    },
+    'sophie-malaga-church': {
+      id: 'sophie-malaga-church', type: 'character_moment', significance: 'medium',
+      title: '马拉加：教堂里的管风琴', title_zh: '马拉加：最后的教堂时刻',
+      summary: '在马拉加，苏菲独自去了一座老教堂，在那里坐了整个下午，听管风琴演奏。她告诉拉里："我不信上帝，但那一刻我觉得，也许有什么东西在听。"这是她最后的希望之光。',
+      summary_zh: '在马拉加，苏菲独自去了一座老教堂，在那里坐了整个下午，听管风琴演奏。她说："我不信上帝，但那一刻我觉得，也许有什么东西在听。"这是她最后的希望之光。',
+      waypoint_id: 'geo-malaga', characters: ['sophie'], year: 1924, chapter: 'Ch23', pages: '380-385',
+      excerpt: '我不信上帝，但那一刻我觉得，也许有什么东西在听。',
+      excerpt_context: '这是Sophie在整部小说中最后的希望表达。一个已经不相信任何宗教的人，在音乐中体验到了某种超越性的东西。但这个希望太过脆弱，最终没能拯救她。',
+      excerpt_zh: '苏菲在马拉加的老教堂里坐了一下午。管风琴的声音在空旷的穹顶下回荡，她闭上眼睛，任由音乐穿过她。那一刻，她感觉到某种东西——也许是上帝，也许是虚无。',
+      analysis: '马拉加的教堂是Sophie精神状态的缩影：她仍然在寻找某种东西，但她已经不相信任何现成的答案了。她是一个失去信仰的现代人，却仍然本能地需要神圣。'
+    }
+  };
 
-  L.control.layers({
-    'NatGeo': natGeo,
-    'Ocean' : ocean,
-    'OSM'   : osm,
-  }, null, { position: 'topright' }).addTo(map);
+  // ─── CHARACTER ROUTES ──────────────────────────────────────
+  var ROUTES = {
+    larry: {
+      color: '#e8c060', weight: 3.5, opacity: 0.85,
+      coords: [
+        [41.8781,-87.6298], [48.8566,2.3522], [43.2965,5.3698],
+        [29.9773,32.5252], [30.0444,31.2357], [6.9271,79.8612],
+        [13.0827,80.2707], [17.3850,78.4867], [15.5007,74.1239],
+        [34.0837,74.7973], [22.5726,88.3639], [8.3114,80.4034],
+        [19.0760,72.8777], [51.5074,-0.1278],
+        [51.5074,-0.1278], [36.1391,-5.3536], [36.7201,-4.4203],
+        [29.9773,32.5252]
+      ]
+    },
+    isabel: {
+      color: '#e89ac7', weight: 2, opacity: 0.6, dashArray: '6,4',
+      coords: [
+        [41.8781,-87.6298], [41.8781,-87.6298], [41.8781,-87.6298],
+        [51.5074,-0.1278]
+      ]
+    },
+    sophie: {
+      color: '#c46a6a', weight: 2.5, opacity: 0.7, dashArray: '3,5',
+      coords: [
+        [40.0000,-89.0000], [40.0000,-89.0000],
+        [51.5074,-0.1278], [51.5074,-0.1278],
+        [36.1391,-5.3536], [36.7201,-4.4203],
+        [29.9773,32.5252]
+      ]
+    },
+    gray: {
+      color: '#6a9fd8', weight: 2, opacity: 0.5, dashArray: '4,4',
+      coords: [
+        [41.8781,-87.6298], [41.8781,-87.6298], [41.8781,-87.6298],
+        [51.5074,-0.1278]
+      ]
+    }
+  };
 
-  // ─── BUILD TIME RULER ────────────────────────────────────────────────────
+  // ─── FAMOUS QUOTES ─────────────────────────────────────────
+  var QUOTES = [
+    { speaker: 'larry', text: 'I want to find out what the monks are trying to find out. I want to get rid of the barrier between myself and God.', zh: '我想知道那些僧侣们想要发现的东西。我想打通自己与上帝之间的屏障。', chapter: 'Ch14', url: '' },
+    { speaker: 'landor', text: 'I strove with none, for none was worth my strife; Nature I loved, and next to Nature, Art; I warmed both hands before the fire of Life; It sinks, and I am ready to depart.', zh: '我不与人争，因无人值得我争斗。我爱自然，其次爱与自然相近的艺术。我把双手伸向生命之火取暖。火萎了，我已准备好离开。', chapter: 'Ch5', url: 'https://www.poetryfoundation.org/poems/56159/dying-speech-of-an-old-philosopher' },
+    { speaker: 'sophie', text: 'The sun goes down every day and I can\'t see why I should see tomorrow.', zh: '太阳每天落下去，可我为什么看不到明天？', chapter: 'Ch23', url: '' },
+    { speaker: 'larry', text: 'You are not looking for God. You are forgetting that you already are God. Remembering is the only answer.', zh: '你不是在寻找上帝，你是在忆起你本身就是上帝。忆起是唯一的答案。', chapter: 'Ch17', url: '' },
+    { speaker: 'larry', text: 'I cannot save anyone. I can only show them the way. Whether they walk it is their own choice.', zh: '我无法拯救任何人。我只能给他们指一条路。他们走不走，那是他们自己的选择。', chapter: 'Ch24', url: '' },
+    { speaker: 'guru', text: 'Spirituality without compassion is just ambition with better lighting. Compassion without spirituality is just sentimentality.', zh: '精神离开了慈悲就是野心，慈悲离开了精神就是感伤。', chapter: 'Ch18', url: '' }
+  ];
+
+  // ─── STATE ─────────────────────────────────────────────────
+  var map;
+  var activeQuoteIdx = -1;
+  var expandedEvents = {};
+  var routeLayers = {};
+  var visibleCharacters = { larry: true, isabel: true, sophie: true, gray: true };
+
+  // ─── INIT ──────────────────────────────────────────────────
+  function init() {
+    map = L.map('map', {
+      center: [35, 20],
+      zoom: 4,
+      minZoom: 2,
+      maxZoom: 10,
+      zoomControl: true,
+      attributionControl: true,
+    });
+
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'National Geographic, Esri, GEBCO, NOAA',
+      maxZoom: 10
+    }).addTo(map);
+
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Esri, GEBCO, NOAA',
+      maxZoom: 10
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+      maxZoom: 10
+    });
+
+    // Build routes
+    Object.keys(ROUTES).forEach(function(charId) {
+      if (visibleCharacters[charId]) {
+        addRoute(charId);
+      }
+    });
+
+    // Build waypoint markers
+    WAYPOINTS.forEach(function(wp) {
+      addWaypointMarker(wp);
+    });
+
+    // Sophie missing marker
+    L.marker([32.5, 25.5], {
+      icon: L.divIcon({
+        html: '<div style="font-size:18px;color:#c46a6a;text-shadow:1px 1px 4px #000;">&#10006;</div>',
+        className: '', iconSize: [24, 24], iconAnchor: [12, 12],
+      })
+    }).bindPopup(buildSophiePopup()).addTo(map);
+
+    buildTimeRuler();
+    buildCharPanel();
+    buildLegend();
+    rotateQuotes();
+  }
+
+  // ─── ROUTES ────────────────────────────────────────────────
+  function addRoute(charId) {
+    var r = ROUTES[charId];
+    if (!r) return;
+    var polyline = L.polyline(r.coords, {
+      color: r.color,
+      weight: r.weight,
+      opacity: r.opacity,
+      dashArray: r.dashArray || null,
+      smoothFactor: 1.5
+    });
+    polyline.addTo(map);
+    routeLayers[charId] = polyline;
+  }
+
+  function toggleRoute(charId) {
+    visibleCharacters[charId] = !visibleCharacters[charId];
+    if (visibleCharacters[charId]) {
+      addRoute(charId);
+    } else {
+      if (routeLayers[charId]) {
+        map.removeLayer(routeLayers[charId]);
+        delete routeLayers[charId];
+      }
+    }
+    buildCharPanel();
+  }
+
+  // ─── WAYPOINT MARKERS ───────────────────────────────────────
+  function addWaypointMarker(wp) {
+    var isJoint = wp.joint_note && wp.events.some(function(e){ var ev = EVENTS[e]; return ev && ev.significance === 'high_energy'; });
+    var isHigh = wp.is_highlight || isJoint;
+    var color = isHigh ? '#c9a84c' : '#6a9fd8';
+    var radius = isHigh ? 8 : 5;
+
+    var iconHtml = isHigh
+      ? '<div style="font-size:16px;color:#c9a84c;text-shadow:1px 1px 3px #000;">&#9733;</div>'
+      : '<div style="width:10px;height:10px;background:' + color + ';border-radius:50%;border:1.5px solid #fff;opacity:0.9;"></div>';
+
+    var marker = L.marker([wp.lat, wp.lng], {
+      icon: L.divIcon({
+        html: iconHtml,
+        className: '', iconSize: [20, 20], iconAnchor: [10, 10],
+      })
+    });
+
+    var popupContent = buildWaypointPopup(wp);
+    marker.bindPopup(popupContent, {
+      maxWidth: 520,
+      className: 'razor-popup'
+    });
+    marker.addTo(map);
+  }
+
+  // ─── POPUP BUILDERS ─────────────────────────────────────────
+  function buildWaypointPopup(wp) {
+    var charLabels = wp.characters.map(function(c) {
+      var ch = CHARACTERS[c] || { name: c, color: '#888' };
+      return '<span style="color:' + ch.color + ';font-size:9.5px;">● ' + ch.name + '</span>';
+    }).join(' &nbsp;');
+
+    var yearLabel = wp.year_start === wp.year_end
+      ? wp.year_start
+      : wp.year_start + '–' + wp.year_end;
+
+    var html = '';
+    html += '<div class="popup-header">';
+    html += '<div class="popup-title">' + wp.city + ' · ' + wp.city_zh + ' <span class="event-badge">&#9733;</span></div>';
+    html += '<div class="popup-meta">' + wp.country + ' &nbsp;·&nbsp; ' + yearLabel + ' &nbsp;·&nbsp; ' + charLabels + '</div>';
+    html += '</div>';
+
+    html += '<div class="popup-body">';
+
+    // Tab buttons
+    html += '<div class="popup-tabs">';
+    html += '<button class="popup-tab-btn active" onclick="RazorMap.switchTab(this, \'geo\', \'' + wp.id + '\')">地理</button>';
+    var eventCount = wp.events ? wp.events.length : 0;
+    html += '<button class="popup-tab-btn" onclick="RazorMap.switchTab(this, \'events\', \'' + wp.id + '\')">情节 ' + (eventCount > 0 ? '<span style="color:#c9a84c">(' + eventCount + ')</span>' : '') + '</button>';
+    html += '<button class="popup-tab-btn" onclick="RazorMap.switchTab(this, \'maugham\', \'' + wp.id + '\')">毛姆视角</button>';
+    html += '</div>';
+
+    // Tab: Geography / narrative
+    html += '<div class="popup-tab-content active" id="tab-geo-' + wp.id + '">';
+    if (wp.joint_note) {
+      html += '<div class="popup-joint">';
+      html += '<div class="popup-joint-label">&#9670; 多角色交汇点</div>';
+      html += '<div class="popup-joint-text">' + wp.joint_note + '</div>';
+      html += '</div>';
+    }
+    html += '<div class="tab-section-title">◆ 地理与叙事</div>';
+    var narrativeText = wp.maugham_zh || wp.maugham || '';
+    html += '<div class="popup-geo">' + narrativeText.replace(/\n/g, '<br>') + '</div>';
+    html += '</div>';
+
+    // Tab: Events
+    html += '<div class="popup-tab-content" id="tab-events-' + wp.id + '">';
+    if (wp.events && wp.events.length > 0) {
+      wp.events.forEach(function(evtId) {
+        var ev = EVENTS[evtId];
+        if (!ev) return;
+        var isExp = expandedEvents[evtId];
+        html += '<div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #1e2e48;' + (wp.events.indexOf(evtId) === wp.events.length - 1 ? 'border-bottom:none;' : '') + '">';
+        html += '<div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:6px;">';
+        if (ev.significance === 'high_energy') {
+          html += '<span style="color:#c9a84c;font-size:11px;flex-shrink:0;margin-top:1px;">&#9733;</span>';
+        }
+        html += '<div style="flex:1;">';
+        html += '<div style="font-size:12px;color:#e8d5b0;font-weight:bold;margin-bottom:3px;">' + ev.title_zh + '</div>';
+        html += '<div style="font-size:9px;color:#6a9fd8;margin-bottom:5px;">' + ev.chapter + ' · ' + ev.year + '</div>';
+        html += '</div></div>';
+        html += '<div class="popup-event-summary">' + ev.summary_zh + '</div>';
+        html += '<button class="popup-expand-btn" onclick="RazorMap.toggleEvent(\'' + evtId + '\', this)">' + (isExp ? '收起 ▲' : '展开详情 ▼') + '</button>';
+        html += '<div class="popup-expanded' + (isExp ? ' open' : '') + '" id="evt-expanded-' + evtId + '">';
+        html += '<div class="popup-excerpt-src">◆ 原文摘录 — ' + ev.chapter + '</div>';
+        html += '<div class="popup-excerpt">' + ev.excerpt + '</div>';
+        if (ev.excerpt_context) {
+          html += '<div style="font-size:10px;color:#8fa8c8;margin:6px 0;">' + ev.excerpt_context + '</div>';
+        }
+        html += '<div style="font-size:10px;color:#9a9a8a;line-height:1.6;margin-top:8px;">' + ev.analysis + '</div>';
+        html += '</div>';
+        html += '</div>';
+      });
+    } else {
+      html += '<div class="popup-empty">此地点无高能情节记录</div>';
+    }
+    html += '</div>';
+
+    // Tab: Maugham narrative
+    html += '<div class="popup-tab-content" id="tab-maugham-' + wp.id + '">';
+    html += '<div class="popup-maugham">';
+    html += '<div class="popup-maugham-label">&#9670; Maugham 叙述者视角</div>';
+    html += '<div class="popup-maugham-text">' + (wp.maugham_zh || wp.maugham || '暂无毛姆叙述者视角记录').replace(/\n/g, '<br>') + '</div>';
+    html += '</div>';
+    html += '<div style="font-size:9.5px;color:#6a7a8a;margin-top:8px;line-height:1.5;">毛姆在小说中以第三人称全知视角叙述，同时他本人也是书中的角色——一位作家，通过社交圈收集各人物的故事素材。</div>';
+    html += '</div>';
+
+    html += '</div>'; // popup-body
+    return html;
+  }
+
+  function buildSophiePopup() {
+    return '<div class="popup-title" style="color:#c46a6a;">Sophie Missing &middot; 索菲失踪</div>' +
+           '<div class="popup-meta">~ 1924 &middot; 地中海航海途中</div>' +
+           '<div style="margin-top:10px;font-size:12px;color:#c8b898;line-height:1.7;">' +
+           '拉里找到已沉沦酒精的索菲，带她登上邮轮试图拯救。<br>' +
+           '但她在一站独自离船，从此杳无音讯。<br><br>' +
+           '<span style="color:#8a5a5a;font-size:10.5px;">毛姆笔下暗示她可能回到了她在大海尚未出事之前就热爱的大海——这是小说最神秘的留白之一。</span>' +
+           '</div>';
+  }
+
+  // ─── TAB SWITCHING ──────────────────────────────────────────
+  function switchTab(btn, tabName, wpId) {
+    var panel = btn.closest('.popup-tab-content');
+    if (!panel) return;
+    panel.querySelectorAll('.popup-tab-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+
+    var contentId = 'tab-' + tabName + '-' + wpId;
+    var contentEl = document.getElementById(contentId);
+    if (contentEl) {
+      panel.parentElement.querySelectorAll('.popup-tab-content').forEach(function(c){ c.classList.remove('active'); });
+      contentEl.classList.add('active');
+    }
+  }
+
+  // ─── EVENT EXPAND ───────────────────────────────────────────
+  function toggleEvent(evtId, btn) {
+    expandedEvents[evtId] = !expandedEvents[evtId];
+    var el = document.getElementById('evt-expanded-' + evtId);
+    if (el) {
+      el.classList.toggle('open', expandedEvents[evtId]);
+      btn.textContent = expandedEvents[evtId] ? '收起 ▲' : '展开详情 ▼';
+    }
+  }
+
+  // ─── CHARACTER PANEL ────────────────────────────────────────
+  function buildCharPanel() {
+    var html = '';
+    Object.keys(CHARACTERS).forEach(function(id) {
+      var c = CHARACTERS[id];
+      if (id === 'maugham') return; // maugham not in panel
+      var isVisible = visibleCharacters[id];
+      html += '<div class="char-toggle-row" onclick="RazorMap.toggleRoute(\'' + id + '\')">';
+      html += '<div class="char-toggle-dot" style="background:' + c.color + ';"></div>';
+      html += '<div class="char-toggle-name">' + c.name_zh + '</div>';
+      html += '<div class="char-toggle-check">' + (isVisible ? '&#9633;' : '&#9634;') + '</div>';
+      html += '</div>';
+    });
+
+    // Route lines legend
+    html += '<div style="margin-top:12px;padding-top:8px;border-top:1px solid #2a3a5a;">';
+    html += '<div style="font-size:9px;color:#5a6a7a;margin-bottom:6px;letter-spacing:1px;">CLICK TO TOGGLE ROUTE</div>';
+    html += '<div style="font-size:9px;color:#4a5a6a;line-height:1.7;">';
+    html += '实线 = 当前显示<br>方块 = 已隐藏';
+    html += '</div></div>';
+
+    document.getElementById('char-list').innerHTML = html;
+  }
+
+  // ─── LEGEND ─────────────────────────────────────────────────
+  function buildLegend() {
+    // legend is pure HTML/CSS, no JS needed
+  }
+
+  // ─── TIME RULER ─────────────────────────────────────────────
   function buildTimeRuler() {
-    var years = MapData.getYears();
+    var years = [1919, 1920, 1921, 1922, 1923, 1924];
     var ruler = document.getElementById('time-ruler');
     var html = '';
     years.forEach(function(yr, i) {
       if (i > 0) html += '<span class="sep">——</span>';
       var cls = (yr === 1919 || yr === 1924) ? 'year' : '';
-      html += '<span class="' + cls + '" onclick="flyToYear(' + yr + ')">' + yr + '</span>';
+      html += '<span class="' + cls + '" onclick="RazorMap.flyToYear(' + yr + ')">' + yr + '</span>';
     });
-    html += '<span class="hint">click year to locate &middot; 点击定位</span>';
+    html += '<span class="hint">&nbsp;· click to locate</span>';
     ruler.innerHTML = html;
   }
 
-  // ─── BUILD MARKERS ───────────────────────────────────────────────────────
-  function buildMarkers() {
-    var waypoints = MapData.getWaypoints();
-
-    // Route line
-    L.polyline(MapData.getRouteCoords(), {
-      color: '#e8c060',
-      weight: 2.5,
-      opacity: 0.85,
-      dashArray: '8, 6',
-    }).addTo(map);
-
-    // Waypoint markers
-    waypoints.forEach(function(w) {
-      var isKey  = w.key;
-      var color  = isKey ? '#c9a84c' : '#6a9fd8';
-      var radius = isKey ? 7 : 5;
-      var labelSide = w.lng > 20 ? 'right' : 'left';
-
-      // City label
-      L.marker([w.lat + 0.12, w.lng], {
-        icon: L.divIcon({
-          html: '<div style="font-size:12px;font-weight:bold;color:#e8d5b0;background:rgba(8,16,34,0.82);padding:2px 7px;border-radius:3px;border:1px solid '+color+';white-space:nowrap;line-height:1.4;">'
-              + '<span style="color:'+color+';">'+w.city+'</span>'
-              + '<br><span style="font-size:9.5px;color:#8fa8c8;font-weight:normal;">'+w.zh+'</span>'
-              + '</div>',
-          className: '',
-          iconSize: [110, 36],
-          iconAnchor: labelSide === 'left' ? [0, 18] : [110, 18],
-        })
-      }).addTo(map);
-
-      // Circle marker with tab popup
-      L.circleMarker([w.lat, w.lng], {
-        radius: radius,
-        fillColor: color,
-        color: '#ffffff',
-        weight: 1.5,
-        opacity: 0.9,
-        fillOpacity: 0.85,
-      }).bindPopup(PopupRenderer.buildHtml(w)).addTo(map);
-    });
-
-    // Sophie marker
-    var sc = MapData.getSophieCoords();
-    L.marker([sc.lat, sc.lng], {
-      icon: L.divIcon({
-        html: '<div style="font-size:18px;color:#c46a6a;text-shadow:1px 1px 4px #000;">&#10006;</div>',
-        className: '',
-        iconSize: [24, 24],
-        iconAnchor: [12, 12],
-      })
-    }).bindPopup(
-      '<div class="popup-title" style="color:#c46a6a;">Sophie Missing &middot; 索菲失踪</div>'
-      + '<div class="popup-yr">~ 1921 &middot; 地中海航海途中</div>'
-      + '<div class="popup-geo">拉里找到已沉沦酒精的索菲，带她登上邮轮。<br>'
-      + '但她在一站独自离船，从此杳无音讯。<br><br>'
-      + '<span style="color:#8a5a5a;font-size:10.5px;">毛姆笔下暗示她可能回到了在沉沦前热爱的大海——这是小说最神秘的留白之一。</span></div>'
-    ).addTo(map);
+  function flyToYear(yr) {
+    var wp = WAYPOINTS.find(function(w) { return w.year_start === yr; });
+    if (wp) {
+      map.flyTo([wp.lat, wp.lng], 6, { duration: 1.2 });
+    }
   }
 
-  // ─── NAVIGATION FUNCTIONS ────────────────────────────────────────────────
-  window.flyToCity = function(id) {
-    var w = MapData.getWaypoint(id);
-    if (!w) return;
-    map.flyTo([w.lat, w.lng], 8, { duration: 1.4 });
-    setTimeout(function() {
-      map.eachLayer(function(layer) {
-        if (layer instanceof L.CircleMarker) {
-          var latlng = layer.getLatLng();
-          if (Math.abs(latlng.lat - w.lat) < 0.01 && Math.abs(latlng.lng - w.lng) < 0.01) {
-            layer.openPopup();
-          }
-        }
-      });
-    }, 1500);
-  };
-
-  window.flyToSophie = function() {
-    var sc = MapData.getSophieCoords();
-    map.flyTo([sc.lat, sc.lng], 6, { duration: 1.4 });
-    setTimeout(function() {
-      map.eachLayer(function(layer) {
-        if (layer instanceof L.Marker) {
-          var ll = layer.getLatLng();
-          if (Math.abs(ll.lat - sc.lat) < 1 && Math.abs(ll.lng - sc.lng) < 1) {
-            layer.openPopup();
-          }
-        }
-      });
-    }, 1500);
-  };
-
-  window.flyToYear = function(yr) {
-    var matches = MapData.getWaypointsByYear(yr);
-    if (matches.length > 0) {
-      var w = matches[0];
-      map.flyTo([w.lat, w.lng], 7, { duration: 1.2 });
-      setTimeout(function() {
-        map.eachLayer(function(layer) {
-          if (layer instanceof L.CircleMarker) {
-            var latlng = layer.getLatLng();
-            if (Math.abs(latlng.lat - w.lat) < 0.01) layer.openPopup();
-          }
-        });
-      }, 1300);
+  // ─── QUOTE ROTATION ─────────────────────────────────────────
+  function rotateQuotes() {
+    if (QUOTES.length === 0) return;
+    activeQuoteIdx = (activeQuoteIdx + 1) % QUOTES.length;
+    var q = QUOTES[activeQuoteIdx];
+    var ch = CHARACTERS[q.speaker] || { name_zh: q.speaker, color: '#888' };
+    var html = '<div class="quote-text">"' + q.text + '"</div>';
+    html += '<div class="quote-zh">' + q.zh + '</div>';
+    html += '<div class="quote-src">—— ' + ch.name_zh + ' · ' + q.chapter + '</div>';
+    if (q.url) {
+      html += '<a class="quote-url" href="' + q.url + '" target="_blank" rel="noopener">&#8594; 外部阅读</a>';
     }
+    document.getElementById('quote-content').innerHTML = html;
+    document.getElementById('quote-panel').classList.add('visible');
+  }
+
+  function closeQuote() {
+    document.getElementById('quote-panel').classList.remove('visible');
+  }
+
+  // ─── PUBLIC API ─────────────────────────────────────────────
+  return {
+    init: init,
+    switchTab: switchTab,
+    toggleEvent: toggleEvent,
+    toggleRoute: toggleRoute,
+    flyToYear: flyToYear,
+    rotateQuotes: rotateQuotes,
+    closeQuote: closeQuote,
   };
-
-  // ─── INIT SEQUENCE ───────────────────────────────────────────────────────
-  MapData.init()
-    .then(function() {
-      // Build UI components
-      document.getElementById('char-list').innerHTML = CharPanel.buildPanelHtml();
-      buildTimeRuler();
-      buildMarkers();
-    })
-    .catch(function(err) {
-      console.error('Failed to initialize map data:', err);
-      document.getElementById('char-list').innerHTML =
-        '<div style="color:#c46a6a;font-size:11px;padding:8px 0;">Failed to load data. Check console.</div>';
-    });
-
 })();
+
+// Start
+window.addEventListener('DOMContentLoaded', function() {
+  RazorMap.init();
+  // Rotate quote every 15 seconds
+  setInterval(function() { RazorMap.rotateQuotes(); }, 15000);
+});
 </script>
 </body>
 </html>
