@@ -794,6 +794,16 @@ var RazorMap = (function() {
         [41.8781,-87.6298], [41.8781,-87.6298], [41.8781,-87.6298],
         [51.5074,-0.1278]
       ]
+    },
+    elliott: {
+      color: '#7fc97f', weight: 4, opacity: 0.85, dashArray: '10,4',
+      coords: [
+        [48.8566,2.3522],   // Paris 1919
+        [48.8566,2.3522],   // Paris (multiple stays)
+        [51.5074,-0.1278],  // London 1923-24
+        [36.1391,-5.3536],  // Gibraltar (cruise 1924)
+        [36.7201,-4.4203]   // Malaga (cruise 1924)
+      ]
     }
   };
 
@@ -812,7 +822,7 @@ var RazorMap = (function() {
   var activeQuoteIdx = -1;
   var expandedEvents = {};
   var routeLayers = {};
-  var visibleCharacters = { larry: true, isabel: true, sophie: true, gray: true };
+  var visibleCharacters = { larry: true, isabel: true, sophie: true, gray: true, elliott: true };
 
   // ─── INIT ──────────────────────────────────────────────────
   function init() {
