@@ -270,7 +270,8 @@
     padding-bottom: 6px;
     border-bottom: 1px dashed #2a3a5a;
   }
-  .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 9.5px; color: #8fa8c8; }
+  .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 9.5px; color: #8fa8c8; cursor: pointer; transition: color 0.15s; }
+  .legend-item:hover { color: #c8dff5; }
   .leg-line { width: 24px; height: 4px; border-radius: 2px; flex-shrink: 0; }
   .leg-circle { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .leg-star  { width: 10px; height: 10px; color: #c9a84c; font-size: 10px; text-align: center; line-height: 10px; flex-shrink: 0; }
@@ -530,44 +531,44 @@
 </div>
 
 <!-- Legend -->
-<div class="legend panel">
-  <div class="panel-title">Legend &middot; 图例</div>
-  <div class="legend-item">
-    <div class="leg-line" style="background:#f5d76e;"></div>
-    <span>Larry · 拉里</span>
+  <div class="legend panel">
+    <div class="panel-title">Legend &middot; 图例</div>
+    <div class="legend-item" onclick="RazorMap.toggleRoute('larry')">
+      <div class="leg-line" style="background:#f5d76e;"></div>
+      <span>Larry · 拉里</span>
+    </div>
+    <div class="legend-item" onclick="RazorMap.toggleRoute('isabel')">
+      <div class="leg-line" style="background:#f5a0c8;"></div>
+      <span>Isabel · 伊莎贝尔</span>
+    </div>
+    <div class="legend-item" onclick="RazorMap.toggleRoute('sophie')">
+      <div class="leg-line" style="background:#e88080;"></div>
+      <span>Sophie · 苏菲</span>
+    </div>
+    <div class="legend-item" onclick="RazorMap.toggleRoute('gray')">
+      <div class="leg-line" style="background:#6ab0f5;"></div>
+      <span>Gray · 格雷</span>
+    </div>
+    <div class="legend-item" onclick="RazorMap.toggleRoute('elliott')">
+      <div class="leg-line" style="background:#7fc97f;"></div>
+      <span>Elliott · 埃利奥特</span>
+    </div>
+    <div class="legend-item" onclick="RazorMap.showEventCluster('high_energy')">
+      <div class="leg-star">★</div>
+      <span>High-Energy Scene · 高能情节</span>
+    </div>
+    <div class="legend-item" onclick="RazorMap.toggleRoute('maugham')">
+      <div class="leg-circle" style="background:#9b8df0;"></div>
+      <span>Maugham Narrative · 毛姆视角</span>
+    </div>
+    <div class="legend-item" onclick="RazorMap.showEventCluster('sophie_disappearance')">
+      <div class="leg-circle" style="background:#c46a6a;"></div>
+      <span>Sophie Missing · 苏菲失踪</span>
+    </div>
+    <div style="margin-top:10px;padding-top:8px;border-top:1px dashed #2a3a5a;text-align:center;">
+      <button onclick="RazorMap.toggleStatusPanel()" style="background:none;border:1px solid #3a5a8a;border-radius:6px;padding:5px 10px;color:#8ab0d0;font-size:9px;cursor:pointer;width:100%;">&#9670; 面子之物 Status Objects</button>
+    </div>
   </div>
-  <div class="legend-item">
-    <div class="leg-line" style="background:#f5a0c8;"></div>
-    <span>Isabel · 伊莎贝尔</span>
-  </div>
-  <div class="legend-item">
-    <div class="leg-line" style="background:#e88080;"></div>
-    <span>Sophie · 苏菲</span>
-  </div>
-  <div class="legend-item">
-    <div class="leg-line" style="background:#6ab0f5;"></div>
-    <span>Gray · 格雷</span>
-  </div>
-  <div class="legend-item">
-    <div class="leg-line" style="background:#7fc97f;"></div>
-    <span>Elliott · 埃利奥特</span>
-  </div>
-  <div class="legend-item">
-    <div class="leg-star">★</div>
-    <span>High-Energy Scene · 高能情节</span>
-  </div>
-  <div class="legend-item">
-    <div class="leg-circle" style="background:#9b8df0;"></div>
-    <span>Maugham Narrative · 毛姆视角</span>
-  </div>
-  <div class="legend-item">
-    <div class="leg-circle" style="background:#c46a6a;"></div>
-    <span>Sophie Missing · 苏菲失踪</span>
-  </div>
-  <div style="margin-top:10px;padding-top:8px;border-top:1px dashed #2a3a5a;text-align:center;">
-    <button onclick="RazorMap.toggleStatusPanel()" style="background:none;border:1px solid #3a5a8a;border-radius:6px;padding:5px 10px;color:#8ab0d0;font-size:9px;cursor:pointer;width:100%;">&#9670; 面子之物 Status Objects</button>
-  </div>
-</div>
 
 <!-- Time ruler -->
 <div class="time-ruler" id="time-ruler">
@@ -1153,7 +1154,7 @@ var RazorMap = (function() {
   // ─── FAMOUS QUOTES ─────────────────────────────────────────
   var QUOTES = [
     { speaker: 'larry', text: 'I want to find out what the monks are trying to find out. I want to get rid of the barrier between myself and God.', zh: '我想知道那些僧侣们想要发现的东西。我想打通自己与上帝之间的屏障。', chapter: 'Ch14', url: '' },
-    { speaker: 'landor', text: 'I strove with none, for none was worth my strife; Nature I loved, and next to Nature, Art; I warmed both hands before the fire of Life; It sinks, and I am ready to depart.', zh: '我不与人争，因无人值得我争斗。我爱自然，其次爱与自然相近的艺术。我把双手伸向生命之火取暖。火萎了，我已准备好离开。', chapter: 'Ch5', url: 'https://www.poetryfoundation.org/poems/56159/dying-speech-of-an-old-philosopher' },
+    { speaker: 'landor', text: 'I strove with none, for none was worth my strife; Nature I loved, and next to Nature, Art; I warmed both hands before the fire of Life; It sinks, and I am ready to depart.', zh: '我不与人争，因无人值得我争斗。我爱自然，其次爱与自然相近的艺术。我把双手伸向生命之火取暖。火萎了，我已准备好离开。', chapter: 'Ch5', url: 'https://en.wikipedia.org/wiki/Walter_Savage_Landor' },
     { speaker: 'sophie', text: 'The sun goes down every day and I can\'t see why I should see tomorrow.', zh: '太阳每天落下去，可我为什么看不到明天？', chapter: 'Ch23', url: '' },
     { speaker: 'larry', text: 'You are not looking for God. You are forgetting that you already are God. Remembering is the only answer.', zh: '你不是在寻找上帝，你是在忆起你本身就是上帝。忆起是唯一的答案。', chapter: 'Ch17', url: '' },
     { speaker: 'larry', text: 'I cannot save anyone. I can only show them the way. Whether they walk it is their own choice.', zh: '我无法拯救任何人。我只能给他们指一条路。他们走不走，那是他们自己的选择。', chapter: 'Ch24', url: '' },
@@ -1716,6 +1717,32 @@ var RazorMap = (function() {
     document.getElementById('quote-panel').classList.remove('visible');
   }
 
+  function showEventCluster(type) {
+    // Fly to the first waypoint that has an event of this type, and open its popup
+    var targetWp = null;
+    WAYPOINTS.forEach(function(wp) {
+      if (targetWp) return;
+      if (wp.events && wp.events.some(function(e) {
+        var ev = EVENTS[e];
+        return ev && (
+          (type === 'high_energy' && ev.significance === 'high_energy') ||
+          (type === 'sophie_disappearance' && (ev.id === 'sophie-disappearance' || ev.type === 'tragedy'))
+        );
+      })) {
+        targetWp = wp;
+      }
+    });
+    if (targetWp) {
+      activeWpId = targetWp.id;
+      map.flyTo([targetWp.lat, targetWp.lng], 6, { duration: 1.5 });
+      setTimeout(function() {
+        var marker = waypointMarkers[targetWp.id];
+        if (marker) marker.openPopup();
+        updateContextPanels();
+      }, 800);
+    }
+  }
+
   // ─── PUBLIC API ─────────────────────────────────────────────
   return {
     init: init,
@@ -1730,6 +1757,7 @@ var RazorMap = (function() {
     toggleStatusPanel: toggleStatusPanel,
     toggleStatusCard: toggleStatusCard,
     updateContextPanels: updateContextPanels,
+    showEventCluster: showEventCluster,
   };
 })();
 
