@@ -458,8 +458,8 @@
 <div class="time-ruler" id="time-ruler">
   <div class="time-slider-row">
     <span class="time-slider-label">1919</span>
-    <input type="range" class="time-slider" id="time-slider" min="1919" max="1924" step="1" value="1919">
-    <span class="time-slider-label">1924</span>
+    <input type="range" class="time-slider" id="time-slider" min="1919" max="1929" step="1" value="1919">
+    <span class="time-slider-label">1929</span>
     <span class="time-slider-value" id="time-slider-value">1919</span>
   </div>
   <div class="time-ruler-btns">
@@ -543,10 +543,10 @@ var RazorMap = (function() {
     elliott: {
       id: 'elliott', name: 'Elliott Randolph', name_zh: '埃利奥特·兰道夫',
       color: '#7fc97f', role: 'comic_relief',
-      bio: "Elliott is Larry's uncle — a wealthy American art dealer living in Europe, obsessed with high society. He is shallow and snobbish, but genuinely kind to Larry. His social status fades over time, but he finds genuine faith before death.",
-      bio_zh: '拉里的舅舅，富有的美国艺术品商人，住在欧洲，痴迷于上流社会。浅薄势利，但对拉里真心友善。晚年社会地位衰落，临终前在宗教中找到真正的信仰。',
-      arc: '欧洲社交名流（1919-1929）→ 地位衰落 → 孤独病重 → 临终前找到真正的信仰',
-      arc_zh: '追求了一辈子社会地位，最终被贵族圈子遗忘，却在临终时在宗教中找到了真正的安宁——这是毛姆最深刻的讽刺。',
+      bio: "Elliott is Larry's uncle — a wealthy American art dealer living in Europe, obsessed with high society. He is shallow and snobbish, but genuinely kind to Larry. His social status fades over time. He dies in Nice, forgotten by the aristocracy that once embraced him, finding unexpected peace in Catholic faith before the end.",
+      bio_zh: '埃利奥特·兰道夫是拉里的舅舅——一位住在欧洲的美国艺术品商人，痴迷上流社会。浅薄势利，但对拉里真心友善。晚年社会地位衰落，临终前在尼斯的天主教信仰中找到意外的安宁，彼时那些曾让他引以为傲的贵族关系早已将他遗忘。',
+      arc: '欧洲社交名流（1919-1929）→ 地位衰落 → 孤独病重（尼斯） → 临终前找到真正的信仰',
+      arc_zh: '追求了一辈子社会地位，最终被贵族圈子遗忘，却在尼斯临终时在宗教中找到了真正的安宁——这是毛姆最深刻的讽刺。',
       quotes: []
     }
   };
@@ -647,6 +647,12 @@ var RazorMap = (function() {
       maugham: '关于苏菲，我是从她在伊利诺伊州的老邻居那里听到的故事。在那场车祸之前，她是一个完全不同的女人——爱笑，爱读诗，和拉里是青梅竹马。那场车祸在一瞬间夺走了她的丈夫和儿子。我在芝加哥见到了她的婆婆布拉德肖夫人，那是一个被悲伤彻底击垮的老人。她告诉我："苏菲从来没有从那天走出来过。"',
       maugham_zh: '关于苏菲，我是从她在伊利诺伊州的老邻居那里听到的故事。在那场车祸之前，她是一个完全不同的女人——爱笑，爱读诗，和拉里是青梅竹马。那场车祸在一瞬间夺走了她的丈夫和儿子。"苏菲从来没有从那天走出来过。"',
       events: ['sophie-accident'],
+      joint_note: null
+    },
+    { id: 'geo-nice', lat: 43.7102, lng: 7.2620, city: 'Nice', city_zh: '尼斯', country: 'France', year_start: 1929, year_end: 1929, characters: ['elliott','maugham'], significance: 'elliott_death', is_highlight: false,
+      maugham: '埃利奥特在尼斯去世。那些曾经邀请他参加最盛大舞会的贵族们没有一个人来送他最后一程。他在病中受洗入了天主教，那是他一生中第一次真正相信某种东西。我在病床边看着他咽气，他的脸上有一种我从未见过的安详。他最后的要求是让我给他弄一张参加某位公爵夫人舞会的请柬——即使在临终前，他仍然是那个埃利奥特。',
+      maugham_zh: '埃利奥特在尼斯孤独地去世。那些曾经簇拥他的贵族无一人到场。他临终前皈依天主教，是一生中第一次真正有了信仰。弥留之际他仍要求我弄一张公爵夫人的舞会请柬——到死都是那个埃利奥特。',
+      events: ['elliott-death'],
       joint_note: null
     }
   ];
@@ -795,6 +801,17 @@ var RazorMap = (function() {
       excerpt_zh: 'Larry回到美国后做了一名出租车司机。每天他遇到各种各样的人——商人、学生、孤独的老人。他不知道他的乘客中有多少人在深夜的纽约街头寻找生命的意义。',
       analysis: 'Larry做出租车司机的选择是小说最深刻的反讽——一个见过"光"的人，选择把光带给每一个坐他车的普通人。这是"刀锋"最好的注解：最高深的智慧，最平凡的生活。'
     },
+    'elliott-death': {
+      id: 'elliott-death', type: 'character_moment', significance: 'medium',
+      title: "Elliott's Death · 埃利奥特的死亡", title_zh: '埃利奥特之死',
+      summary: "Elliott dies in Nice, forgotten by the aristocracy he spent his life cultivating. In his final days he converts to Catholicism — the first genuine faith he's ever had — and asks Maugham to get him an invitation to a duchess's ball, even as he lies dying. Maugham watches him breathe his last, his face peaceful for the first time.",
+      summary_zh: '埃利奥特在尼斯孤独地去世，一生痴迷的上流社会无一人来送终。他临终前皈依天主教——这是他一生中第一次真正有了信仰——却在弥留之际仍请求毛姆弄一张公爵夫人的舞会请柬。毛姆亲眼看着他咽下最后一口气，脸上浮现出从未有过的安详。',
+      waypoint_id: 'geo-nice', characters: ['elliott','maugham'], year: 1929, chapter: 'Ch26', pages: '430-440',
+      excerpt: "He asked me to get him an invitation to the duchess's ball. Even on his deathbed, he was still Elliott.",
+      excerpt_context: "这是毛姆对埃利奥特最深刻的评价：即使在临终那一刻，他仍然是那个以社会地位为一切的埃利奥特。但与此同时，他脸上的安详说明，在追求了一辈子虚假的东西之后，他终于在信仰中找到了真实。",
+      excerpt_zh: '他让我给他弄一张公爵夫人的舞会请柬。即使在临终的病床上，他仍然是那个埃利奥特。',
+      analysis: '埃利奥特的死是小说最深刻的讽刺之一：他一辈子追求的东西（贵族认可、社会地位）在临终时完全缺席；但正是这种彻底的失败，让他第一次接触到了真正的信仰。毛姆借此展示，虚假的价值有时候要等到彻底破产之后，才能让人看见真实。'
+    },
     'larry-cairo-dialogue': {
       id: 'larry-cairo-dialogue', type: 'conversation', significance: 'medium',
       title: '开罗：尼罗河畔的对话', title_zh: '开罗：尼罗河畔的对话',
@@ -863,7 +880,8 @@ var RazorMap = (function() {
         [48.8566,2.3522],   // Paris (multiple stays)
         [51.5074,-0.1278],  // London 1923-24
         [36.1391,-5.3536],  // Gibraltar (cruise 1924)
-        [36.7201,-4.4203]   // Malaga (cruise 1924)
+        [36.7201,-4.4203],  // Malaga (cruise 2024)
+        [43.7102,7.2620]    // Nice 1929
       ]
     }
   };
@@ -1160,7 +1178,7 @@ var RazorMap = (function() {
 
   // ─── TIME RULER ─────────────────────────────────────────────
   function buildTimeRuler() {
-    var years = [1919, 1920, 1921, 1922, 1923, 1924];
+    var years = [1919, 1920, 1921, 1922, 1923, 1924, 1925, 1926, 1927, 1928, 1929];
     var ruler = document.getElementById('time-ruler');
     var html = '';
     years.forEach(function(yr, i) {
@@ -1190,7 +1208,9 @@ var RazorMap = (function() {
   }
 
   function flyToYear(yr) {
-    var wp = WAYPOINTS.find(function(w) { return w.year_start === yr; });
+    // Find earliest waypoint that starts at or before yr
+    var wp = WAYPOINTS.slice().sort(function(a, b) { return b.year_start - a.year_start; })
+      .find(function(w) { return w.year_start <= yr; });
     if (wp) {
       map.flyTo([wp.lat, wp.lng], 6, { duration: 1.2 });
     }
