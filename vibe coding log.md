@@ -64,3 +64,45 @@
 - 静态检查：JS语法 ✓ / 数据完整性 ✓ / 资源200 OK ✓
 - 运行时：20/21 PASS（popup-passage-src 在初始渲染时不可见是正确行为，内容在Tab点击后延迟加载）
 - 文件打开：file:// 直接打开无需本地服务器 ✓
+
+---
+
+# 2026-05-06
+
+[2026-05-06 11:27]
+
+## 🗺️ razors-edge-map v2.1 — Elliott Route + UI/UX Audit
+
+### 完成内容
+
+1. **Elliott Templeton 路线扩展**
+   - 路线从 5→7 点：Paris→Rome→Antibes→London→Gibraltar→Malaga→Nice
+   - 新增 geo-rome / geo-antibes 两个航点
+   - 新增 5 个 face-objects（总计 8 个，角色中最多）
+   - 新增 Elliott Rome 社交事件
+   - 修正名字/关系/bio 文本
+
+2. **侧边栏合并**
+   - legend + char-panel 合并为统一 tabbed sidebar（Routes / Characters）
+   - L/C 快捷键切换标签页
+   - 平滑 open/close 过渡动画
+
+3. **UI/UX 审计修复（3 轮）**
+   - P0×3: toggleCharDetail 导出、ESC handler 逻辑、buildLegend() 崩溃导致所有快捷键失效
+   - P1×6: 滚动条样式、z-index 层级、删除孤儿 status-panel、键盘提示文案
+   - P2×7: :focus-visible 样式、Isabel/Gray 颜色统一、死代码清理、html lang=mul
+
+4. **键盘快捷键**
+   - Q: Quote 面板 | L: Routes 标签 | C: Characters 标签 | ESC: 关闭（modal→quote→sidebar）
+
+### Commits
+- `af9b886` feat(uiux): v2.1 — Elliott route expansion, sidebar consolidation, full UI/UX audit fixes
+
+### PR
+- https://github.com/mariusiaowego-commits/razors-edge-map/pull/1 (merged)
+
+### 验收结果
+- 文件打开：file:// 直接打开 ✓
+- 键盘快捷键：Q/L/C/ESC 全部正常 ✓
+- 侧边栏切换：Routes/Characters 标签页 ✓
+- 路线切换：各角色路线显示/隐藏 ✓
